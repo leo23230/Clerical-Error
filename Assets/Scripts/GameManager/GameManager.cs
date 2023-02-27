@@ -27,9 +27,14 @@ public class GameManager : MonoBehaviour
         //spawn the characters
         for (var i = 0; i < chosenCharacters.Count; i++)
         {
-            var instance = Instantiate(chosenCharacters[i].characterPrefab);
+            CharacterDetailsSO chosenCharacterDetails = chosenCharacters[i];
+            var instance = Instantiate(chosenCharacterDetails.characterPrefab);
             var spawn = GameObject.Find("Spawn" + i.ToString());
-            if (spawn != null) instance.transform.position = spawn.transform.position;
+            if (spawn != null) {
+                //spawn in the player prefab
+                instance.transform.position = spawn.transform.position;
+                instance.GetComponent<Character>().Initialize(chosenCharacterDetails);
+            } 
             else Debug.Log("No Spawn");
         }
     }

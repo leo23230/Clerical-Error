@@ -15,15 +15,23 @@ using UnityEngine.Rendering;
 
 public class Character : MonoBehaviour
 {
+    //character stats
     [HideInInspector] public CharacterDetailsSO characterDetails;
-    [HideInInspector] public Health health;
+    [HideInInspector] public string characterName;
+    [HideInInspector] public int speed;
+    [HideInInspector] public int health;
+    [HideInInspector] public float armorClass;
+    //a list of ability ids
+    [HideInInspector] public List<string> abilities;
+
+    [HideInInspector] public Health healthComponent;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
 
     private void Awake()
     {
         // Load components
-        health = GetComponent<Health>();
+        healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -34,6 +42,11 @@ public class Character : MonoBehaviour
     public void Initialize(CharacterDetailsSO characterDetails)
     {
         this.characterDetails = characterDetails;
+        characterName = characterDetails.characterName;
+        health = characterDetails.characterHealthAmount;
+        speed = characterDetails.characterSpeed;
+        armorClass = characterDetails.characterArmorClass;
+
 
         // Set character starting health
         SetCharacterHealth();
@@ -44,7 +57,6 @@ public class Character : MonoBehaviour
     /// </summary>
     private void SetCharacterHealth()
     {
-        health.SetStartingHealth(characterDetails.characterHealthAmount);
+        healthComponent.SetStartingHealth(health);
     }
-
 }
