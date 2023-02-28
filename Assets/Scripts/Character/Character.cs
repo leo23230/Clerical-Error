@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
     [HideInInspector] public Health healthComponent;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public Rigidbody2D characterRigidbody;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class Character : MonoBehaviour
         healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        characterRigidbody = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>

@@ -16,11 +16,10 @@ GameObject:
   - component: {fileID: 8237058962606921174}
   - component: {fileID: 3455390595703611662}
   - component: {fileID: 8406711286886470841}
-  - component: {fileID: 9170145014415430521}
-  - component: {fileID: 226300619044305095}
-  m_Layer: 6
-  m_Name: Character
-  m_TagString: Character
+  - component: {fileID: 4693125087013115120}
+  m_Layer: 0
+  m_Name: Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,7 +170,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -215,7 +214,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &9170145014415430521
+--- !u!114 &4693125087013115120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,33 +223,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6812353130048190523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c738455fd3f86b44ca9921e481d55816, type: 3}
+  m_Script: {fileID: 11500000, guid: 05115c5f91978394cb71d95f7b3aa35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterDetails: {fileID: 0}
-  characterName: 
+  enemyName: 
   speed: 0
   health: 0
-  armorClass: 0
   abilities: []
   healthComponent: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
-  characterRigidbody: {fileID: 0}
-  target: {fileID: 0}
---- !u!114 &226300619044305095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6812353130048190523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd273c0ded54efc4b972ae2c79354d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 0}
-  moveSpeed: 8
-  target: {fileID: 0}
-  enemies: []
