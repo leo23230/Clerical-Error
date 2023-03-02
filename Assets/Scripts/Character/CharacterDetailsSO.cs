@@ -24,6 +24,7 @@ public class CharacterDetailsSO : ScriptableObject
     #endregion
     public RuntimeAnimatorController runtimeAnimatorController;
 
+
     #region Header CHARACTER STATS
     [Space(10)]
     [Header("CHARACTER STATS")]
@@ -44,7 +45,7 @@ public class CharacterDetailsSO : ScriptableObject
     #region Tooltip
     [Tooltip("Character speed (1-10) determines turn order")]
     #endregion
-    public int characterSpeed;
+    public float characterSpeed;
 
     #region Header ARMORCLASS
     [Space(10)]
@@ -54,6 +55,15 @@ public class CharacterDetailsSO : ScriptableObject
     [Tooltip("Float (0.5 - 1.0) that is multiplied to incoming damage")]
     #endregion
     public float characterArmorClass;
+
+    #region Header ATTACKRANGE
+    [Space(10)]
+    [Header("ATTACKRANGE")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Float - max units player can be from target")]
+    #endregion
+    public float characterAttackRange;
 
     #region Header CHARACTER ABILITIES
     [Space(10)]

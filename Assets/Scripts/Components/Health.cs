@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
     private int startingHealth;
     private int currentHealth;
+
+    public Image healthBarImage;
 
     /// <summary>
     /// Set starting health 
@@ -23,6 +26,17 @@ public class Health : MonoBehaviour
     public int GetStartingHealth()
     {
         return startingHealth;
+    }
+
+    public void SubtractHealth(int amt)
+    {
+        currentHealth -= amt;
+        UpdateHealthBar();
+    }
+
+    public void UpdateHealthBar() 
+    {
+        healthBarImage.fillAmount = (float)currentHealth / (float)startingHealth;
     }
 
 }

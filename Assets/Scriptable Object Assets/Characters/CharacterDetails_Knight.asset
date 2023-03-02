@@ -16,10 +16,11 @@ MonoBehaviour:
   characterPrefab: {fileID: 2020621593951310722, guid: 08a25c2153d8a364091ef37c17040ae2, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 100
-  characterSpeed: 7
+  characterSpeed: 8
   characterArmorClass: 0.7
+  characterAttackRange: 3
   characterAbilities:
-  - Shield Strike
-  - Shield Chop
-  - Shield Charge
+  - LightAttack
+  - HeavyAttack
+  - Special
   characterMiniMapIcon: {fileID: 0}

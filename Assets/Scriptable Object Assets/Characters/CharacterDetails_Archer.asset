@@ -16,10 +16,11 @@ MonoBehaviour:
   characterPrefab: {fileID: 4966904054944035368, guid: e8413e8c659f18d4bbfe0e5b31d882af, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 90
-  characterSpeed: 9
+  characterSpeed: 4
   characterArmorClass: 0.9
+  characterAttackRange: 10
   characterAbilities:
-  - Shoot
-  - Double Shot
-  - Arrow Barrage
+  - LightAttack
+  - HeavyAttack
+  - Special
   characterMiniMapIcon: {fileID: 0}

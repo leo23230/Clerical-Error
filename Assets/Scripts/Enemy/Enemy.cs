@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     //[HideInInspector] public EnemyDetailsSO enemyDetails;
     [HideInInspector] public string enemyName;
     [HideInInspector] public int speed;
-    [HideInInspector] public int health;
+    [HideInInspector] public int health = 100;
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
 
@@ -22,6 +22,10 @@ public class Enemy : MonoBehaviour
         healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        //THIS IS TEMPORARY//
+        health = 100;
+        SetEnemyHealth();
     }
 
     /// <summary>
@@ -46,5 +50,6 @@ public class Enemy : MonoBehaviour
     private void SetEnemyHealth()
     {
         healthComponent.SetStartingHealth(health);
+        Debug.Log(healthComponent.GetStartingHealth());
     }
 }

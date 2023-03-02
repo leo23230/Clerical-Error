@@ -12,16 +12,21 @@ public abstract class Ability
 
     public float coolDown = 0f;
 
-    public abstract void useAbility();
+    public abstract void useAbility(GameObject target);
 
-    public void setCoolDown()
+    public void setCoolDownTimer()
     {
         coolDown = coolDownTime;
     }
-    public void coolDownTimerCount() {
+    public void updateCoolDownTimer() {
         if(coolDown > 0f)
         {
-            coolDownTime -= Time.deltaTime;
+            coolDown -= Time.deltaTime;
         }
+    }
+
+    public bool AbilityIsReady()
+    {
+        return coolDown <= 0f;
     }
 }

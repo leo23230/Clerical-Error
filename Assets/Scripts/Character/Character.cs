@@ -18,9 +18,10 @@ public class Character : MonoBehaviour
     //character stats
     [HideInInspector] public CharacterDetailsSO characterDetails;
     [HideInInspector] public string characterName;
-    [HideInInspector] public int speed;
+    [HideInInspector] public float speed;
     [HideInInspector] public int health;
     [HideInInspector] public float armorClass;
+    [HideInInspector] public float minRange;
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
 
@@ -48,6 +49,8 @@ public class Character : MonoBehaviour
         health = characterDetails.characterHealthAmount;
         speed = characterDetails.characterSpeed;
         armorClass = characterDetails.characterArmorClass;
+        minRange = characterDetails.characterAttackRange;
+        abilities = characterDetails.characterAbilities;
 
 
         // Set character starting health
