@@ -19,6 +19,7 @@ MonoBehaviour:
   characterSpeed: 12
   characterArmorClass: 0.8
   characterAttackRange: 3
+  characterAbilityCooldown: 1
   characterAbilities:
   - LightAttack
   - HeavyAttack

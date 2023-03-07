@@ -6,7 +6,7 @@ public class CharacterIdleState : CharacterBaseState
 {
     public override void EnterState(CharacterStateManager characterSM)
     {
-        Debug.Log("Entered Idle State");
+        characterSM.currentState = characterSM.idleState;
     }
 
     public override void UpdateState(CharacterStateManager characterSM)
@@ -17,11 +17,10 @@ public class CharacterIdleState : CharacterBaseState
             //then send the character into the attack state
 
             characterSM.attackState.EnterState(characterSM);
-            characterSM.currentState = characterSM.attackState;
         }
         else
         {
-            characterSM.currentState = characterSM.walkState;
+            characterSM.walkState.EnterState(characterSM);
         }
     }
 }

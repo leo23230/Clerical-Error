@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class CharacterAttackState : CharacterBaseState
 {
-    float attackCoolDown = 0f;
-    float attackCoolDownTime = 1f; 
+    float attackReadyCoolDown = 0f;
     public override void EnterState(CharacterStateManager characterSM)
     {
-        if(characterSM.ChooseAnAbility()) setAttackCoolDownTime();
+        if (characterSM.animator != null) characterSM.animator.SetBool("isRunning", false);
+
+        //this function sets animation automatically
+        if (characterSM.ChooseAnAbility()) setAttackCoolDownTime(characterSM);
+
+        characterSM.currentState = characterSM.attackState;
     }
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
-        if(attackCoolDown <= 0f)
+        if(attackReadyCoolDown <= 0f)
         {
             //if an ability is actually chosen, then we'll set the cool down
-            if(characterSM.ChooseAnAbility()) setAttackCoolDownTime();
+            if (characterSM.ChooseAnAbility()) 
+            {
+                setAttackCoolDownTime(characterSM);
+            }
         }
-        if(attackCoolDown > 0f) attackCoolDown -= Time.deltaTime;
+        if(attackReadyCoolDown > 0f) attackReadyCoolDown -= Time.deltaTime;
     }
 
-    private void setAttackCoolDownTime()
+    private void setAttackCoolDownTime(CharacterStateManager characterSM)
     {
-        attackCoolDown = attackCoolDownTime;
+        attackReadyCoolDown = characterSM.abilityReadyCooldown;
     }
 }

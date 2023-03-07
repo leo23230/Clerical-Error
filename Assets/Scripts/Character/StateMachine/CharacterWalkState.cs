@@ -6,6 +6,14 @@ public class CharacterWalkState : CharacterBaseState
 {
     public override void EnterState(CharacterStateManager characterSM)
     {
+        Debug.Log("Entered Run State");
+        if (characterSM.animator != null)
+        {
+            Debug.Log("Run Animation");
+            characterSM.animator.SetBool("isRunning", true);
+        }
+        
+        characterSM.currentState = characterSM.walkState;
     }
 
     public override void UpdateState(CharacterStateManager characterSM)

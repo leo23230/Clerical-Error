@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Character
   - Enemy
+  - Sprite
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SBfirst
+    uniqueID: 1748853601
+    locked: 0
+  - name: SBRotateCanvas
+    uniqueID: 1480270225
+    locked: 0
+  - name: SBRotatingShape
+    uniqueID: 3713498865
+    locked: 0
+  - name: UI
+    uniqueID: 4233216597
     locked: 0

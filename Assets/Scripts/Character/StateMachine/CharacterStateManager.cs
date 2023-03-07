@@ -15,6 +15,11 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public Character character;
     [HideInInspector] public CharacterBaseState currentState;
     [HideInInspector] public float moveSpeed;
+    [HideInInspector] public float abilityReadyCooldown;
+
+    //components//
+    [HideInInspector] public Animator animator;
+
     //other//
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject[] enemies;
@@ -30,13 +35,18 @@ public class CharacterStateManager : MonoBehaviour
         
 
         target = SelectEnemy();
-        currentState = walkState;
 
     }
     void Start()
     {
+        //stat cahce//
+        animator = character.animator;
         moveSpeed = character.speed;
+        abilityReadyCooldown = character.abilityReadyCooldown;
+
         InstantiateAbilities();
+
+        idleState.EnterState(this);
     }
     void Update()
     {
@@ -87,6 +97,9 @@ public class CharacterStateManager : MonoBehaviour
             chosenAbility.useAbility(target);
             Debug.Log("Player used " + chosenAbility.name);
 
+            //start animation
+            if(animator != null) animator.SetBool("isAttacking", true);
+
             return true;
         }
         else
@@ -95,6 +108,9 @@ public class CharacterStateManager : MonoBehaviour
             Ability chosenAbility = readyAbilities[random];
             chosenAbility.useAbility(target);
             Debug.Log(character.name + " used " + chosenAbility.name);
+
+            //start animation
+            animator.SetBool("isAttacking", true);
 
             return true;
         }

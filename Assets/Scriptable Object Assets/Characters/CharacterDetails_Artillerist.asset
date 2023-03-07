@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b766356489aa5146aad828bc3d3330c, type: 3}
+  m_Name: CharacterDetails_Artillerist
+  m_EditorClassIdentifier: 
+  characterName: Artillerist
+  characterPrefab: {fileID: 4966904054944035368, guid: e8413e8c659f18d4bbfe0e5b31d882af, type: 3}
+  runtimeAnimatorController: {fileID: 0}
+  characterHealthAmount: 90
+  characterSpeed: 4
+  characterArmorClass: 0.9
+  characterAttackRange: 8
+  characterAbilityCooldown: 5
+  characterAbilities:
+  - ArtilleristAttack1
+  - ArtilleristAttack2
+  - ArtilleristSpecial
+  characterMiniMapIcon: {fileID: 0}

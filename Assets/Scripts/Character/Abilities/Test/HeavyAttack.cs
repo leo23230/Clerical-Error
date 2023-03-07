@@ -6,7 +6,7 @@ public class HeavyAttack : Ability
 {
     public HeavyAttack()
     {
-        name = "HeavyAttack";
+        name = "Heavy";
         attackDamage = 10;
         accuracy = 1f;
         coolDownTime = 5f;

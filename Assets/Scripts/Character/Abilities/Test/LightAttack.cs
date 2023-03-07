@@ -6,7 +6,7 @@ public class LightAttack : Ability
 {
     public LightAttack()
     {
-        name = "LightAttack";
+        name = "Light";
         attackDamage = 5;
         accuracy = 1f;
         coolDownTime = 2f;

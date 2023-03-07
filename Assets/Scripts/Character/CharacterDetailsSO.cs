@@ -65,6 +65,16 @@ public class CharacterDetailsSO : ScriptableObject
     #endregion
     public float characterAttackRange;
 
+    #region Header ABILITYCOOLDOWN
+    [Space(10)]
+    [Header("ABILITYCOOLDOWN")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Float - how long the character spends between attacks")]
+    #endregion
+    public float characterAbilityCooldown;
+
+
     #region Header CHARACTER ABILITIES
     [Space(10)]
     [Header("CHARACTER ABILITIES")]

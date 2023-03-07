@@ -22,21 +22,32 @@ public class Character : MonoBehaviour
     [HideInInspector] public int health;
     [HideInInspector] public float armorClass;
     [HideInInspector] public float minRange;
+    [HideInInspector] public float abilityReadyCooldown;
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
 
     [HideInInspector] public Health healthComponent;
+    [HideInInspector] public CooldownBarManager CDBarManager;
     [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public GameObject sprite;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody2D characterRigidbody;
+
 
     private void Awake()
     {
         // Load components
         healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        CDBarManager = GetComponent<CooldownBarManager>();
+        
         characterRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        sprite = GameObject.Find("Sprite");
+        if (sprite != null) animator = sprite.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -51,6 +62,7 @@ public class Character : MonoBehaviour
         armorClass = characterDetails.characterArmorClass;
         minRange = characterDetails.characterAttackRange;
         abilities = characterDetails.characterAbilities;
+        abilityReadyCooldown = characterDetails.characterAbilityCooldown;
 
 
         // Set character starting health
