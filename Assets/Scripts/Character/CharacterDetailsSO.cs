@@ -60,15 +60,22 @@ public class CharacterDetailsSO : ScriptableObject
     [Space(10)]
     [Header("ATTACKRANGE")]
     #endregion
+
     #region Tooltip
     [Tooltip("Float - max units player can be from target")]
     #endregion
-    public float characterAttackRange;
+    public float characterAttackMax;
+
+    #region Tooltip
+    [Tooltip("Float - min units player can be from target")]
+    #endregion
+    public float characterAttackMin;
 
     #region Header ABILITYCOOLDOWN
     [Space(10)]
     [Header("ABILITYCOOLDOWN")]
     #endregion
+
     #region Tooltip
     [Tooltip("Float - how long the character spends between attacks")]
     #endregion

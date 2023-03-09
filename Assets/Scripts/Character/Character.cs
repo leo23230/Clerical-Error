@@ -21,7 +21,9 @@ public class Character : MonoBehaviour
     [HideInInspector] public float speed;
     [HideInInspector] public int health;
     [HideInInspector] public float armorClass;
-    [HideInInspector] public float minRange;
+    [HideInInspector] public float minDistance;
+    [HideInInspector] public float maxDistance;
+    [HideInInspector] public float avgDistance;
     [HideInInspector] public float abilityReadyCooldown;
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
@@ -46,7 +48,7 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        sprite = GameObject.Find("Sprite");
+        sprite = transform.Find("Sprite").gameObject;
         if (sprite != null) animator = sprite.GetComponent<Animator>();
     }
 
@@ -60,7 +62,9 @@ public class Character : MonoBehaviour
         health = characterDetails.characterHealthAmount;
         speed = characterDetails.characterSpeed;
         armorClass = characterDetails.characterArmorClass;
-        minRange = characterDetails.characterAttackRange;
+        maxDistance = characterDetails.characterAttackMax;
+        minDistance = characterDetails.characterAttackMin;
+        avgDistance = minDistance + ((maxDistance - minDistance) /2);
         abilities = characterDetails.characterAbilities;
         abilityReadyCooldown = characterDetails.characterAbilityCooldown;
 

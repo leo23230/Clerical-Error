@@ -16,7 +16,7 @@ public class CharacterIdleState : CharacterBaseState
             //determine which attack to use based on cooldowns and other stuff
             //then send the character into the attack state
 
-            characterSM.attackState.EnterState(characterSM);
+            if(characterSM.findAliveEnemies().Count > 0) characterSM.attackState.EnterState(characterSM);
         }
         else
         {
