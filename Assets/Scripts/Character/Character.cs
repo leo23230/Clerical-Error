@@ -16,6 +16,7 @@ using UnityEngine.Rendering;
 public class Character : MonoBehaviour
 {
     //character stats
+    private int wow;
     [HideInInspector] public CharacterDetailsSO characterDetails;
     [HideInInspector] public string characterName;
     [HideInInspector] public float speed;
