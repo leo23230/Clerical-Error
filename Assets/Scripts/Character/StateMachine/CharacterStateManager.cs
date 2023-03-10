@@ -24,6 +24,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject[] enemies;
     [HideInInspector] public List<Ability> abilities = new List<Ability>();
+    [HideInInspector] public Vector2 startingPos = new Vector2();
     private void Awake()
     {
         //the character component is repsonible for storing
@@ -32,10 +33,8 @@ public class CharacterStateManager : MonoBehaviour
 
         //set character stats
         character = gameObject.GetComponent<Character>();
-        
 
         target = SelectEnemy();
-
     }
     void Start()
     {
@@ -43,6 +42,8 @@ public class CharacterStateManager : MonoBehaviour
         animator = character.animator;
         moveSpeed = character.speed;
         abilityReadyCooldown = character.abilityReadyCooldown;
+
+        startingPos = new Vector2(transform.position.x, transform.position.y);
 
         InstantiateAbilities();
 
@@ -56,10 +57,29 @@ public class CharacterStateManager : MonoBehaviour
         UpdateCoolDownTimers();
     }
 
-    GameObject SelectEnemy() {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        var target = enemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length))];
+    public GameObject SelectEnemy() {
+
+        List<GameObject> aliveEnemies = findAliveEnemies();
+
+        var target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length))];
         return target;
+    }
+
+    public List<GameObject> findAliveEnemies()
+    {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        List<GameObject> aliveEnemies = new List<GameObject>();
+
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.GetComponent<Health>().GetHealth() > 0)
+            {
+                aliveEnemies.Add(enemy);
+            }
+        }
+
+        return aliveEnemies;
     }
 
     public bool CharacterIsWithinRange()
@@ -67,7 +87,10 @@ public class CharacterStateManager : MonoBehaviour
         if(target != null)
         {
             float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
-            return distanceToTarget <= character.minRange;
+
+            bool isWithinRange = distanceToTarget >= character.minDistance && distanceToTarget <= character.maxDistance;
+
+            return isWithinRange;
         }
         else
         {
@@ -76,21 +99,23 @@ public class CharacterStateManager : MonoBehaviour
       
     }
 
-    //this function will take the list of attacks and based on current ability statuses / game state determine which ability to use
     public bool ChooseAnAbility()
     {
         //collect a list of ready abilities
         List<Ability> readyAbilities = new List<Ability>();
 
+        //first we add only the readied abilities to a list
         foreach (Ability ability in abilities)
         {
             if (ability.AbilityIsReady()) readyAbilities.Add(ability);
         }
 
+        //we first check to make sure there are more than 0 readied abilities
         if (readyAbilities.Count <= 0) 
         {
             return false;
         } 
+        //if there is one, we just pick that ability, if there are more than one in that moment pick randomly
         else if (readyAbilities.Count == 1)
         {
             Ability chosenAbility = readyAbilities[0];
@@ -110,7 +135,7 @@ public class CharacterStateManager : MonoBehaviour
             Debug.Log(character.name + " used " + chosenAbility.name);
 
             //start animation
-            animator.SetBool("isAttacking", true);
+            if (animator != null) animator.SetBool("isAttacking", true);
 
             return true;
         }
@@ -128,7 +153,6 @@ public class CharacterStateManager : MonoBehaviour
 
             //add the ability to the list
             abilities.Add(abilityInstance);
-
         }
     }
 
@@ -137,6 +161,25 @@ public class CharacterStateManager : MonoBehaviour
         foreach (Ability ability in abilities)
         {
             ability.updateCoolDownTimer();
+        }
+    }
+
+    public void FlipSprite(string dir)
+    {
+        float dirNumber = 1f;
+        if (dir == "left") dirNumber = -1f;
+        else if (dir == "right") dirNumber = 1f;
+
+        if (character.sprite != null)
+        {
+            character.sprite.transform.localScale = new Vector3(dirNumber, character.sprite.transform.localScale.y, character.sprite.transform.localScale.z);
+        }
+        else
+        {
+            //super temporary//
+            transform.localScale = new Vector3(dirNumber, transform.localScale.y, transform.localScale.z);
+            var canvasScale = transform.Find("CharacterCanvas").localScale;
+            transform.Find("CharacterCanvas").localScale = new Vector3(dirNumber/1000f, canvasScale.y, canvasScale.z);
         }
     }
 }

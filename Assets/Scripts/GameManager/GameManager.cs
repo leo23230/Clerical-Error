@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<CharacterDetailsSO> characters;
+    public int numberOfCharacters;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour
     void generateCharacters()
     {
         //get a list of 3 random Characters
-        List<CharacterDetailsSO> chosenCharacters = chooseRandomCharacters(3);
+        List<CharacterDetailsSO> chosenCharacters = chooseRandomCharacters(numberOfCharacters);
 
         //spawn the characters
         for (var i = 0; i < chosenCharacters.Count; i++)

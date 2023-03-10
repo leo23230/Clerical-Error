@@ -7,6 +7,8 @@ public class CharacterAttackState : CharacterBaseState
     float attackReadyCoolDown = 0f;
     public override void EnterState(CharacterStateManager characterSM)
     {
+        characterSM.FlipSprite("right");
+
         if (characterSM.animator != null) characterSM.animator.SetBool("isRunning", false);
 
         //this function sets animation automatically
@@ -17,15 +19,37 @@ public class CharacterAttackState : CharacterBaseState
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
-        if(attackReadyCoolDown <= 0f)
+        if (characterSM.target.GetComponent<Health>().GetHealth() <= 0)
         {
-            //if an ability is actually chosen, then we'll set the cool down
-            if (characterSM.ChooseAnAbility()) 
+            if(characterSM.findAliveEnemies().Count > 0) 
             {
-                setAttackCoolDownTime(characterSM);
+                characterSM.target = characterSM.SelectEnemy();
+            }
+            else
+            {
+                characterSM.idleState.EnterState(characterSM);
             }
         }
-        if(attackReadyCoolDown > 0f) attackReadyCoolDown -= Time.deltaTime;
+
+        if (characterSM.CharacterIsWithinRange())
+        {
+            if (attackReadyCoolDown <= 0f)
+            {
+                //if an ability is actually chosen, then we'll set the cool down
+                if (characterSM.ChooseAnAbility())
+                {
+                    setAttackCoolDownTime(characterSM);
+                }
+            }
+            if (attackReadyCoolDown > 0f) attackReadyCoolDown -= Time.deltaTime;
+        }
+        else
+        {
+            characterSM.walkState.EnterState(characterSM);
+        }
+
+
+        
     }
 
     private void setAttackCoolDownTime(CharacterStateManager characterSM)

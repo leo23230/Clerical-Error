@@ -28,6 +28,11 @@ public class Health : MonoBehaviour
         return startingHealth;
     }
 
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+
     public void SubtractHealth(int amt)
     {
         currentHealth -= amt;
