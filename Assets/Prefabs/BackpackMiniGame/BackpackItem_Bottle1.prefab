@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1694703207284644180, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1759184636954485983, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 4
@@ -102,6 +106,10 @@ PrefabInstance:
     - target: {fileID: 3669946860595053574, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_Name
       value: BackpackItem_Bottle1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669946860595053574, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5019850630483905490, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_RootOrder
