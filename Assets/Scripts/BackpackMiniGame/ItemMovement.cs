@@ -51,7 +51,7 @@ public class ItemMovement : MonoBehaviour
             isHeld = true;
 
             gameObject.layer = LayerBackpackTop;
-            r.sortingOrder = 3;
+            r.sortingLayerName = "BPFront";
         }
     }
 
