@@ -16,9 +16,9 @@ TagManager:
   - UI
   - Character
   - Enemy
-  - BackpackLayerTop
-  - BackpackLayerMiddle
-  - BackpackLayerBottom
+  - BPBottom
+  - BPMiddle
+  - BPTop
   - 
   - 
   - 
@@ -56,12 +56,12 @@ TagManager:
   - name: UI
     uniqueID: 4233216597
     locked: 0
-  - name: BPBack
+  - name: BPBottom
     uniqueID: 1993524765
     locked: 0
-  - name: BPMid
+  - name: BPMiddle
     uniqueID: 4095275567
     locked: 0
-  - name: BPFront
+  - name: BPTop
     uniqueID: 1206557667
     locked: 0

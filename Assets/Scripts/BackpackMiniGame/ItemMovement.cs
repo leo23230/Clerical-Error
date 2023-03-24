@@ -10,6 +10,7 @@ public class ItemMovement : MonoBehaviour
     private bool isHeld = false;
     private SpriteRenderer r;
     private Rigidbody2D rb;
+    private BackpackManager backpackManager;
 
     private int LayerBackpackTop;
     private int LayerBackpackMiddle;
@@ -19,10 +20,11 @@ public class ItemMovement : MonoBehaviour
     {
         r = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
 
-        LayerBackpackTop = LayerMask.NameToLayer("BackpackLayerTop");
-        LayerBackpackMiddle = LayerMask.NameToLayer("BackpackLayerMiddle");
-        LayerBackpackBottom = LayerMask.NameToLayer("BackpackLayerBottom");
+        LayerBackpackTop = LayerMask.NameToLayer("BPTop");
+        LayerBackpackMiddle = LayerMask.NameToLayer("BPMiddle");
+        LayerBackpackBottom = LayerMask.NameToLayer("BPBottom");
     }
 
     private void Update()
@@ -50,8 +52,10 @@ public class ItemMovement : MonoBehaviour
 
             isHeld = true;
 
-            gameObject.layer = LayerBackpackTop;
-            r.sortingLayerName = "BPFront";
+            backpackManager.ReorganizeItemsIntoLayers(gameObject);
+
+            /*gameObject.layer = LayerBackpackTop;
+            r.sortingLayerName = "BPFront";*/
         }
     }
 
