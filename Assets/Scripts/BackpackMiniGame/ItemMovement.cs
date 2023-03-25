@@ -15,6 +15,7 @@ public class ItemMovement : MonoBehaviour
     private int LayerBackpackTop;
     private int LayerBackpackMiddle;
     private int LayerBackpackBottom;
+    private int LayerBackpackHand;
 
     private void Start()
     {
@@ -22,9 +23,13 @@ public class ItemMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
 
+        float randRotation = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, 0f, randRotation);
+
         LayerBackpackTop = LayerMask.NameToLayer("BPTop");
         LayerBackpackMiddle = LayerMask.NameToLayer("BPMiddle");
         LayerBackpackBottom = LayerMask.NameToLayer("BPBottom");
+        LayerBackpackHand = LayerMask.NameToLayer("BPHand");
     }
 
     private void Update()
@@ -52,16 +57,16 @@ public class ItemMovement : MonoBehaviour
 
             isHeld = true;
 
-            backpackManager.ReorganizeItemsIntoLayers(gameObject);
-
-            /*gameObject.layer = LayerBackpackTop;
-            r.sortingLayerName = "BPFront";*/
+            //if the item is currently being held, put on hand layer
+            gameObject.layer = LayerBackpackHand;
+            r.sortingLayerName = "BPHand";
         }
     }
 
     private void OnMouseUp()
     {
         isHeld = false;
+        backpackManager.ReorganizeItemsIntoLayers(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

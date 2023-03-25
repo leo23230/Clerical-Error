@@ -69,24 +69,36 @@ public class BackpackManager : MonoBehaviour
         backpackObjects.Add(selectedItem);
         for(int i = 0; i < backpackObjects.Count; i++)
         {
+            var item = backpackObjects[i];
             if(i < maxLayerItems)
             {
                 //set the item's layers to bottom
-                backpackObjects[i].layer = LayerMask.NameToLayer(bottomLayer);
-                backpackObjects[i].GetComponent<SpriteRenderer>().sortingLayerName = bottomSortingLayer;
+                SetItemLayers(item, bottomLayer, bottomSortingLayer);
+                SetItemMass(item, 10);
             }
             else if (i < maxLayerItems * 2)
             {
                 //set the item's layers to middle
-                backpackObjects[i].layer = LayerMask.NameToLayer(middleLayer);
-                backpackObjects[i].GetComponent<SpriteRenderer>().sortingLayerName = middleSortingLayer;
+                SetItemLayers(item, middleLayer, middleSortingLayer);
+                SetItemMass(item, 5);
             }
             else
             {
                 //set the item's layers to top
-                backpackObjects[i].layer = LayerMask.NameToLayer(topLayer);
-                backpackObjects[i].GetComponent<SpriteRenderer>().sortingLayerName = topSortingLayer;
+                SetItemLayers(item, topLayer, topSortingLayer);
+                SetItemMass(item, 1);
             }
         }
+    }
+
+    public void SetItemLayers(GameObject item, string layerName, string sortingLayerName)
+    {
+        item.layer = LayerMask.NameToLayer(layerName);
+        item.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayerName;
+    }
+
+    public void SetItemMass(GameObject item, int mass)
+    {
+        item.GetComponent<Rigidbody2D>().mass = mass;
     }
 }

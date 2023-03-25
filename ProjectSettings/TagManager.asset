@@ -19,7 +19,7 @@ TagManager:
   - BPBottom
   - BPMiddle
   - BPTop
-  - 
+  - BPHand
   - 
   - 
   - 
@@ -64,4 +64,7 @@ TagManager:
     locked: 0
   - name: BPTop
     uniqueID: 1206557667
+    locked: 0
+  - name: BPHand
+    uniqueID: 1573671895
     locked: 0
