@@ -24,6 +24,8 @@ public class Item: MonoBehaviour
     private int LayerBackpackHand;
 
     private Quaternion startingRotation;
+    private bool isLocked = false;
+    private bool isSelected = false;
 
     private void Start()
     {
@@ -65,7 +67,7 @@ public class Item: MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isLocked)
         {
             Vector3 mousePos;
             mousePos = Input.mousePosition;
@@ -84,15 +86,23 @@ public class Item: MonoBehaviour
 
     private void OnMouseUp()
     {
-        isHeld = false;
-        backpackManager.ReorganizeItemsIntoLayers(gameObject);
+        if (isHeld)
+        {
+            //if the item is selected, we don't want to reorganize the layers.
+            if (!isSelected)
+            {
+                backpackManager.ReorganizeItemsIntoLayers(gameObject);
+            }
+            isHeld = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == offHand)
+        if (collision.gameObject == offHand && isHeld)
         {
             backpackManager.RemoveItemFromBackpack(gameObject);
+            isSelected = true;
             transform.position = offHand.transform.position;
             transform.rotation = offHand.transform.rotation;
         }
@@ -103,8 +113,20 @@ public class Item: MonoBehaviour
         //reset the rotation so the player can't reset the rotations of the objects by putting them in the hand
         if (collision.gameObject == offHand)
         {
+            backpackManager.AddItemToBackpack(gameObject);
             transform.rotation = startingRotation;
+            isSelected = false;
         }
+    }
+
+    public void LockItem()
+    {
+        isLocked = true;
+    }
+
+    public void UnlockItem()
+    {
+        isLocked = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

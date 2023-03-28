@@ -1257,13 +1257,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2602671531411593995, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2602671531411593995, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.51
+      objectReference: {fileID: 0}
     - target: {fileID: 4098609180731695655, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098609180731695655, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[0]
+      value: 1573671895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098609180731695655, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[1]
+      value: 2067405437
       objectReference: {fileID: 0}
     - target: {fileID: 4098609180731695655, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.data[2]
-      value: 2067405437
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325755104079773497, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5426911445195684918, guid: a6bedc98790c11d468269b048faaf2bd, type: 3}
       propertyPath: m_Name

@@ -23,6 +23,9 @@ public class BackpackManager : MonoBehaviour
     private const string topSortingLayer = "BPTop";
     private const string offHandSortingLayer = "BPOffHand";
 
+    //state//
+    [HideInInspector] public bool itemSelected = false;
+
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -123,6 +126,7 @@ public class BackpackManager : MonoBehaviour
     {
         backpackObjects.Add(_item);
         DetermineLayer(_item);
+        UnlockBackpackItems();
     }
 
     //removes physical game object from the backpack
@@ -130,6 +134,23 @@ public class BackpackManager : MonoBehaviour
     {
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+        LockBackpackItems();
+    }
+
+    public void LockBackpackItems()
+    {
+        for (int i= 0; i < backpackObjects.Count; i++)
+        {
+            backpackObjects[i].GetComponent<Item>().LockItem();
+        }
+    }
+
+    public void UnlockBackpackItems()
+    {
+        for (int i = 0; i < backpackObjects.Count; i++)
+        {
+            backpackObjects[i].GetComponent<Item>().UnlockItem();
+        }
     }
 
     public void RemoveItemFromInventory(GameObject _item)
