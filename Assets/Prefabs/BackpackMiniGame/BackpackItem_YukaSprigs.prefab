@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1694703207284644180, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1759184636954485983, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3669946860595053574, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_Name
-      value: BackpackItem_Bottle1
+      value: BackpackItem_YukaSprigs
       objectReference: {fileID: 0}
     - target: {fileID: 3669946860595053574, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_Layer
