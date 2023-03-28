@@ -52,9 +52,9 @@ public class CharacterWalkState : CharacterBaseState
 
             characterSM.character.characterRigidbody.MovePosition(newMovePoint);
 
-            Debug.Log("is within range: " + characterSM.CharacterIsWithinRange());
+            /*Debug.Log("is within range: " + characterSM.CharacterIsWithinRange());
             Debug.Log("avg dist:" + avgDistance);
-            Debug.Log("current dist:" + distanceToTarget);
+            Debug.Log("current dist:" + distanceToTarget);*/
 
             isAtAvgDistance = distanceToTarget > lowerBound && distanceToTarget < upperBound;
 

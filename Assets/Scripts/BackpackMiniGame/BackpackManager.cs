@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class BackpackManager : MonoBehaviour
 {
-    public List<GameObject> itemPrefabs = new List<GameObject>();
+    private Player player;
+    private Inventory inventoryComponent;
+    private Transform parentTransform;
+    private float yOffset;
+
+    public List<InventoryItem> playerInventory = new List<InventoryItem>();
     private List<GameObject> backpackObjects = new List<GameObject>();
     
     private int maxItems = 24;
@@ -12,23 +17,35 @@ public class BackpackManager : MonoBehaviour
     private const string bottomLayer = "BPBottom";
     private const string middleLayer = "BPMiddle";
     private const string topLayer = "BPTop";
+    private const string offHandLayer = "BPOffHand";
     private const string bottomSortingLayer = "BPBottom";
     private const string middleSortingLayer = "BPMiddle";
     private const string topSortingLayer = "BPTop";
+    private const string offHandSortingLayer = "BPOffHand";
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+        inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+        parentTransform = GameObject.Find("BackPackMiniGame").transform;
+    }
 
     void Start()
     {
-        //temporary generate a list
+        SetYOffset();
+        playerInventory = inventoryComponent.inventory;
+        //Genereate Items from prefabs
         for (int i = 0; i < maxItems - 4; i++)
         {
-            int rand = Mathf.RoundToInt(Random.Range(0f, (float)itemPrefabs.Count-1));
+            int rand = HelperUtilities.RandInt(0f, (float)playerInventory.Count-1);
 
             //instantiate the prefab
-            GameObject item = Instantiate(itemPrefabs[rand]);
+            GameObject itemPrefab = playerInventory[i].itemDetails.backpackPrefab;
+            GameObject item = Instantiate(itemPrefab);
 
             //get a random x and y for starting Position
             float randX = Random.Range(-8f, 8f);
-            float randY = Random.Range(-4f, 4f);
+            float randY = Random.Range(-4f, 4f) + yOffset;
             Vector3 startingPos = new Vector3(randX, randY, 0f);
             //set starting position
             item.transform.position = startingPos;
@@ -100,5 +117,51 @@ public class BackpackManager : MonoBehaviour
     public void SetItemMass(GameObject item, int mass)
     {
         item.GetComponent<Rigidbody2D>().mass = mass;
+    }
+
+    public void AddItemToBackpack(GameObject _item)
+    {
+        backpackObjects.Add(_item);
+        DetermineLayer(_item);
+    }
+
+    //removes physical game object from the backpack
+    public void RemoveItemFromBackpack(GameObject _item)
+    {
+        backpackObjects.Remove(_item);
+        SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+    }
+
+    public void RemoveItemFromInventory(GameObject _item)
+    {
+        string itemName = _item.GetComponent<Item>().itemName;
+        inventoryComponent.RemoveItem(itemName);
+    }
+
+    public void SetYOffset()
+    {
+        yOffset = parentTransform.position.y;
+    }
+
+    public void DetermineLayer(GameObject _item)
+    {
+        if (backpackObjects.Count < maxLayerItems)
+        {
+            //set the item's layers to bottom
+            _item.layer = LayerMask.NameToLayer(bottomLayer);
+            _item.GetComponent<SpriteRenderer>().sortingLayerName = bottomSortingLayer;
+        }
+        else if (backpackObjects.Count < maxLayerItems * 2)
+        {
+            //set the item's layers to middle
+            _item.layer = LayerMask.NameToLayer(middleLayer);
+            _item.GetComponent<SpriteRenderer>().sortingLayerName = middleSortingLayer;
+        }
+        else
+        {
+            //set the item's layers to top
+            _item.layer = LayerMask.NameToLayer(topLayer);
+            _item.GetComponent<SpriteRenderer>().sortingLayerName = topSortingLayer;
+        }
     }
 }

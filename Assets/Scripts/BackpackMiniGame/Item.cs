@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemMovement : MonoBehaviour
+public class Item: MonoBehaviour
 {
     private float startPosX;
     private float startPosY;
@@ -11,20 +11,33 @@ public class ItemMovement : MonoBehaviour
     private SpriteRenderer r;
     private Rigidbody2D rb;
     private BackpackManager backpackManager;
+    private GameObject offHand;
+    //we need to get the hand object
+    //if we're colliding with it, then it is good, else, no good.
+
+    [HideInInspector] public ItemDetailsSO itemDetails;
+    [HideInInspector] public string itemName;
 
     private int LayerBackpackTop;
     private int LayerBackpackMiddle;
     private int LayerBackpackBottom;
     private int LayerBackpackHand;
 
+    private Quaternion startingRotation;
+
     private void Start()
     {
         r = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
+        offHand = GameObject.Find("OffHand");
 
         float randRotation = Random.Range(0f, 360f);
-        transform.rotation = Quaternion.Euler(0f, 0f, randRotation);
+
+        //we need to store this for later use
+        startingRotation = Quaternion.Euler(0f, 0f, randRotation);
+        transform.rotation = startingRotation;
+        
 
         LayerBackpackTop = LayerMask.NameToLayer("BPTop");
         LayerBackpackMiddle = LayerMask.NameToLayer("BPMiddle");
@@ -42,6 +55,12 @@ public class ItemMovement : MonoBehaviour
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }
+    }
+
+    public void InitializeItem(ItemDetailsSO _details)
+    {
+        itemDetails = _details;
+        itemName = itemDetails.itemName;
     }
 
     private void OnMouseDown()
@@ -67,6 +86,25 @@ public class ItemMovement : MonoBehaviour
     {
         isHeld = false;
         backpackManager.ReorganizeItemsIntoLayers(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == offHand)
+        {
+            backpackManager.RemoveItemFromBackpack(gameObject);
+            transform.position = offHand.transform.position;
+            transform.rotation = offHand.transform.rotation;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //reset the rotation so the player can't reset the rotations of the objects by putting them in the hand
+        if (collision.gameObject == offHand)
+        {
+            transform.rotation = startingRotation;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -238,6 +238,12 @@ public static class HelperUtilities
         return error;
     }
 
+    public static int RandInt(float min, float max)
+    {
+        int rand = Mathf.RoundToInt(Random.Range(min, max));
+        return rand;
+    }
+
     /// <summary>
     /// Get the nearest spawn position to the player
     /// </summary>
