@@ -9,7 +9,7 @@ public class Special : Ability
         name = "Special";
         attackDamage = 20;
         accuracy = 1f;
-        coolDownTime = 10f;
+        coolDownTime = 20f;
     }
 
     public override void useAbility(GameObject target)

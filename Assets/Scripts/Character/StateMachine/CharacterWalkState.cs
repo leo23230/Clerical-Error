@@ -11,7 +11,6 @@ public class CharacterWalkState : CharacterBaseState
         Debug.Log("Entered Run State");
         if (characterSM.animator != null)
         {
-            Debug.Log("Run Animation");
             characterSM.animator.SetBool("isRunning", true);
         }
         

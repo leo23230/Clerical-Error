@@ -5,11 +5,15 @@ using System;
 
 public class CharacterStateManager : MonoBehaviour
 {
+    //inspector stuff//
+    [SerializeField] public GameObject hitEffect;
+    [SerializeField] public GameObject deathEffect;
 
     //state manager stuff//
     [HideInInspector] public CharacterIdleState idleState = new CharacterIdleState();
     [HideInInspector] public CharacterWalkState walkState = new CharacterWalkState();
     [HideInInspector] public CharacterAttackState attackState = new CharacterAttackState();
+    [HideInInspector] public CharacterDeadState deadState = new CharacterDeadState();
 
     //stats//
     [HideInInspector] public Character character;
@@ -55,6 +59,15 @@ public class CharacterStateManager : MonoBehaviour
 
         //always need to update cool down timers
         UpdateCoolDownTimers();
+
+        //No matter what state the character is in
+        if (character.healthComponent.GetHealth() <= 0)
+        {
+            if(currentState != deadState)
+            {
+                deadState.EnterState(this);
+            }
+        }
     }
 
     public GameObject SelectEnemy() {
@@ -181,5 +194,35 @@ public class CharacterStateManager : MonoBehaviour
             var canvasScale = transform.Find("CharacterCanvas").localScale;
             transform.Find("CharacterCanvas").localScale = new Vector3(dirNumber/1000f, canvasScale.y, canvasScale.z);
         }
+    }
+
+    public void DamagePlayer(float _amt)
+    {
+        //we want to damage the player and cause a damage effect
+
+        _amt *= character.armorClass;
+
+        int intAmt = Mathf.RoundToInt(_amt);
+
+        character.healthComponent.SubtractHealth(intAmt);
+
+        InstantiateEffectPrefab(hitEffect);
+
+    }
+
+    public void InstantiateEffectPrefab(GameObject _prefab)
+    {
+        GameObject effectObject = Instantiate(_prefab);
+
+        float yOffset = 1f;
+
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+
+        //set pos to middle of character
+        effectObject.transform.position = newPos;
+
+        //make sure the effect follows the character
+        effectObject.transform.SetParent(transform);
+        //spawn effect prefab
     }
 }

@@ -9,7 +9,7 @@ public class HeavyAttack : Ability
         name = "Heavy";
         attackDamage = 10;
         accuracy = 1f;
-        coolDownTime = 5f;
+        coolDownTime = 7f;
     }
 
     public override void useAbility(GameObject target)

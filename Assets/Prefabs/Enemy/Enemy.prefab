@@ -388,6 +388,7 @@ MonoBehaviour:
   healthComponent: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
+  damage: 10
 --- !u!1 &7529604458834086328
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,10 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
 
+    private float damageTimer;
+    private float damageTimerSet;
+    public int damage;
+
     private void Awake()
     {
         // Load components
@@ -26,6 +30,41 @@ public class Enemy : MonoBehaviour
         //THIS IS TEMPORARY//
         health = 100;
         SetEnemyHealth();
+
+        damageTimerSet = Random.Range(3f, 8f);
+
+        damageTimer = damageTimerSet;
+    }
+
+    private void Update()
+    {
+        if (damageTimer > 0f)
+        {
+            damageTimer -= Time.deltaTime;
+        }
+        else
+        {
+            GameObject[] characters = GameObject.FindGameObjectsWithTag("Character");
+
+            List<GameObject> aliveCharacters = new List<GameObject>();
+
+            for(int i = 0; i < characters.Length; i++)
+            {
+                var charState = characters[i].GetComponent<CharacterStateManager>();
+                if(charState.currentState != charState.deadState)
+                {
+                    aliveCharacters.Add(characters[i]);
+                }
+            }
+
+            int randInt = HelperUtilities.RandInt(0f, characters.Length - 1);
+
+            characters[randInt].GetComponent<CharacterStateManager>().DamagePlayer(damage);
+
+            damageTimerSet = Random.Range(3f, 8f);
+
+            damageTimer = damageTimerSet;
+        }
     }
 
     /// <summary>

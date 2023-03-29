@@ -9,7 +9,7 @@ public class LightAttack : Ability
         name = "Light";
         attackDamage = 5;
         accuracy = 1f;
-        coolDownTime = 2f;
+        coolDownTime = 4f;
     }
 
     public override void useAbility(GameObject target)

@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce1d690085568c458c3b0e6258aa249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarImage: {fileID: 0}
+  healthBarImage: {fileID: 7676730763361134676}
 --- !u!114 &4499716516693074855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,6 +634,7 @@ MonoBehaviour:
   lightCooldownBarImage: {fileID: 5321931728311293335}
   heavyCooldownBarImage: {fileID: 261133223349695897}
   specialCooldownBarImage: {fileID: 9042137614491766427}
+  character: {fileID: 0}
 --- !u!210 &1102892504862406673
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -814,10 +815,13 @@ MonoBehaviour:
   speed: 0
   health: 0
   armorClass: 0
-  minRange: 0
+  minDistance: 0
+  maxDistance: 0
+  avgDistance: 0
   abilityReadyCooldown: 0
   abilities: []
   healthComponent: {fileID: 0}
+  CDBarManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
   sprite: {fileID: 0}
   animator: {fileID: 0}
@@ -834,12 +838,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd273c0ded54efc4b972ae2c79354d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffect: {fileID: 2427786012956944610, guid: da0de216ad60c5d46a6b049d61961615, type: 3}
+  deathEffect: {fileID: 395031058680739610, guid: b2f0b8902a31c8a46a1c4bb24ed9ea36, type: 3}
   character: {fileID: 0}
   moveSpeed: 8
   abilityReadyCooldown: 0
   animator: {fileID: 0}
   target: {fileID: 0}
   enemies: []
+  startingPos: {x: 0, y: 0}
 --- !u!1 &7460352760839541278
 GameObject:
   m_ObjectHideFlags: 0

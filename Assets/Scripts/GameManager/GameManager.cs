@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         List<CharacterDetailsSO> chosenCharacters = new List<CharacterDetailsSO>();
         for (var i = 0; i < amt; i++)
         {
-            var rand = Random.Range(0, characters.Count);
+            int rand = Mathf.RoundToInt(Random.Range(0, characters.Count));
             var chosenCharacter = characters[rand];
             chosenCharacters.Add(chosenCharacter);
         }

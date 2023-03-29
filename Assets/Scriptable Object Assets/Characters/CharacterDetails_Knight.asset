@@ -16,11 +16,11 @@ MonoBehaviour:
   characterPrefab: {fileID: 2020621593951310722, guid: 08a25c2153d8a364091ef37c17040ae2, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 100
-  characterSpeed: 8
+  characterSpeed: 3
   characterArmorClass: 0.7
-  characterAttackMax: 2
-  characterAttackMin: 1
-  characterAbilityCooldown: 1.5
+  characterAttackMax: 3
+  characterAttackMin: 2
+  characterAbilityCooldown: 2
   characterAbilities:
   - LightAttack
   - HeavyAttack
