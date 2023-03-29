@@ -14,13 +14,11 @@ public class Inventory : MonoBehaviour
         InitializeInventory();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -49,7 +47,30 @@ public class Inventory : MonoBehaviour
     public void AddItem(ItemDetailsSO _item)
     {
         //if the item exists, just increase quantity.
-        //else add new inventory item into the inventory
+        //search for the item in the player's inventory, and remove it
+
+        //this is for the future
+
+        /*for (int i = 0; i < inventory.Count; i++)
+        {
+            InventoryItem inventoryItem = inventory[i];
+
+            if (inventoryItem.itemDetails.name == _item.name)
+            {
+                    inventoryItem.quantity += 1;
+            }
+            else
+            {
+                InventoryItem newInventoryItem = new InventoryItem();
+                newInventoryItem.itemDetails = _item;
+                newInventoryItem.quantity = 1;
+                inventory.Add(newInventoryItem);
+            }
+        }*/
+        InventoryItem newInventoryItem = new InventoryItem();
+        newInventoryItem.itemDetails = _item;
+        newInventoryItem.quantity = 1;
+        inventory.Add(newInventoryItem);
     }
 
     public void RemoveItem(string _itemName)
@@ -82,10 +103,19 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            AddItem(_item);
+            RemoveItem(_item.name);
             itemInHand = _item;
         }
-        
+    }
+
+    public void PutBackHandItem(ItemDetailsSO _item)
+    {
+        //if the player is holding an item, put it back into the inventory
+        if (itemInHand != null)
+        {
+            AddItem(_item);
+            itemInHand = null;
+        }
     }
 
     public ItemDetailsSO GetHandItem()

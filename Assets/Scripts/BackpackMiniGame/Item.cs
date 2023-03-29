@@ -25,7 +25,10 @@ public class Item: MonoBehaviour
 
     private Quaternion startingRotation;
     private bool isLocked = false;
-    private bool isSelected = false;
+    private bool stateEntered = false;
+    private bool isTouchingOffHand = false;
+    [HideInInspector] public ItemState state = ItemState.Free;
+
 
     private void Start()
     {
@@ -47,15 +50,77 @@ public class Item: MonoBehaviour
         LayerBackpackHand = LayerMask.NameToLayer("BPHand");
     }
 
+    private void EnterState()
+    {
+        if (state == ItemState.Held)
+        {
+            //if the item is currently being held, put on hand layer
+            gameObject.layer = LayerBackpackHand;
+            r.sortingLayerName = "BPHand";
+        }
+        else if (state == ItemState.Released)
+        {
+            Debug.Log("Released");
+            Debug.Log(isTouchingOffHand);
+            if (isTouchingOffHand)
+            {
+                
+                backpackManager.RemoveItemFromBackpack(gameObject);
+                transform.position = offHand.transform.position;
+                transform.rotation = offHand.transform.rotation;
+                SwitchState(ItemState.Selected);  
+            }
+            else
+            {
+                if (!backpackManager.IsItemInBackpack(gameObject))
+                {
+                    backpackManager.AddItemToBackpack(gameObject);
+                }
+
+                backpackManager.ReorganizeItemsIntoLayers(gameObject);
+                transform.rotation = startingRotation;
+                SwitchState(ItemState.Free);
+            }
+
+        }
+        else if (state == ItemState.Selected)
+        {
+
+        }
+
+        stateEntered = true;
+    }
+
+    private void SwitchState(ItemState _state)
+    {
+        state = _state;
+        stateEntered = false;
+    }
+
     private void Update()
     {
-        if (isHeld)
+        if (!stateEntered)
         {
-            Vector3 mousePos;
-            mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            EnterState();
+        }
+        else
+        {
+            if (state == ItemState.Held)
+            {
+                Vector3 mousePos;
+                mousePos = Input.mousePosition;
+                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
+                gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
+            }
+            else if (state == ItemState.Released)
+            {
+
+            }
+            else if (state == ItemState.Selected)
+            {
+                isLocked = false;
+            }
         }
     }
 
@@ -76,35 +141,24 @@ public class Item: MonoBehaviour
             startPosX = mousePos.x - this.transform.localPosition.x;
             startPosY = mousePos.y - this.transform.localPosition.y;
 
-            isHeld = true;
-
-            //if the item is currently being held, put on hand layer
-            gameObject.layer = LayerBackpackHand;
-            r.sortingLayerName = "BPHand";
+            SwitchState(ItemState.Held);
         }
     }
 
     private void OnMouseUp()
     {
-        if (isHeld)
+        if (state == ItemState.Held)
         {
-            //if the item is selected, we don't want to reorganize the layers.
-            if (!isSelected)
-            {
-                backpackManager.ReorganizeItemsIntoLayers(gameObject);
-            }
-            isHeld = false;
+            SwitchState(ItemState.Released);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == offHand && isHeld)
+        if (collision.gameObject == offHand)
         {
-            backpackManager.RemoveItemFromBackpack(gameObject);
-            isSelected = true;
-            transform.position = offHand.transform.position;
-            transform.rotation = offHand.transform.rotation;
+            Debug.Log("offhand");
+            isTouchingOffHand = true;
         }
     }
 
@@ -113,9 +167,7 @@ public class Item: MonoBehaviour
         //reset the rotation so the player can't reset the rotations of the objects by putting them in the hand
         if (collision.gameObject == offHand)
         {
-            backpackManager.AddItemToBackpack(gameObject);
-            transform.rotation = startingRotation;
-            isSelected = false;
+            isTouchingOffHand = false;
         }
     }
 
@@ -128,32 +180,12 @@ public class Item: MonoBehaviour
     {
         isLocked = false;
     }
+}
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        /*if (r.sortingOrder == 1)
-        {
-            r = collision.gameObject.GetComponent<SpriteRenderer>();
-            if (r.sortingOrder == 2 || r.sortingOrder == 3)
-            {
-                Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            }
-        }
-        if (r.sortingOrder == 2)
-        {
-            r = collision.gameObject.GetComponent<SpriteRenderer>();
-            if (r.sortingOrder == 1 || r.sortingOrder == 3)
-            {
-                Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            }
-        }
-        if (r.sortingOrder == 3)
-        {
-            r = collision.gameObject.GetComponent<SpriteRenderer>();
-            if (r.sortingOrder == 2 || r.sortingOrder == 1)
-            {
-                Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-            }
-        }*/
-    }
+public enum ItemState
+{
+    Free,
+    Held,
+    Selected,
+    Released
 }

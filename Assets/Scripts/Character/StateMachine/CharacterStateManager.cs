@@ -61,7 +61,7 @@ public class CharacterStateManager : MonoBehaviour
 
         List<GameObject> aliveEnemies = findAliveEnemies();
 
-        var target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length))];
+        var target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length-1))];
         return target;
     }
 

@@ -127,6 +127,15 @@ public class BackpackManager : MonoBehaviour
         backpackObjects.Add(_item);
         DetermineLayer(_item);
         UnlockBackpackItems();
+
+        /*if (inventoryComponent.GetHandItem() != null)
+        {
+            //Get Item Details to pass to player inventory
+            ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
+            PutBackHandItem(itemDetails);
+        }*/
+
+
     }
 
     //removes physical game object from the backpack
@@ -135,6 +144,19 @@ public class BackpackManager : MonoBehaviour
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
         LockBackpackItems();
+        //Get Item Details to pass to player inventory
+        /*ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
+        SetPlayerInventoryHandItem(itemDetails);*/
+    }
+
+    public bool IsItemInBackpack(GameObject _item)
+    {
+        foreach(GameObject obj in backpackObjects)
+        {
+            if (obj == _item) return true;
+        }
+        return false;
+        
     }
 
     public void LockBackpackItems()
@@ -153,10 +175,20 @@ public class BackpackManager : MonoBehaviour
         }
     }
 
-    public void RemoveItemFromInventory(GameObject _item)
+    /*public void RemoveItemFromInventory(GameObject _item)
     {
         string itemName = _item.GetComponent<Item>().itemName;
         inventoryComponent.RemoveItem(itemName);
+    }*/
+
+    public void SetPlayerInventoryHandItem(ItemDetailsSO itemDetails)
+    {
+        inventoryComponent.SetHandItem(itemDetails);
+    }
+
+    public void PutBackHandItem(ItemDetailsSO itemDetails)
+    {
+        inventoryComponent.PutBackHandItem(itemDetails);
     }
 
     public void SetYOffset()
