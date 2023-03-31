@@ -7,6 +7,7 @@ TagManager:
   - Character
   - Enemy
   - Sprite
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -70,4 +71,7 @@ TagManager:
     locked: 0
   - name: BPHand
     uniqueID: 1573671895
+    locked: 0
+  - name: Effects
+    uniqueID: 762682115
     locked: 0

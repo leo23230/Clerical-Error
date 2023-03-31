@@ -33,6 +33,18 @@ public class BackpackManager : MonoBehaviour
         parentTransform = GameObject.Find("BackPackMiniGame").transform;
     }
 
+    private void OnEnable()
+    {
+        StaticEventHandler.ItemSelectedEvent += RemoveItemFromBackpack;
+        StaticEventHandler.ConsumableUsedEvent += useConsumable;
+    }
+
+    private void OnDisable()
+    {
+        StaticEventHandler.ItemSelectedEvent -= RemoveItemFromBackpack;
+        StaticEventHandler.ConsumableUsedEvent -= useConsumable;
+    }
+
     void Start()
     {
         SetYOffset();
@@ -45,6 +57,11 @@ public class BackpackManager : MonoBehaviour
             //instantiate the prefab
             GameObject itemPrefab = playerInventory[i].itemDetails.backpackPrefab;
             GameObject item = Instantiate(itemPrefab);
+
+            Item itemComponent = item.GetComponent<Item>();
+            ItemDetailsSO selectedItemDetails = playerInventory[i].itemDetails;
+
+            itemComponent.InitializeItem(selectedItemDetails);
 
             //get a random x and y for starting Position
             float randX = Random.Range(-8f, 8f);
@@ -128,25 +145,27 @@ public class BackpackManager : MonoBehaviour
         DetermineLayer(_item);
         UnlockBackpackItems();
 
-        /*if (inventoryComponent.GetHandItem() != null)
+        if (inventoryComponent.GetHandItem() != null)
         {
             //Get Item Details to pass to player inventory
             ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
             PutBackHandItem(itemDetails);
-        }*/
+        }
 
 
     }
 
     //removes physical game object from the backpack
-    public void RemoveItemFromBackpack(GameObject _item)
+    public void RemoveItemFromBackpack(ItemSelectedEventArgs eventArgs)
     {
+        GameObject _item = eventArgs.backPackObject;
+        ItemDetailsSO _itemDetails = eventArgs.itemDetails;
+
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
         LockBackpackItems();
-        //Get Item Details to pass to player inventory
-        /*ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
-        SetPlayerInventoryHandItem(itemDetails);*/
+
+       // SetPlayerInventoryHandItem(_itemDetails);
     }
 
     public bool IsItemInBackpack(GameObject _item)
@@ -183,7 +202,7 @@ public class BackpackManager : MonoBehaviour
 
     public void SetPlayerInventoryHandItem(ItemDetailsSO itemDetails)
     {
-        inventoryComponent.SetHandItem(itemDetails);
+        //inventoryComponent.SetHandItem(itemDetails);
     }
 
     public void PutBackHandItem(ItemDetailsSO itemDetails)
@@ -216,5 +235,11 @@ public class BackpackManager : MonoBehaviour
             _item.layer = LayerMask.NameToLayer(topLayer);
             _item.GetComponent<SpriteRenderer>().sortingLayerName = topSortingLayer;
         }
+    }
+
+    //resets backpack for next use
+    public void useConsumable(ConsumableUsedEventArgs eventArgs)
+    {
+        UnlockBackpackItems();
     }
 }

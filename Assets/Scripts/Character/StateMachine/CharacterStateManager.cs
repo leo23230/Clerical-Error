@@ -8,6 +8,7 @@ public class CharacterStateManager : MonoBehaviour
     //inspector stuff//
     [SerializeField] public GameObject hitEffect;
     [SerializeField] public GameObject deathEffect;
+    [SerializeField] public GameObject healEffect;
 
     //state manager stuff//
     [HideInInspector] public CharacterIdleState idleState = new CharacterIdleState();
@@ -23,6 +24,7 @@ public class CharacterStateManager : MonoBehaviour
 
     //components//
     [HideInInspector] public Animator animator;
+    [HideInInspector] public Inventory inventory;
 
     //other//
     [HideInInspector] public GameObject target;
@@ -37,6 +39,8 @@ public class CharacterStateManager : MonoBehaviour
 
         //set character stats
         character = gameObject.GetComponent<Character>();
+
+        inventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         target = SelectEnemy();
     }
@@ -67,6 +71,14 @@ public class CharacterStateManager : MonoBehaviour
             {
                 deadState.EnterState(this);
             }
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (Input.GetMouseButtonDown(0) && NotDead() && inventory.GetHandItem() != null)
+        {
+            StaticEventHandler.CallConsumableUsedEvent(this);
         }
     }
 
@@ -225,4 +237,28 @@ public class CharacterStateManager : MonoBehaviour
         effectObject.transform.SetParent(transform);
         //spawn effect prefab
     }
+
+    public void Heal(int _amt)
+    {
+        character.healthComponent.AddHealth(_amt);
+        InstantiateEffectPrefab(healEffect);
+    }
+
+    public void StatBoost(ItemDetailsSO item)
+    {
+        if(item.itemName == "CoppabloomTea")
+        {
+            Heal(10);
+        }
+        if(item.itemName == "PaparikoInsence")
+        {
+            //increase speed and item cool down for x time
+        }
+    }
+
+    public bool NotDead()
+    {
+        return currentState != deadState;
+    }
+
 }

@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public List<ItemDetailsSO> allItems = new List<ItemDetailsSO>();
     private ItemDetailsSO itemInHand;
+    private GameObject handItemBackpackObject;
 
     [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>();
 
@@ -22,6 +23,18 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        StaticEventHandler.ItemSelectedEvent += SetHandItem;
+        StaticEventHandler.ConsumableUsedEvent += UseHandItem;
+    }
+
+    private void OnDisable()
+    {
+        StaticEventHandler.ItemSelectedEvent -= SetHandItem;
+        StaticEventHandler.ConsumableUsedEvent -= UseHandItem;
     }
 
     void InitializeInventory()
@@ -94,17 +107,22 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void SetHandItem(ItemDetailsSO _item)
+    public void SetHandItem(ItemSelectedEventArgs eventArgs)
     {
+        GameObject _backpackObject = eventArgs.backPackObject;
+        ItemDetailsSO _itemDetails = eventArgs.itemDetails;
+
         //if the player is holding an item, put it back into the inventory
-        if(itemInHand == null)
+        if (itemInHand == null)
         {
-            itemInHand = _item;
+            itemInHand = _itemDetails;
+            handItemBackpackObject = _backpackObject;
+            Debug.Log(_itemDetails.itemName);
         }
         else
         {
-            RemoveItem(_item.name);
-            itemInHand = _item;
+            AddItem(_itemDetails);
+            itemInHand = _itemDetails;
         }
     }
 
@@ -123,9 +141,22 @@ public class Inventory : MonoBehaviour
         return itemInHand;
     }
 
-    public void UseHandItem()
+    public void UseHandItem(ConsumableUsedEventArgs eventArgs)
     {
+        CharacterStateManager character = eventArgs.character;
         //use the item//
+        if (character.NotDead() && itemInHand.isConsumable)
+        {
+            Debug.Log("Used Hand item");
+            character.StatBoost(itemInHand);
+        }
+
+        //Make sure item is no longer in backpack, and unlock the backpack items.
+        Destroy(handItemBackpackObject);
+
+        //reset variables
         itemInHand = null;
+        handItemBackpackObject = null;
+        
     }
 }

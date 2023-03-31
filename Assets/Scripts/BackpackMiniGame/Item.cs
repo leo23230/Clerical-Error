@@ -29,7 +29,6 @@ public class Item: MonoBehaviour
     private bool isTouchingOffHand = false;
     [HideInInspector] public ItemState state = ItemState.Free;
 
-
     private void Start()
     {
         r = GetComponent<SpriteRenderer>();
@@ -48,6 +47,7 @@ public class Item: MonoBehaviour
         LayerBackpackMiddle = LayerMask.NameToLayer("BPMiddle");
         LayerBackpackBottom = LayerMask.NameToLayer("BPBottom");
         LayerBackpackHand = LayerMask.NameToLayer("BPHand");
+
     }
 
     private void EnterState()
@@ -64,11 +64,11 @@ public class Item: MonoBehaviour
             Debug.Log(isTouchingOffHand);
             if (isTouchingOffHand)
             {
-                
-                backpackManager.RemoveItemFromBackpack(gameObject);
+                StaticEventHandler.CallItemSelectedEvent(gameObject, itemDetails);
+                //backpackManager.RemoveItemFromBackpack(gameObject, itemDetails);
                 transform.position = offHand.transform.position;
                 transform.rotation = offHand.transform.rotation;
-                SwitchState(ItemState.Selected);  
+                SwitchState(ItemState.Selected);
             }
             else
             {

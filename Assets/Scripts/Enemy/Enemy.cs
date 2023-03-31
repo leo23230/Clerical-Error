@@ -89,6 +89,5 @@ public class Enemy : MonoBehaviour
     private void SetEnemyHealth()
     {
         healthComponent.SetStartingHealth(health);
-        Debug.Log(healthComponent.GetStartingHealth());
     }
 }

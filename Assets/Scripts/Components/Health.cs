@@ -39,6 +39,20 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
+    public void AddHealth(int amt)
+    {
+        if(currentHealth <= startingHealth - amt)
+        {
+            currentHealth += amt;
+        }
+        else
+        {
+            currentHealth = startingHealth;
+        }
+        
+        UpdateHealthBar();
+    }
+
     public void UpdateHealthBar() 
     {
         healthBarImage.fillAmount = (float)currentHealth / (float)startingHealth;

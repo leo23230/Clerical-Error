@@ -840,10 +840,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 2427786012956944610, guid: da0de216ad60c5d46a6b049d61961615, type: 3}
   deathEffect: {fileID: 395031058680739610, guid: b2f0b8902a31c8a46a1c4bb24ed9ea36, type: 3}
+  healEffect: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
   character: {fileID: 0}
   moveSpeed: 8
   abilityReadyCooldown: 0
   animator: {fileID: 0}
+  inventory: {fileID: 0}
   target: {fileID: 0}
   enemies: []
   startingPos: {x: 0, y: 0}
