@@ -107,6 +107,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void RemoveDestroyedItem(ItemDestroyedEventArgs eventArgs)
+    {
+        Item itemComponent = eventArgs.item.GetComponent<Item>();
+        RemoveItem(itemComponent.itemName);
+    }
+
     public void SetHandItem(ItemSelectedEventArgs eventArgs)
     {
         GameObject _backpackObject = eventArgs.backPackObject;

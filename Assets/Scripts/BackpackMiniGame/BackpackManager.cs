@@ -37,12 +37,14 @@ public class BackpackManager : MonoBehaviour
     {
         StaticEventHandler.ItemSelectedEvent += RemoveItemFromBackpack;
         StaticEventHandler.ConsumableUsedEvent += useConsumable;
+        StaticEventHandler.ItemDestroyedEvent += removeDestroyedItem;
     }
 
     private void OnDisable()
     {
         StaticEventHandler.ItemSelectedEvent -= RemoveItemFromBackpack;
         StaticEventHandler.ConsumableUsedEvent -= useConsumable;
+        StaticEventHandler.ItemDestroyedEvent -= removeDestroyedItem;
     }
 
     void Start()
@@ -168,6 +170,15 @@ public class BackpackManager : MonoBehaviour
        // SetPlayerInventoryHandItem(_itemDetails);
     }
 
+    public void RemoveItemFromBackpackReg(GameObject _item)
+    {
+        backpackObjects.Remove(_item);
+        SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+        LockBackpackItems();
+
+        // SetPlayerInventoryHandItem(_itemDetails);
+    }
+
     public bool IsItemInBackpack(GameObject _item)
     {
         foreach(GameObject obj in backpackObjects)
@@ -241,5 +252,10 @@ public class BackpackManager : MonoBehaviour
     public void useConsumable(ConsumableUsedEventArgs eventArgs)
     {
         UnlockBackpackItems();
+    }
+
+    public void removeDestroyedItem(ItemDestroyedEventArgs eventArgs)
+    {
+        RemoveItemFromBackpackReg(eventArgs.item);
     }
 }

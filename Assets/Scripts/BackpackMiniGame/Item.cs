@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Item: MonoBehaviour
 {
+
     private float startPosX;
     private float startPosY;
     private bool isHeld = false;
@@ -28,6 +29,12 @@ public class Item: MonoBehaviour
     private bool stateEntered = false;
     private bool isTouchingOffHand = false;
     [HideInInspector] public ItemState state = ItemState.Free;
+    private List<Vector3> points = new List<Vector3>();
+    private float localSpeed;
+
+    //effects//
+    public float maxVelocity = 2f;
+    public GameObject breakEffect;
 
     private void Start()
     {
@@ -54,6 +61,7 @@ public class Item: MonoBehaviour
     {
         if (state == ItemState.Held)
         {
+            points.Add(transform.position);
             //if the item is currently being held, put on hand layer
             gameObject.layer = LayerBackpackHand;
             r.sortingLayerName = "BPHand";
@@ -111,7 +119,22 @@ public class Item: MonoBehaviour
                 mousePos = Input.mousePosition;
                 mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
+                //Vector2 newPos = new Vector2(mousePos.x - startPosX, mousePos.y - startPosY);
+                //rb.MovePosition(newPos);
                 gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
+
+                if (points.Count < 2) 
+                {
+                    points.Add(transform.position);
+                }
+                else
+                {
+                    points[0] = points[1];
+                    points[1] = transform.position;
+                }
+
+                localSpeed = Mathf.Abs(Vector3.Distance(points[0], points[1]));
+                Debug.Log(localSpeed);
             }
             else if (state == ItemState.Released)
             {
@@ -169,6 +192,38 @@ public class Item: MonoBehaviour
         {
             isTouchingOffHand = false;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Item otherItem = collision.gameObject.GetComponent<Item>();
+        if (otherItem != null)
+        {
+            if(otherItem.state == ItemState.Held)
+            {
+                if (otherItem.localSpeed > maxVelocity)
+                {
+                    InstantiateEffectPrefab(breakEffect);
+
+                    StaticEventHandler.CallItemDestroyedEvent(gameObject);
+
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
+
+    public void InstantiateEffectPrefab(GameObject _prefab)
+    {
+        Debug.Log("making effect");
+        GameObject effectObject = Instantiate(_prefab);
+
+        float yOffset = 0f;
+
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+
+        //set pos to middle of character
+        effectObject.transform.position = newPos;
     }
 
     public void LockItem()

@@ -9,6 +9,7 @@ public static class StaticEventHandler
     public static event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
     public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
     public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
+    public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
 
     public static void CallBagRummageEvent()
     {
@@ -25,6 +26,11 @@ public static class StaticEventHandler
     public static void CallConsumableUsedEvent(CharacterStateManager _character)
     {
         ConsumableUsedEvent?.Invoke(new ConsumableUsedEventArgs() {character = _character});
+    }
+
+    public static void CallItemDestroyedEvent(GameObject item)
+    {
+        ItemDestroyedEvent?.Invoke(new ItemDestroyedEventArgs() {item = item});
     }
 
 }
@@ -52,4 +58,9 @@ public class ItemSelectedEventArgs : EventArgs
 public class ConsumableUsedEventArgs : EventArgs
 {
     public CharacterStateManager character;
+}
+
+public class ItemDestroyedEventArgs : EventArgs
+{
+    public GameObject item;
 }
