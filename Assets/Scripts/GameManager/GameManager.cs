@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     void generateCharacters()
     {
         //get a list of 3 random Characters
-        List<CharacterDetailsSO> chosenCharacters = chooseRandomCharacters(numberOfCharacters);
+        List<CharacterDetailsSO> chosenCharacters = chooseCharacters(numberOfCharacters);
 
         //spawn the characters
         for (var i = 0; i < chosenCharacters.Count; i++)
@@ -38,6 +38,17 @@ public class GameManager : MonoBehaviour
             } 
             else Debug.Log("No Spawn");
         }
+    }
+
+    List<CharacterDetailsSO> chooseCharacters(int amt)
+    {
+        List<CharacterDetailsSO> chosenCharacters = new List<CharacterDetailsSO>();
+        for (var i = 0; i < amt; i++)
+        {
+            var chosenCharacter = characters[i];
+            chosenCharacters.Add(chosenCharacter);
+        }
+        return chosenCharacters;
     }
 
     List<CharacterDetailsSO> chooseRandomCharacters(int amt)

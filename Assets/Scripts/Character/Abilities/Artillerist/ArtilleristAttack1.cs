@@ -7,7 +7,7 @@ public class ArtilleristAttack1 : Ability
     public ArtilleristAttack1()
     {
         name = "Light";
-        attackDamage = 50;
+        attackDamage = 40;
         accuracy = 1f;
         coolDownTime = 20f;
     }
@@ -16,10 +16,10 @@ public class ArtilleristAttack1 : Ability
     {
     }
 
-    public override void useAbility(GameObject target)
+    public override void useAbility(GameObject target, int buff)
     {
         Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage);
+        targetHealthComponent.SubtractHealth(attackDamage + buff);
         setCoolDownTimer();
     }
 }

@@ -7,15 +7,15 @@ public class ArtilleristSpecial : Ability
     public ArtilleristSpecial()
     {
         name = "Special";
-        attackDamage = 100;
+        attackDamage = 80;
         accuracy = 1f;
         coolDownTime = 30f;
     }
 
-    public override void useAbility(GameObject target)
+    public override void useAbility(GameObject target, int buff)
     {
         Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage);
+        targetHealthComponent.SubtractHealth(attackDamage + buff);
         setCoolDownTimer();
     }
 }

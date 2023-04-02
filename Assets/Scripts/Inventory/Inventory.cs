@@ -43,7 +43,35 @@ public class Inventory : MonoBehaviour
         int numItems = 24;
         for (int i = 0; i < numItems; i++)
         {
-            //Get a random ItemSO
+
+            //If not atleast 2 of each consumable, Get a random ItemSO
+            /*int healAmt = 0;
+            int speedAmt = 0;
+            int damageAmt = 0;
+            foreach(InventoryItem inventoryItem in inventory)
+            {
+                if (inventoryItem.itemDetails.name == "CoppabloomTea") healAmt += 1;
+                if (inventoryItem.itemDetails.name == "PaparikoInsence") speedAmt += 1;
+                if (inventoryItem.itemDetails.name == "SlayerStew") damageAmt += 1;
+            }
+            ItemDetailsSO randItem;
+            if (healAmt < 2)
+            {
+                randItem = allItems[3];
+            }
+            else if(speedAmt < 2)
+            {
+                randItem = allItems[6];
+            }
+            else if(damageAmt < 2)
+            {
+                randItem = allItems[5];
+            }
+            else
+            {
+                int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
+                randItem = allItems[rand];
+            }*/
             int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
             ItemDetailsSO randItem = allItems[rand];
 

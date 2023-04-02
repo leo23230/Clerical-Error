@@ -12,7 +12,7 @@ public abstract class Ability
 
     public float coolDown = 0f;
 
-    public abstract void useAbility(GameObject target);
+    public abstract void useAbility(GameObject target, int buff);
 
     public void setCoolDownTimer()
     {

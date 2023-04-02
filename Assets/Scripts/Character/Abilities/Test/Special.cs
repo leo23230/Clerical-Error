@@ -12,10 +12,10 @@ public class Special : Ability
         coolDownTime = 20f;
     }
 
-    public override void useAbility(GameObject target)
+    public override void useAbility(GameObject target, int buff)
     {
         Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage);
+        targetHealthComponent.SubtractHealth(attackDamage + buff);
         setCoolDownTimer();
     }
 }

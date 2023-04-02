@@ -10,7 +10,11 @@ public class CharacterDeadState : CharacterBaseState
         {
             characterSM.animator.SetBool("isRunning", false);
         }
+
         characterSM.InstantiateEffectPrefab(characterSM.deathEffect);
+
+        characterSM.character.sortingGroup.sortingLayerName = "Dead";
+
         characterSM.currentState = characterSM.deadState;
     }
 

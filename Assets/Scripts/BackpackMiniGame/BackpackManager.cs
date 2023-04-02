@@ -174,7 +174,6 @@ public class BackpackManager : MonoBehaviour
     {
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
-        LockBackpackItems();
 
         // SetPlayerInventoryHandItem(_itemDetails);
     }

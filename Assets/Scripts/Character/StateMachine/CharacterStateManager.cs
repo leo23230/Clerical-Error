@@ -6,9 +6,13 @@ using System;
 public class CharacterStateManager : MonoBehaviour
 {
     //inspector stuff//
+
+    //effects//
     [SerializeField] public GameObject hitEffect;
     [SerializeField] public GameObject deathEffect;
     [SerializeField] public GameObject healEffect;
+    [SerializeField] public GameObject speedEffect;
+    [SerializeField] public GameObject damageEffect;
 
     //state manager stuff//
     [HideInInspector] public CharacterIdleState idleState = new CharacterIdleState();
@@ -20,6 +24,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public Character character;
     [HideInInspector] public CharacterBaseState currentState;
     [HideInInspector] public float moveSpeed;
+    [HideInInspector] public int damageBuff = 0;
     [HideInInspector] public float abilityReadyCooldown;
 
     //components//
@@ -83,10 +88,21 @@ public class CharacterStateManager : MonoBehaviour
     }
 
     public GameObject SelectEnemy() {
-
+        GameObject target;
         List<GameObject> aliveEnemies = findAliveEnemies();
-
-        var target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length-1))];
+        if(aliveEnemies.Count > 1)
+        {
+            target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length - 1))];
+        }
+        else if (aliveEnemies.Count == 1)
+        {
+            target = aliveEnemies[0];
+        }
+        else
+        {
+            target = null;
+        }
+        
         return target;
     }
 
@@ -144,7 +160,7 @@ public class CharacterStateManager : MonoBehaviour
         else if (readyAbilities.Count == 1)
         {
             Ability chosenAbility = readyAbilities[0];
-            chosenAbility.useAbility(target);
+            chosenAbility.useAbility(target, damageBuff);
             Debug.Log("Player used " + chosenAbility.name);
 
             //start animation
@@ -156,7 +172,7 @@ public class CharacterStateManager : MonoBehaviour
         {
             int random = UnityEngine.Random.Range(0, readyAbilities.Count);
             Ability chosenAbility = readyAbilities[random];
-            chosenAbility.useAbility(target);
+            chosenAbility.useAbility(target, damageBuff);
             Debug.Log(character.name + " used " + chosenAbility.name);
 
             //start animation
@@ -222,11 +238,11 @@ public class CharacterStateManager : MonoBehaviour
 
     }
 
-    public void InstantiateEffectPrefab(GameObject _prefab)
+    public GameObject InstantiateEffectPrefab(GameObject _prefab)
     {
         GameObject effectObject = Instantiate(_prefab);
 
-        float yOffset = 1f;
+        float yOffset = 2.0f;
 
         Vector3 newPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
 
@@ -236,12 +252,40 @@ public class CharacterStateManager : MonoBehaviour
         //make sure the effect follows the character
         effectObject.transform.SetParent(transform);
         //spawn effect prefab
+
+        return effectObject;
     }
 
     public void Heal(int _amt)
     {
         character.healthComponent.AddHealth(_amt);
         InstantiateEffectPrefab(healEffect);
+    }
+
+    IEnumerator ChangeSpeed(int _amt, float time)
+    {
+        moveSpeed += _amt;
+        GameObject effectObject = InstantiateEffectPrefab(speedEffect);
+
+        yield return new WaitForSeconds(time);
+
+        moveSpeed -= _amt;
+        Destroy(effectObject);
+
+        yield break;
+    }
+
+    IEnumerator ChangeDamage(int _amt, float time)
+    {
+        damageBuff = _amt;
+        GameObject effectObject = InstantiateEffectPrefab(damageEffect);
+
+        yield return new WaitForSeconds(time);
+
+        damageBuff -= _amt;
+        Destroy(effectObject);
+
+        yield break;
     }
 
     public void StatBoost(ItemDetailsSO item)
@@ -252,7 +296,11 @@ public class CharacterStateManager : MonoBehaviour
         }
         if(item.itemName == "PaparikoInsence")
         {
-            //increase speed and item cool down for x time
+            StartCoroutine(ChangeSpeed(4, 4f));
+        }
+        if (item.itemName == "SlayerStew")
+        {
+            StartCoroutine(ChangeDamage(10, 5f));
         }
     }
 

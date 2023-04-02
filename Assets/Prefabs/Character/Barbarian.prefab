@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3455390595703611662, guid: c220455add0b4b7488e9e61f7adb6d36, type: 3}
+      propertyPath: m_Offset.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6344321192824355210, guid: c220455add0b4b7488e9e61f7adb6d36, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -65,6 +69,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903710543149565822, guid: c220455add0b4b7488e9e61f7adb6d36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8237058962606921174, guid: c220455add0b4b7488e9e61f7adb6d36, type: 3}
+      propertyPath: m_Offset.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

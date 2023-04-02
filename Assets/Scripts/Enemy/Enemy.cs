@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public string enemyName;
     [HideInInspector] public int speed;
     [HideInInspector] public int health = 100;
+
+    [HideInInspector] public bool dead;
+
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
 
@@ -34,36 +37,15 @@ public class Enemy : MonoBehaviour
         damageTimerSet = Random.Range(3f, 8f);
 
         damageTimer = damageTimerSet;
+
+        dead = false;
     }
 
     private void Update()
     {
-        if (damageTimer > 0f)
+        if (!dead)
         {
-            damageTimer -= Time.deltaTime;
-        }
-        else
-        {
-            GameObject[] characters = GameObject.FindGameObjectsWithTag("Character");
-
-            List<GameObject> aliveCharacters = new List<GameObject>();
-
-            for(int i = 0; i < characters.Length; i++)
-            {
-                var charState = characters[i].GetComponent<CharacterStateManager>();
-                if(charState.currentState != charState.deadState)
-                {
-                    aliveCharacters.Add(characters[i]);
-                }
-            }
-
-            int randInt = HelperUtilities.RandInt(0f, characters.Length - 1);
-
-            characters[randInt].GetComponent<CharacterStateManager>().DamagePlayer(damage);
-
-            damageTimerSet = Random.Range(3f, 8f);
-
-            damageTimer = damageTimerSet;
+            AttackCharacters();
         }
     }
 
@@ -89,5 +71,36 @@ public class Enemy : MonoBehaviour
     private void SetEnemyHealth()
     {
         healthComponent.SetStartingHealth(health);
+    }
+
+    private void AttackCharacters()
+    {
+        if (damageTimer > 0f)
+        {
+            damageTimer -= Time.deltaTime;
+        }
+        else
+        {
+            GameObject[] characters = GameObject.FindGameObjectsWithTag("Character");
+
+            List<GameObject> aliveCharacters = new List<GameObject>();
+
+            for (int i = 0; i < characters.Length; i++)
+            {
+                var charState = characters[i].GetComponent<CharacterStateManager>();
+                if (charState.currentState != charState.deadState)
+                {
+                    aliveCharacters.Add(characters[i]);
+                }
+            }
+
+            int randInt = HelperUtilities.RandInt(0f, characters.Length - 1);
+
+            aliveCharacters[randInt].GetComponent<CharacterStateManager>().DamagePlayer(damage);
+
+            damageTimerSet = Random.Range(3f, 8f);
+
+            damageTimer = damageTimerSet;
+        }
     }
 }

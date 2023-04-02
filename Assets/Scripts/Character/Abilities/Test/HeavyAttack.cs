@@ -7,15 +7,15 @@ public class HeavyAttack : Ability
     public HeavyAttack()
     {
         name = "Heavy";
-        attackDamage = 10;
+        attackDamage = 6;
         accuracy = 1f;
         coolDownTime = 7f;
     }
 
-    public override void useAbility(GameObject target)
+    public override void useAbility(GameObject target, int buff)
     {
         Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage);
+        targetHealthComponent.SubtractHealth(attackDamage + buff);
         setCoolDownTimer();
     }
 }

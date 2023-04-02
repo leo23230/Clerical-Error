@@ -8,7 +8,6 @@ public class Item: MonoBehaviour
 
     private float startPosX;
     private float startPosY;
-    private bool isHeld = false;
     private SpriteRenderer r;
     private Rigidbody2D rb;
     private BackpackManager backpackManager;
@@ -35,6 +34,7 @@ public class Item: MonoBehaviour
     //effects//
     public float maxVelocity = 2f;
     public GameObject breakEffect;
+    public GameObject dinkEffect;
 
     private void Start()
     {
@@ -143,6 +143,7 @@ public class Item: MonoBehaviour
             else if (state == ItemState.Selected)
             {
                 isLocked = false;
+                Debug.Log(isLocked);
             }
         }
     }
@@ -203,11 +204,24 @@ public class Item: MonoBehaviour
             {
                 if (otherItem.localSpeed > maxVelocity)
                 {
-                    InstantiateEffectPrefab(breakEffect);
+                    int hitChance = HelperUtilities.RandInt(1f, 5f);
 
-                    StaticEventHandler.CallItemDestroyedEvent(gameObject);
+                    if(hitChance == 1)
+                    {
+                        //break
+                        InstantiateEffectPrefab(breakEffect);
 
-                    Destroy(gameObject);
+                        ScreenShake.Instance.ShakeCamera(4f, .1f, true);
+
+                        StaticEventHandler.CallItemDestroyedEvent(gameObject);
+
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        InstantiateEffectPrefab(dinkEffect);
+                    }
+                    
                 }
             }
         }

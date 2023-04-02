@@ -35,6 +35,7 @@ public class Character : MonoBehaviour
     [HideInInspector] public GameObject sprite;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Rigidbody2D characterRigidbody;
+    [HideInInspector] public SortingGroup sortingGroup;
 
 
     private void Awake()
@@ -42,9 +43,9 @@ public class Character : MonoBehaviour
         // Load components
         healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        CDBarManager = GetComponent<CooldownBarManager>();
-        
+        CDBarManager = GetComponent<CooldownBarManager>();       
         characterRigidbody = GetComponent<Rigidbody2D>();
+        sortingGroup = GetComponent<SortingGroup>();
     }
 
     private void Start()
