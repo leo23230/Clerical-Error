@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class Item: MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class Item: MonoBehaviour
     private float startPosX;
     private float startPosY;
     private SpriteRenderer r;
+    [HideInInspector] public SortingGroup sortingGroup;
     private Rigidbody2D rb;
     private BackpackManager backpackManager;
     private GameObject offHand;
+    private GameObject glow;
     //we need to get the hand object
     //if we're colliding with it, then it is good, else, no good.
 
@@ -27,6 +30,7 @@ public class Item: MonoBehaviour
     private bool isLocked = false;
     private bool stateEntered = false;
     private bool isTouchingOffHand = false;
+    private bool isCollidingWithOtherItem = false;
     [HideInInspector] public ItemState state = ItemState.Free;
     private List<Vector3> points = new List<Vector3>();
     private float localSpeed;
@@ -36,10 +40,18 @@ public class Item: MonoBehaviour
     public GameObject breakEffect;
     public GameObject dinkEffect;
 
-    private void Start()
+    private void Awake()
     {
         r = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        sortingGroup = GetComponent<SortingGroup>();
+        glow = transform.Find("Glow").gameObject;
+        glow.SetActive(false);
+    }
+
+    private void Start()
+    {
+        
         backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
         offHand = GameObject.Find("OffHand");
 
@@ -64,7 +76,7 @@ public class Item: MonoBehaviour
             points.Add(transform.position);
             //if the item is currently being held, put on hand layer
             gameObject.layer = LayerBackpackHand;
-            r.sortingLayerName = "BPHand";
+            sortingGroup.sortingLayerName = "BPHand";
         }
         else if (state == ItemState.Released)
         {
@@ -200,6 +212,7 @@ public class Item: MonoBehaviour
         Item otherItem = collision.gameObject.GetComponent<Item>();
         if (otherItem != null)
         {
+            isCollidingWithOtherItem = true;
             if(otherItem.state == ItemState.Held)
             {
                 if (otherItem.localSpeed > maxVelocity)
@@ -225,6 +238,27 @@ public class Item: MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Item>() != null)
+        {
+            isCollidingWithOtherItem = false;
+        }
+    }
+
+    //for glow activation
+    private void OnMouseEnter()
+    {
+        if(state != ItemState.Held && !backpackManager.itemSelected)
+        {
+            glow.SetActive(true);
+        }
+    }
+    private void OnMouseExit()
+    {
+        if(glow.activeSelf) glow.SetActive(false);
     }
 
     public void InstantiateEffectPrefab(GameObject _prefab)

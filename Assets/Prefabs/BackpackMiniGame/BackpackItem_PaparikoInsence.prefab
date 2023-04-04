@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: 1694703207284644180, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 6af57615b3bd8de4d80ea774e1c5550b, type: 2}
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 2610901546342706609, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -683,6 +683,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackpackItem_PaparikoInsence
       objectReference: {fileID: 0}
+    - target: {fileID: 4921027337396960340, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_Size.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921027337396960340, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_Size.y
+      value: 3.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921027337396960340, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f20b9d32c8f1b436a9a7f40022bed2ed, type: 3}
+    - target: {fileID: 4921027337396960340, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921027337396960340, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9463d04f0426e3e4f8f5adf8a4544f0d, type: 2}
     - target: {fileID: 5019850630483905490, guid: dad73af40b83e48e89746708ef7d60d2, type: 3}
       propertyPath: m_RootOrder
       value: 0

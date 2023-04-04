@@ -92,7 +92,7 @@ public class CharacterStateManager : MonoBehaviour
         List<GameObject> aliveEnemies = findAliveEnemies();
         if(aliveEnemies.Count > 1)
         {
-            target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, enemies.Length - 1))];
+            target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, aliveEnemies.Count - 1))];
         }
         else if (aliveEnemies.Count == 1)
         {
@@ -292,7 +292,7 @@ public class CharacterStateManager : MonoBehaviour
     {
         if(item.itemName == "CoppabloomTea")
         {
-            Heal(10);
+            Heal(30);
         }
         if(item.itemName == "PaparikoInsence")
         {

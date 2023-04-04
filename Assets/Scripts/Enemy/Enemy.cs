@@ -96,11 +96,15 @@ public class Enemy : MonoBehaviour
 
             int randInt = HelperUtilities.RandInt(0f, characters.Length - 1);
 
-            aliveCharacters[randInt].GetComponent<CharacterStateManager>().DamagePlayer(damage);
+            if(aliveCharacters.Count > 0)
+            {
+                aliveCharacters[randInt].GetComponent<CharacterStateManager>().DamagePlayer(damage);
 
-            damageTimerSet = Random.Range(3f, 8f);
+                damageTimerSet = Random.Range(3f, 8f);
 
-            damageTimer = damageTimerSet;
+                damageTimer = damageTimerSet;
+            }
+            
         }
     }
 }

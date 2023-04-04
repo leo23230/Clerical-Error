@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BackpackManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class BackpackManager : MonoBehaviour
     private const string middleSortingLayer = "BPMiddle";
     private const string topSortingLayer = "BPTop";
     private const string offHandSortingLayer = "BPOffHand";
+    private const int bottomMass = 10;
+    private const int middleMass = 5;
+    private const int topMass = 1;
 
     //state//
     [HideInInspector] public bool itemSelected = false;
@@ -75,20 +79,20 @@ public class BackpackManager : MonoBehaviour
             if (i < maxLayerItems)
             {
                 //set the item's layers to bottom
-                item.layer = LayerMask.NameToLayer(bottomLayer);
-                item.GetComponent<SpriteRenderer>().sortingLayerName = bottomSortingLayer;
+                SetItemLayers(item, bottomLayer, bottomSortingLayer);
+                SetItemMass(item, bottomMass);
             }
             else if (i < maxLayerItems * 2)
             {
                 //set the item's layers to middle
-                item.layer = LayerMask.NameToLayer(middleLayer);
-                item.GetComponent<SpriteRenderer>().sortingLayerName = middleSortingLayer;
+                SetItemLayers(item, middleLayer, middleSortingLayer);
+                SetItemMass(item, middleMass);
             }
             else
             {
                 //set the item's layers to top
-                item.layer = LayerMask.NameToLayer(topLayer);
-                item.GetComponent<SpriteRenderer>().sortingLayerName = topSortingLayer;
+                SetItemLayers(item, topLayer, topSortingLayer);
+                SetItemMass(item, topMass);
             }
 
             //add reference to the list
@@ -106,34 +110,38 @@ public class BackpackManager : MonoBehaviour
     {
         backpackObjects.Remove(selectedItem);
         backpackObjects.Add(selectedItem);
-        for(int i = 0; i < backpackObjects.Count; i++)
+
+        for (int i = 0; i < backpackObjects.Count; i++)
         {
             var item = backpackObjects[i];
             if(i < maxLayerItems)
             {
                 //set the item's layers to bottom
                 SetItemLayers(item, bottomLayer, bottomSortingLayer);
-                SetItemMass(item, 10);
+                SetItemMass(item, bottomMass);
             }
             else if (i < maxLayerItems * 2)
             {
                 //set the item's layers to middle
                 SetItemLayers(item, middleLayer, middleSortingLayer);
-                SetItemMass(item, 5);
+                SetItemMass(item, middleMass);
             }
             else
             {
                 //set the item's layers to top
                 SetItemLayers(item, topLayer, topSortingLayer);
-                SetItemMass(item, 1);
+                SetItemMass(item, topMass);
             }
         }
     }
 
     public void SetItemLayers(GameObject item, string layerName, string sortingLayerName)
     {
+
+        SortingGroup itemSortingGroup = item.GetComponent<Item>().sortingGroup;
+
         item.layer = LayerMask.NameToLayer(layerName);
-        item.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayerName;
+        itemSortingGroup.sortingLayerName = sortingLayerName;
     }
 
     public void SetItemMass(GameObject item, int mass)
@@ -230,20 +238,17 @@ public class BackpackManager : MonoBehaviour
         if (backpackObjects.Count < maxLayerItems)
         {
             //set the item's layers to bottom
-            _item.layer = LayerMask.NameToLayer(bottomLayer);
-            _item.GetComponent<SpriteRenderer>().sortingLayerName = bottomSortingLayer;
+            SetItemLayers(_item, bottomLayer, bottomSortingLayer);
         }
         else if (backpackObjects.Count < maxLayerItems * 2)
         {
             //set the item's layers to middle
-            _item.layer = LayerMask.NameToLayer(middleLayer);
-            _item.GetComponent<SpriteRenderer>().sortingLayerName = middleSortingLayer;
+            SetItemLayers(_item, middleLayer, middleSortingLayer);
         }
         else
         {
             //set the item's layers to top
-            _item.layer = LayerMask.NameToLayer(topLayer);
-            _item.GetComponent<SpriteRenderer>().sortingLayerName = topSortingLayer;
+            SetItemLayers(_item, topLayer, topSortingLayer);
         }
     }
 

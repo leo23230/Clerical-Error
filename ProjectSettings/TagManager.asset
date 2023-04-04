@@ -22,7 +22,7 @@ TagManager:
   - BPTop
   - BPHand
   - BPOffHand
-  - 
+  - Bloom
   - 
   - 
   - 
@@ -57,14 +57,17 @@ TagManager:
   - name: SBRotatingShape
     uniqueID: 3713498865
     locked: 0
-  - name: UI
-    uniqueID: 4233216597
+  - name: BPBackground
+    uniqueID: 3815868085
     locked: 0
   - name: BPBottom
     uniqueID: 1993524765
     locked: 0
   - name: BPMiddle
     uniqueID: 4095275567
+    locked: 0
+  - name: BPEdges
+    uniqueID: 868579101
     locked: 0
   - name: BPTop
     uniqueID: 1206557667
@@ -77,4 +80,7 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 762682115
+    locked: 0
+  - name: UI
+    uniqueID: 4233216597
     locked: 0

@@ -7,6 +7,8 @@ public class MoveCamera : MonoBehaviour
     [HideInInspector] public bool moveCameraPosition = false;
     [HideInInspector] public float targetX;
     [HideInInspector] public float targetY;
+    [HideInInspector] public bool isBagRummage = true;
+    [HideInInspector] public float bagRummageY = 16.875f;
     private void Awake()
     {
         targetX = transform.position.x;
@@ -40,7 +42,7 @@ public class MoveCamera : MonoBehaviour
 
     public void moveCameraToBagRummage(BagRummageEventArgs bagRummageEventArgs)
     {
-        targetY = 16.875f;
+        targetY = bagRummageY;
     }
 
     public void moveCameraBack(ExitMiniGameEventArgs exitMiniGameEventArgs)

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StewGlowMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 7a91547bf78f67b419d6e79cc0cdea9c, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: a093df19b8661c840a12708e91dffaeb, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -57,7 +57,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _Thickness: 0.99
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 67.79352, g: 67.79352, b: 67.79352, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

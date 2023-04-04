@@ -39,31 +39,36 @@ public class Inventory : MonoBehaviour
 
     void InitializeInventory()
     {
+        
         //populate this inventory with 24 random objects
         int numItems = 24;
         for (int i = 0; i < numItems; i++)
         {
 
             //If not atleast 2 of each consumable, Get a random ItemSO
-            /*int healAmt = 0;
+            int healAmt = 0;
             int speedAmt = 0;
             int damageAmt = 0;
-            foreach(InventoryItem inventoryItem in inventory)
+            foreach (InventoryItem inventoryItem in inventory)
             {
-                if (inventoryItem.itemDetails.name == "CoppabloomTea") healAmt += 1;
-                if (inventoryItem.itemDetails.name == "PaparikoInsence") speedAmt += 1;
-                if (inventoryItem.itemDetails.name == "SlayerStew") damageAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "CoppabloomTea") healAmt +=1;
+                if (inventoryItem.itemDetails.itemName == "PaparikoInsence") speedAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "SlayerStew") damageAmt += 1;
             }
+
+            Debug.Log(healAmt);
+
             ItemDetailsSO randItem;
+
             if (healAmt < 2)
             {
                 randItem = allItems[3];
             }
-            else if(speedAmt < 2)
+            else if (speedAmt < 2)
             {
                 randItem = allItems[6];
             }
-            else if(damageAmt < 2)
+            else if (damageAmt < 2)
             {
                 randItem = allItems[5];
             }
@@ -71,9 +76,9 @@ public class Inventory : MonoBehaviour
             {
                 int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
                 randItem = allItems[rand];
-            }*/
-            int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
-            ItemDetailsSO randItem = allItems[rand];
+            }
+            /*int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
+            ItemDetailsSO randItem = allItems[rand];*/
 
             //Create an inventory item from it
             InventoryItem item = new InventoryItem();
