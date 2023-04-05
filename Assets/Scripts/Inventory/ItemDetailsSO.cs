@@ -13,6 +13,8 @@ public class ItemDetailsSO : ScriptableObject
 
     public string itemName;
 
+    public string itemDescription;
+
     public bool isConsumable;
 
     public bool isIngredient;
@@ -20,6 +22,7 @@ public class ItemDetailsSO : ScriptableObject
     public bool isTreasure;
 
     public int maxUses;
+
 
     #region Header ITEM PREFABS
     [Space(10)]

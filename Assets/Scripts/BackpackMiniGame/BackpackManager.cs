@@ -8,6 +8,7 @@ public class BackpackManager : MonoBehaviour
     private Player player;
     private Inventory inventoryComponent;
     private Transform parentTransform;
+    private BackpackUIManager BPUIManager;
     private float yOffset;
 
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
@@ -23,6 +24,9 @@ public class BackpackManager : MonoBehaviour
     private const string middleSortingLayer = "BPMiddle";
     private const string topSortingLayer = "BPTop";
     private const string offHandSortingLayer = "BPOffHand";
+    private const float bottomScale = 0.9f;
+    private const float middleScale = 0.95f;
+    private const float topScale = 1.0f;
     private const int bottomMass = 10;
     private const int middleMass = 5;
     private const int topMass = 1;
@@ -35,6 +39,7 @@ public class BackpackManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
         parentTransform = GameObject.Find("BackPackMiniGame").transform;
+        BPUIManager = GameObject.Find("BackpackUI").GetComponent<BackpackUIManager>();
     }
 
     private void OnEnable()
@@ -81,18 +86,21 @@ public class BackpackManager : MonoBehaviour
                 //set the item's layers to bottom
                 SetItemLayers(item, bottomLayer, bottomSortingLayer);
                 SetItemMass(item, bottomMass);
+                SetItemScale(item, bottomScale);
             }
             else if (i < maxLayerItems * 2)
             {
                 //set the item's layers to middle
                 SetItemLayers(item, middleLayer, middleSortingLayer);
                 SetItemMass(item, middleMass);
+                SetItemScale(item, middleScale);
             }
             else
             {
                 //set the item's layers to top
                 SetItemLayers(item, topLayer, topSortingLayer);
                 SetItemMass(item, topMass);
+                SetItemScale(item, topScale);
             }
 
             //add reference to the list
@@ -119,19 +127,47 @@ public class BackpackManager : MonoBehaviour
                 //set the item's layers to bottom
                 SetItemLayers(item, bottomLayer, bottomSortingLayer);
                 SetItemMass(item, bottomMass);
+                SetItemScale(item, bottomScale);
             }
             else if (i < maxLayerItems * 2)
             {
                 //set the item's layers to middle
                 SetItemLayers(item, middleLayer, middleSortingLayer);
                 SetItemMass(item, middleMass);
+                SetItemScale(item, middleScale);
             }
             else
             {
                 //set the item's layers to top
                 SetItemLayers(item, topLayer, topSortingLayer);
                 SetItemMass(item, topMass);
+                SetItemScale(item, topScale);
             }
+        }
+    }
+
+    public void DetermineLayer(GameObject _item)
+    {
+        if (backpackObjects.Count < maxLayerItems)
+        {
+            //set the item's layers to bottom
+            SetItemLayers(_item, bottomLayer, bottomSortingLayer);
+            SetItemMass(_item, bottomMass);
+            SetItemScale(_item, bottomScale);
+        }
+        else if (backpackObjects.Count < maxLayerItems * 2)
+        {
+            //set the item's layers to middle
+            SetItemLayers(_item, middleLayer, middleSortingLayer);
+            SetItemMass(_item, middleMass);
+            SetItemScale(_item, middleScale);
+        }
+        else
+        {
+            //set the item's layers to top
+            SetItemLayers(_item, topLayer, topSortingLayer);
+            SetItemMass(_item, topMass);
+            SetItemScale(_item, topScale);
         }
     }
 
@@ -149,9 +185,16 @@ public class BackpackManager : MonoBehaviour
         item.GetComponent<Rigidbody2D>().mass = mass;
     }
 
+    public void SetItemScale(GameObject item, float scale)
+    {
+        Vector3 newScale = new Vector3(scale, scale, item.transform.localScale.z);
+        item.transform.localScale = newScale;
+    }
+
     public void AddItemToBackpack(GameObject _item)
     {
         backpackObjects.Add(_item);
+        BPUIManager.ResetTooltip();
         DetermineLayer(_item);
         UnlockBackpackItems();
 
@@ -173,6 +216,10 @@ public class BackpackManager : MonoBehaviour
 
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+        SetItemScale(_item, bottomScale);
+
+        
+
         LockBackpackItems();
 
        // SetPlayerInventoryHandItem(_itemDetails);
@@ -233,24 +280,7 @@ public class BackpackManager : MonoBehaviour
         yOffset = parentTransform.position.y;
     }
 
-    public void DetermineLayer(GameObject _item)
-    {
-        if (backpackObjects.Count < maxLayerItems)
-        {
-            //set the item's layers to bottom
-            SetItemLayers(_item, bottomLayer, bottomSortingLayer);
-        }
-        else if (backpackObjects.Count < maxLayerItems * 2)
-        {
-            //set the item's layers to middle
-            SetItemLayers(_item, middleLayer, middleSortingLayer);
-        }
-        else
-        {
-            //set the item's layers to top
-            SetItemLayers(_item, topLayer, topSortingLayer);
-        }
-    }
+    
 
     //resets backpack for next use
     public void useConsumable(ConsumableUsedEventArgs eventArgs)

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ItemDetails_SlayerStew
   m_EditorClassIdentifier: 
   itemName: SlayerStew
+  itemDescription: A spicy, savory, salty stew packed full of everything a wannabe
+    hero needs to crack some heads and get the blood pumping.
   isConsumable: 1
   isIngredient: 0
   isTreasure: 0

@@ -384,11 +384,12 @@ MonoBehaviour:
   enemyName: 
   speed: 0
   health: 0
+  dead: 0
   abilities: []
   healthComponent: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
-  damage: 10
+  damage: 15
 --- !u!1 &7529604458834086328
 GameObject:
   m_ObjectHideFlags: 0

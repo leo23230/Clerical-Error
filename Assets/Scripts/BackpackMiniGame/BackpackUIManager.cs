@@ -7,12 +7,20 @@ using TMPro;
 public class BackpackUIManager : MonoBehaviour
 {
 
-    private TextMeshProUGUI toolTip;
+    private TextMeshProUGUI toolTipName;
+    private TextMeshProUGUI toolTipDescription;
+    private GameObject panel;
 
     // Start is called before the first frame update
     void Start()
     {
-        toolTip = GameObject.Find("Tooltip").GetComponent<TextMeshProUGUI>();
+        panel = transform.Find("TooltipPanel").gameObject;
+        toolTipName = panel.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+        toolTipDescription = panel.transform.Find("DescriptionText").GetComponent<TextMeshProUGUI>();
+
+        toolTipName.text = "";
+        toolTipDescription.text = "";
+        panel.SetActive(false);
     }
 
     private void OnEnable()
@@ -35,10 +43,19 @@ public class BackpackUIManager : MonoBehaviour
 
     void UpdateToolTipToSelected(ItemSelectedEventArgs eventArgs)
     {
-        toolTip.text = eventArgs.itemDetails.itemName;
+        panel.SetActive(true);
+        toolTipName.text = eventArgs.itemDetails.itemName;
+        toolTipDescription.text = eventArgs.itemDetails.itemDescription;
     }
     void ResetTooltipAfterUse(ConsumableUsedEventArgs eventArgs)
     {
-        toolTip.text = "";
+        ResetTooltip();
+    }
+
+    public void ResetTooltip()
+    {
+        panel.SetActive(false);
+        toolTipName.text = "";
+        toolTipDescription.text = "";
     }
 }

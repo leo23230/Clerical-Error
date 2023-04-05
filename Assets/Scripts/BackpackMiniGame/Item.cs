@@ -146,7 +146,7 @@ public class Item: MonoBehaviour
                 }
 
                 localSpeed = Mathf.Abs(Vector3.Distance(points[0], points[1]));
-                Debug.Log(localSpeed);
+                //Debug.Log(localSpeed);
             }
             else if (state == ItemState.Released)
             {
@@ -155,7 +155,7 @@ public class Item: MonoBehaviour
             else if (state == ItemState.Selected)
             {
                 isLocked = false;
-                Debug.Log(isLocked);
+                //Debug.Log(isLocked);
             }
         }
     }

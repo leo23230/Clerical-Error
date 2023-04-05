@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ItemDetails_CoppabloomTea
   m_EditorClassIdentifier: 
   itemName: CoppabloomTea
+  itemDescription: '"A refreshing tea, famous for its ability to numb pain and boost
+    immunity."'
   isConsumable: 1
   isIngredient: 0
   isTreasure: 0

@@ -7,7 +7,7 @@ public class Special : Ability
     public Special()
     {
         name = "Special";
-        attackDamage = 20;
+        attackDamage = 10;
         accuracy = 1f;
         coolDownTime = 20f;
     }
