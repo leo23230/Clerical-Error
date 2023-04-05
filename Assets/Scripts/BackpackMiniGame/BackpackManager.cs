@@ -8,6 +8,7 @@ public class BackpackManager : MonoBehaviour
     private Player player;
     private Inventory inventoryComponent;
     private Transform parentTransform;
+    private BackpackUIManager BPUIManager;
     private float yOffset;
 
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
@@ -38,6 +39,7 @@ public class BackpackManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
         parentTransform = GameObject.Find("BackPackMiniGame").transform;
+        BPUIManager = GameObject.Find("BackpackUI").GetComponent<BackpackUIManager>();
     }
 
     private void OnEnable()
@@ -192,6 +194,7 @@ public class BackpackManager : MonoBehaviour
     public void AddItemToBackpack(GameObject _item)
     {
         backpackObjects.Add(_item);
+        BPUIManager.ResetTooltip();
         DetermineLayer(_item);
         UnlockBackpackItems();
 
@@ -213,6 +216,10 @@ public class BackpackManager : MonoBehaviour
 
         backpackObjects.Remove(_item);
         SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+        SetItemScale(_item, bottomScale);
+
+        
+
         LockBackpackItems();
 
        // SetPlayerInventoryHandItem(_itemDetails);
