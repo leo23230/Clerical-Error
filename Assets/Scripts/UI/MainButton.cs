@@ -14,6 +14,7 @@ public class MainButton : MonoBehaviour
     private Button SpellcastingButtonComponent;
     private Button CraftingButtonComponent;
     private Button MainButtonComponent;
+    private Image Image;
 
     //animation triggers//
     private string normal;
@@ -45,6 +46,7 @@ public class MainButton : MonoBehaviour
         SpellcastingButtonComponent = SpellcastingButton.GetComponent<Button>();
         CraftingButtonComponent = CraftingButton.GetComponent<Button>();
         MainButtonComponent = GetComponent<Button>();
+        Image = GetComponent<Image>();
     }
 
     public void ActivateActionButtons()
@@ -65,17 +67,21 @@ public class MainButton : MonoBehaviour
 
     private IEnumerator TimedDeactivate()
     {
-        yield return new WaitForSeconds(0.2f);
+        MainButtonComponent.interactable = true;
+        yield return new WaitForSeconds(0.4f);
+        //Image.color = new Color(255, 255, 255, 0);
         gameObject.SetActive(false);
         yield break;
     }
 
-    private IEnumerator TimedActivate()
+   /* private IEnumerator TimedActivate()
     {
+        MainButtonComponent.interactable = false;
         yield return new WaitForSeconds(0.2f);
-        gameObject.SetActive(true);
+        Image.color = new Color(255, 255, 255, 0);
+        //gameObject.SetActive(true);
         yield break;
-    }
+    }*/
 
     public void StartTimedDeactivate(BagRummageEventArgs eventArgs)
     {
@@ -84,6 +90,8 @@ public class MainButton : MonoBehaviour
 
     public void ActivateSelf(ExitMiniGameEventArgs eventArgs)
     {
+        //MainButtonComponent.interactable = true;
+        //Image.color = new Color (255,255,255, 100);
         gameObject.SetActive(true);
     }
 

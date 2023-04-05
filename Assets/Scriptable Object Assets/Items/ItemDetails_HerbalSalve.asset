@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ItemDetails_HerbalSalve
   m_EditorClassIdentifier: 
   itemName: HerbalSalve
+  itemDescription: A regenerative ointment that will help heal wounds in no time.
   isConsumable: 1
   isIngredient: 0
   isTreasure: 0

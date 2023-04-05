@@ -47,6 +47,8 @@ public class Enemy : MonoBehaviour
         {
             AttackCharacters();
         }
+
+        if (healthComponent.GetHealth() <= 0) dead = true;
     }
 
     /// <summary>

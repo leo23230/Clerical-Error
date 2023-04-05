@@ -36,6 +36,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public GameObject[] enemies;
     [HideInInspector] public List<Ability> abilities = new List<Ability>();
     [HideInInspector] public Vector2 startingPos = new Vector2();
+    [HideInInspector] public Vector3 effectAnchorPos;
     private void Awake()
     {
         //the character component is repsonible for storing
@@ -46,6 +47,8 @@ public class CharacterStateManager : MonoBehaviour
         character = gameObject.GetComponent<Character>();
 
         inventory = GameObject.Find("Player").GetComponent<Inventory>();
+
+        effectAnchorPos = transform.Find("EffectAnchor").transform.position;
 
         target = SelectEnemy();
     }
@@ -242,12 +245,12 @@ public class CharacterStateManager : MonoBehaviour
     {
         GameObject effectObject = Instantiate(_prefab);
 
-        float yOffset = 2.0f;
+        //float yOffset = 2.0f;
 
-        Vector3 newPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+        Vector3 newPos = new Vector3(transform.position.x + effectAnchorPos.x, transform.position.y + effectAnchorPos.y, transform.position.z);
 
         //set pos to middle of character
-        effectObject.transform.position = newPos;
+        effectObject.transform.localPosition = newPos;
 
         //make sure the effect follows the character
         effectObject.transform.SetParent(transform);
@@ -288,6 +291,23 @@ public class CharacterStateManager : MonoBehaviour
         yield break;
     }
 
+    IEnumerator HealOverTime(int _amt, float time)
+    {
+        float count = 0f;
+        GameObject effectObject = InstantiateEffectPrefab(healEffect);
+
+        while(count <= time)
+        {
+            Heal(_amt);
+            yield return new WaitForSeconds(time / time);
+            count += 1;
+        }
+
+        //Destroy(effectObject);
+
+        yield break;
+    }
+
     public void StatBoost(ItemDetailsSO item)
     {
         if(item.itemName == "CoppabloomTea")
@@ -301,6 +321,10 @@ public class CharacterStateManager : MonoBehaviour
         if (item.itemName == "SlayerStew")
         {
             StartCoroutine(ChangeDamage(10, 5f));
+        }
+        if (item.itemName == "HerbalSalve")
+        {
+            StartCoroutine(HealOverTime(5, 8f));
         }
     }
 

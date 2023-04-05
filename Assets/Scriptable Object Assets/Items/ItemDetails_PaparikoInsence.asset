@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ItemDetails_PaparikoInsence
   m_EditorClassIdentifier: 
   itemName: PaparikoInsence
+  itemDescription: An intense aromatic that is bound to put some pep in the steps
+    of anyone who gets a good whiff.
   isConsumable: 1
   isIngredient: 0
   isTreasure: 0

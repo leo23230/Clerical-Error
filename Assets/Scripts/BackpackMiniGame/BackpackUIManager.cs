@@ -35,7 +35,7 @@ public class BackpackUIManager : MonoBehaviour
 
     void UpdateToolTipToSelected(ItemSelectedEventArgs eventArgs)
     {
-        toolTip.text = eventArgs.itemDetails.itemName;
+        toolTip.text = eventArgs.itemDetails.itemDescription;
     }
     void ResetTooltipAfterUse(ConsumableUsedEventArgs eventArgs)
     {

@@ -53,7 +53,7 @@ public class SideButton : MonoBehaviour
 
     public void MakeMainBackButton()
     {
-        EnableMainButton();
+        //EnableMainButton();
         BackButton.SetActive(true);
         //DeactivateActionButtons();
     }

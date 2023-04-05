@@ -23,7 +23,7 @@ public class CancelArea : MonoBehaviour
 
     private void OnMouseExit()
     {
-        Debug.Log("OUT");
+        //Debug.Log("OUT");
         MainButtonComponent.interactable = true;
     }
 
