@@ -158,6 +158,18 @@ public class Item: MonoBehaviour
                 //Debug.Log(isLocked);
             }
         }
+
+       /* Vector3 mousePos;
+
+        mousePos = Input.mousePosition;
+
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        Ray ray = new Ray(mousePos, );
+
+        RaycastHit2D[] results = new RaycastHit2D[10];
+        
+        RaycastHit2D hit = Physics2D.GetRayIntersectionNonAlloc(ray, results, 10f);*/
     }
 
     public void InitializeItem(ItemDetailsSO _details)
