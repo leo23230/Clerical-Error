@@ -20,7 +20,7 @@ MonoBehaviour:
   characterArmorClass: 0.9
   characterAttackMax: 14
   characterAttackMin: 10
-  characterAbilityCooldown: 8
+  characterAbilityCooldown: 10
   characterAbilities:
   - ArtilleristAttack1
   - ArtilleristAttack2
