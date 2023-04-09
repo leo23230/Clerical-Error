@@ -72,6 +72,9 @@ TagManager:
   - name: BPTop
     uniqueID: 1206557667
     locked: 0
+  - name: BPEdges
+    uniqueID: 1960170091
+    locked: 0
   - name: BPOffHand
     uniqueID: 2067405437
     locked: 0
