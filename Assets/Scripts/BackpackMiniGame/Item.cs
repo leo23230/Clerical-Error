@@ -14,6 +14,7 @@ public class Item: MonoBehaviour
     private Rigidbody2D rb;
     private BackpackManager backpackManager;
     private GameObject offHand;
+    private OffHand offHandComponent;
     private GameObject glow;
     //we need to get the hand object
     //if we're colliding with it, then it is good, else, no good.
@@ -54,6 +55,7 @@ public class Item: MonoBehaviour
         
         backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
         offHand = GameObject.Find("OffHand");
+        offHandComponent = offHand.GetComponent<OffHand>();
 
         float randRotation = Random.Range(0f, 360f);
 
@@ -80,15 +82,26 @@ public class Item: MonoBehaviour
         }
         else if (state == ItemState.Released)
         {
-            Debug.Log("Released");
-            Debug.Log(isTouchingOffHand);
+/*            Debug.Log("Released");
+            Debug.Log(isTouchingOffHand);*/
+
             if (isTouchingOffHand)
             {
-                StaticEventHandler.CallItemSelectedEvent(gameObject, itemDetails);
-                //backpackManager.RemoveItemFromBackpack(gameObject, itemDetails);
-                transform.position = offHand.transform.position;
-                transform.rotation = offHand.transform.rotation;
-                SwitchState(ItemState.Selected);
+                if (itemDetails.isConsumable)
+                {
+                    StaticEventHandler.CallItemSelectedEvent(gameObject, itemDetails);
+                    //backpackManager.RemoveItemFromBackpack(gameObject, itemDetails);
+                    transform.position = offHand.transform.position;
+                    transform.rotation = offHand.transform.rotation;
+                    SwitchState(ItemState.Selected);
+                }
+                else
+                {
+                    transform.position = new Vector3(-8.5f, 13f, transform.position.z);
+                    offHandComponent.StartFlashRed();
+                    SwitchState(ItemState.Free);
+                }
+                
             }
             else
             {
@@ -205,7 +218,7 @@ public class Item: MonoBehaviour
     {
         if (collision.gameObject == offHand)
         {
-            Debug.Log("offhand");
+            //Debug.Log("offhand");
             isTouchingOffHand = true;
         }
     }

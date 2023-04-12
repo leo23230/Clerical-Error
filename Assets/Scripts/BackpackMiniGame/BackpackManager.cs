@@ -24,8 +24,8 @@ public class BackpackManager : MonoBehaviour
     private const string middleSortingLayer = "BPMiddle";
     private const string topSortingLayer = "BPTop";
     private const string offHandSortingLayer = "BPOffHand";
-    private const float bottomScale = 0.9f;
-    private const float middleScale = 0.95f;
+    private const float bottomScale = 0.8f;
+    private const float middleScale = 0.9f;
     private const float topScale = 1.0f;
     private const int bottomMass = 10;
     private const int middleMass = 5;

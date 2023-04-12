@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72af4da88e165bc408652c9133c7de3b, type: 3}
   m_Name: ItemDetails_SlayerStew
   m_EditorClassIdentifier: 
-  itemName: SlayerStew
+  itemName: Slayer Stew
   itemDescription: A spicy, savory, salty stew packed full of everything a wannabe
     hero needs to crack some heads and get the blood pumping.
   isConsumable: 1

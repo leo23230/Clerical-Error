@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72af4da88e165bc408652c9133c7de3b, type: 3}
   m_Name: ItemDetails_PaparikoInsence
   m_EditorClassIdentifier: 
-  itemName: PaparikoInsence
+  itemName: Papariko Insence
   itemDescription: An intense aromatic that is bound to put some pep in the steps
     of anyone who gets a good whiff.
   isConsumable: 1

@@ -51,9 +51,9 @@ public class Inventory : MonoBehaviour
             int damageAmt = 0;
             foreach (InventoryItem inventoryItem in inventory)
             {
-                if (inventoryItem.itemDetails.itemName == "CoppabloomTea") healAmt +=1;
-                if (inventoryItem.itemDetails.itemName == "PaparikoInsence") speedAmt += 1;
-                if (inventoryItem.itemDetails.itemName == "SlayerStew") damageAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt +=1;
+                if (inventoryItem.itemDetails.itemName == "Papariko Insence") speedAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt += 1;
             }
 
             Debug.Log(healAmt);

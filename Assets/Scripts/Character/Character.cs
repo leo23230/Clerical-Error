@@ -46,12 +46,14 @@ public class Character : MonoBehaviour
         CDBarManager = GetComponent<CooldownBarManager>();       
         characterRigidbody = GetComponent<Rigidbody2D>();
         sortingGroup = GetComponent<SortingGroup>();
+        sprite = transform.Find("Sprite").gameObject;
+        //animator = sprite.GetComponent<Animator>();
+        if (sprite != null) animator = sprite.GetComponent<Animator>();
     }
 
     private void Start()
     {
-        sprite = transform.Find("Sprite").gameObject;
-        if (sprite != null) animator = sprite.GetComponent<Animator>();
+
     }
 
     /// <summary>

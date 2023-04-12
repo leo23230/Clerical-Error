@@ -26,18 +26,22 @@ public class SideButton : MonoBehaviour
         StaticEventHandler.BagRummageEvent -= DeactivateActionButtons;
     }
 
-    void Start()
+    private void Awake()
     {
         MainButton = GameObject.Find("MainButton");
         BackButton = GameObject.Find("BackButton");
         BackpackButton = GameObject.Find("BackpackButton");
         SpellcastingButton = GameObject.Find("SpellcastingButton");
         CraftingButton = GameObject.Find("CraftingButton");
-
         if (BackButton.activeSelf) BackButton.SetActive(false);
         MainButtonUIComponent = MainButton.GetComponent<Button>();
         MainButtonComponent = MainButton.GetComponent<MainButton>();
         MainButtonText = MainButton.transform.Find("text").GetComponent<TextMeshProUGUI>();
+    }
+
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

@@ -104,6 +104,7 @@ public class CharacterStateManager : MonoBehaviour
         else
         {
             target = null;
+
         }
         
         return target;
@@ -310,19 +311,19 @@ public class CharacterStateManager : MonoBehaviour
 
     public void StatBoost(ItemDetailsSO item)
     {
-        if(item.itemName == "CoppabloomTea")
+        if(item.itemName == "Coppabloom Tea")
         {
             Heal(30);
         }
-        if(item.itemName == "PaparikoInsence")
+        if(item.itemName == "Papariko Insence")
         {
             StartCoroutine(ChangeSpeed(4, 4f));
         }
-        if (item.itemName == "SlayerStew")
+        if (item.itemName == "Slayer Stew")
         {
             StartCoroutine(ChangeDamage(10, 5f));
         }
-        if (item.itemName == "HerbalSalve")
+        if (item.itemName == "Herbal Salve")
         {
             StartCoroutine(HealOverTime(5, 8f));
         }

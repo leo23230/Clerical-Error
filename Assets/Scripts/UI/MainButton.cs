@@ -36,7 +36,7 @@ public class MainButton : MonoBehaviour
         //StaticEventHandler.ExitMiniGameEvent -= ActivateSelf;
     }
 
-    private void Start()
+    private void Awake()
     {
         BackpackButton = GameObject.Find("BackpackButton");
         SpellcastingButton = GameObject.Find("SpellcastingButton");
@@ -47,6 +47,12 @@ public class MainButton : MonoBehaviour
         CraftingButtonComponent = CraftingButton.GetComponent<Button>();
         MainButtonComponent = GetComponent<Button>();
         Image = GetComponent<Image>();
+
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void ActivateActionButtons()

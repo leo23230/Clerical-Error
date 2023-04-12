@@ -41,7 +41,10 @@ public class CharacterAttackState : CharacterBaseState
                     setAttackCoolDownTime(characterSM);
                 }
             }
-            if (attackReadyCoolDown > 0f) attackReadyCoolDown -= Time.deltaTime;
+            if (attackReadyCoolDown > 0f) 
+            {
+                attackReadyCoolDown -= Time.deltaTime;
+            } 
         }
         else
         {
@@ -56,4 +59,6 @@ public class CharacterAttackState : CharacterBaseState
     {
         attackReadyCoolDown = characterSM.abilityReadyCooldown;
     }
+
+
 }

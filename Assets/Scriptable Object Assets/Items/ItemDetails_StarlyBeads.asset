@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72af4da88e165bc408652c9133c7de3b, type: 3}
   m_Name: ItemDetails_StarlyBeads
   m_EditorClassIdentifier: 
-  itemName: StarlyBeads
+  itemName: Starly Beads
+  itemDescription: 
   isConsumable: 1
   isIngredient: 1
   isTreasure: 0
