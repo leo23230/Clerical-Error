@@ -49,18 +49,20 @@ public class Inventory : MonoBehaviour
             int healAmt = 0;
             int speedAmt = 0;
             int damageAmt = 0;
+            int salveAmt = 0;
             foreach (InventoryItem inventoryItem in inventory)
             {
                 if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt +=1;
                 if (inventoryItem.itemDetails.itemName == "Papariko Insence") speedAmt += 1;
                 if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "Herbal Salve") salveAmt += 1;
             }
 
             Debug.Log(healAmt);
 
             ItemDetailsSO randItem;
 
-            if (healAmt < 2)
+            if (healAmt < 3)
             {
                 randItem = allItems[3];
             }
@@ -71,6 +73,10 @@ public class Inventory : MonoBehaviour
             else if (damageAmt < 2)
             {
                 randItem = allItems[5];
+            }
+            else if (salveAmt < 2)
+            {
+                randItem = allItems[4];
             }
             else
             {

@@ -6,25 +6,25 @@ using UnityEngine.UI;
 public class AlertMonobehaviour : MonoBehaviour
 {
 
+    private GameObject animations;
+    private Animator animator;
+    private string lowHealthAnimatorBool = "isLowHealth";
+    private string criticalAnimatorBool = "isCritical";
+    private string deadAnimatorBool = "isDead";
+    private string fineAnimatorBool = "isFine";
+
     public List<Sprite> alertSprites = new List<Sprite>();
-    private Image image;
 
     //Colors
     private Color transparent = new Color(0f, 0f, 0f, 0f);
 
     private void Awake()
     {
-        image = GetComponent<Image>();
-        image.color = transparent;
-        image.sprite = alertSprites[0];
-    }
 
-    public void InitializeAlert()
-    {
-        image.color = transparent;
-        image.sprite = alertSprites[0];
+        animations = transform.Find("Animations").gameObject;
+        animator = animations.GetComponent<Animator>();
+        animator.SetBool(fineAnimatorBool, true);
     }
-
 
     public void UpdatePosition(float _x)
     {
@@ -39,23 +39,55 @@ public class AlertMonobehaviour : MonoBehaviour
         if (_health > 20f && _health <= 40f)
         {
             Debug.Log("Health Low");
-            image.sprite = alertSprites[0];
-            image.color = Color.white;
+
+            SwitchAnimations(lowHealthAnimatorBool);
         }
         else if(_health > 0f && _health <= 20f)
         {
             Debug.Log("Critical");
-            image.sprite = alertSprites[1];
-            image.color = Color.white;
+
+            SwitchAnimations(criticalAnimatorBool);
         }
         else if(_health <= 0f)
         {
-            image.sprite = alertSprites[2];
-            image.color = Color.white;
+
+            SwitchAnimations(deadAnimatorBool);
         }
         else
         {
-            image.color = transparent;
+            SwitchAnimations(fineAnimatorBool);
+        }
+    }
+
+    public void SwitchAnimations(string _animation)
+    {
+        if(_animation == lowHealthAnimatorBool)
+        {
+            animator.SetBool(lowHealthAnimatorBool, true);
+            animator.SetBool(criticalAnimatorBool, false);
+            animator.SetBool(deadAnimatorBool, false);
+            animator.SetBool(fineAnimatorBool, false);
+        }
+        else if(_animation == criticalAnimatorBool)
+        {
+            animator.SetBool(lowHealthAnimatorBool, false);
+            animator.SetBool(criticalAnimatorBool, true);
+            animator.SetBool(deadAnimatorBool, false);
+            animator.SetBool(fineAnimatorBool, false);
+        }
+        else if (_animation == deadAnimatorBool)
+        {
+            animator.SetBool(lowHealthAnimatorBool, false);
+            animator.SetBool(criticalAnimatorBool, false);
+            animator.SetBool(deadAnimatorBool, true);
+            animator.SetBool(fineAnimatorBool, false);
+        }
+        else if (_animation == fineAnimatorBool)
+        {
+            animator.SetBool(lowHealthAnimatorBool, false);
+            animator.SetBool(criticalAnimatorBool, false);
+            animator.SetBool(deadAnimatorBool, false);
+            animator.SetBool(fineAnimatorBool, true);
         }
     }
 }

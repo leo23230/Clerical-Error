@@ -828,7 +828,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   characterRigidbody: {fileID: 0}
   sortingGroup: {fileID: 0}
-  alertPrefab: {fileID: 259906449595300493, guid: f45e6084225ea384096b3894858e7993, type: 3}
+  alertPrefab: {fileID: 226892496860740217, guid: b0e30cc2debc95b40981519d9921bdaa, type: 3}
   alertObject: {fileID: 0}
   alertMonobehaviour: {fileID: 0}
 --- !u!114 &226300619044305095
