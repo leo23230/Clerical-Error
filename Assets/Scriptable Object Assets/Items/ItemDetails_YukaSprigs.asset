@@ -19,4 +19,4 @@ MonoBehaviour:
   isTreasure: 0
   maxUses: 1
   entityPrefab: {fileID: 0}
-  backpackPrefab: {fileID: 6342774761034269738, guid: fc0241bc88f1f44ca941ce24a11b41f3, type: 3}
+  backpackPrefab: {fileID: 7486104915482128872, guid: a5a74c5932ff44d58a31a4474e1fff4b, type: 3}

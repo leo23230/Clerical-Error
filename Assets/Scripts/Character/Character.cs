@@ -53,7 +53,7 @@ public class Character : MonoBehaviour
         sortingGroup = GetComponent<SortingGroup>();
         sprite = transform.Find("Sprite").gameObject;
         //animator = sprite.GetComponent<Animator>();
-        if (sprite != null) animator = sprite.GetComponent<Animator>();
+
 
         //Alert//
         Transform alertCanvasTransform = GameObject.Find("AlertCanvas").transform;
@@ -61,6 +61,8 @@ public class Character : MonoBehaviour
         alertObject = Instantiate(alertPrefab, alertCanvasTransform);
         
         alertMonobehaviour = alertObject.GetComponent<AlertMonobehaviour>();
+
+        if (sprite != null) animator = sprite.GetComponent<Animator>();
     }
 
     private void Start()

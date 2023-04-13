@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b766356489aa5146aad828bc3d3330c, type: 3}
   m_Name: CharacterDetails_Barbarian
   m_EditorClassIdentifier: 
-  characterName: Barbarian
+  characterName: Sword Singer
   characterPrefab: {fileID: 463899782032013103, guid: 8cda00dd8aab2e84c89327823f8c3ec3, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 100
-  characterSpeed: 11
+  characterSpeed: 7
   characterArmorClass: 0.8
   characterAttackMax: 2
   characterAttackMin: 1
