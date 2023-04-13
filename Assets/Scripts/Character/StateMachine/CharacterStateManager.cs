@@ -240,6 +240,8 @@ public class CharacterStateManager : MonoBehaviour
 
         InstantiateEffectPrefab(hitEffect);
 
+        character.alertMonobehaviour.UpdateSprite(character.healthComponent.GetHealth());
+
     }
 
     public GameObject InstantiateEffectPrefab(GameObject _prefab)
@@ -263,6 +265,9 @@ public class CharacterStateManager : MonoBehaviour
     public void Heal(int _amt)
     {
         character.healthComponent.AddHealth(_amt);
+
+        character.alertMonobehaviour.UpdateSprite(character.healthComponent.GetHealth());
+
         InstantiateEffectPrefab(healEffect);
     }
 

@@ -17,12 +17,12 @@ public class MainButton : MonoBehaviour
     private Image Image;
 
     //animation triggers//
-    private string normal;
+    /*private string normal;
     private string highlighted;
     private string selected;
 
     private float deactivateTimer = 0f;
-    private float deactivateTimerSet = 0.2f;
+    private float deactivateTimerSet = 0.2f;*/
 
     private void OnEnable()
     {

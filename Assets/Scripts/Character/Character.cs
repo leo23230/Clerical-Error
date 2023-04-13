@@ -37,6 +37,11 @@ public class Character : MonoBehaviour
     [HideInInspector] public Rigidbody2D characterRigidbody;
     [HideInInspector] public SortingGroup sortingGroup;
 
+    //attached
+    public GameObject alertPrefab;
+    [HideInInspector] public GameObject alertObject;
+    [HideInInspector] public AlertMonobehaviour alertMonobehaviour;
+
 
     private void Awake()
     {
@@ -49,11 +54,23 @@ public class Character : MonoBehaviour
         sprite = transform.Find("Sprite").gameObject;
         //animator = sprite.GetComponent<Animator>();
         if (sprite != null) animator = sprite.GetComponent<Animator>();
+
+        //Alert//
+        Transform alertCanvasTransform = GameObject.Find("AlertCanvas").transform;
+
+        alertObject = Instantiate(alertPrefab, alertCanvasTransform);
+        
+        alertMonobehaviour = alertObject.GetComponent<AlertMonobehaviour>();
     }
 
     private void Start()
     {
 
+    }
+
+    private void Update()
+    {
+        alertMonobehaviour.UpdatePosition(transform.position.x);
     }
 
     /// <summary>
