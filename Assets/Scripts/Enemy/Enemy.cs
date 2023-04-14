@@ -75,6 +75,17 @@ public class Enemy : MonoBehaviour
         healthComponent.SetStartingHealth(health);
     }
 
+    public void TakeDamage(int _amt)
+    {
+        healthComponent.SubtractHealth(_amt);
+
+        if(healthComponent.GetHealth() <= 0)
+        {
+            LevelSequencer.Instance.UpdateEnemyList(gameObject);
+            Destroy(gameObject);
+        }
+    }
+
     private void AttackCharacters()
     {
         if (damageTimer > 0f)

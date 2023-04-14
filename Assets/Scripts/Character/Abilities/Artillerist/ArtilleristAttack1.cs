@@ -12,14 +12,14 @@ public class ArtilleristAttack1 : Ability
         coolDownTime = 20f;
     }
 
-    private void updateCoolDownBar(CooldownBarManager CDBarManager) 
+    private void updateCoolDownBar(CooldownBarManager CDBarManager)
     {
     }
 
     public override void useAbility(GameObject target, int buff)
     {
-        Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage + buff);
+        Enemy targetEnemyComponent = target.GetComponent<Enemy>();
+        targetEnemyComponent.TakeDamage(attackDamage + buff);
         setCoolDownTimer();
     }
 }

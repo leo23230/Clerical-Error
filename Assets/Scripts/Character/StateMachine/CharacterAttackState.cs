@@ -50,8 +50,6 @@ public class CharacterAttackState : CharacterBaseState
         {
             characterSM.walkState.EnterState(characterSM);
         }
-
-
         
     }
 

@@ -14,8 +14,8 @@ public class LightAttack : Ability
 
     public override void useAbility(GameObject target, int buff)
     {
-        Health targetHealthComponent = target.GetComponent<Health>();
-        targetHealthComponent.SubtractHealth(attackDamage + buff);
+        Enemy targetEnemyComponent = target.GetComponent<Enemy>();
+        targetEnemyComponent.TakeDamage(attackDamage + buff);
         setCoolDownTimer();
     }
 }

@@ -249,7 +249,7 @@ public class Item: MonoBehaviour
                         //break
                         InstantiateEffectPrefab(breakEffect);
 
-                        ScreenShake.Instance.ShakeCamera(4f, .1f, true);
+                        ScreenShake.Instance.ShakeCamera(10f, .2f, true);
 
                         StaticEventHandler.CallItemDestroyedEvent(gameObject);
 
@@ -257,6 +257,9 @@ public class Item: MonoBehaviour
                     }
                     else
                     {
+
+                        ScreenShake.Instance.ShakeCamera(1f, .1f, false);
+
                         InstantiateEffectPrefab(dinkEffect);
                     }
                     

@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Sprite
   - FxTemporaire
+  - EnemySpawn
   layers:
   - Default
   - TransparentFX

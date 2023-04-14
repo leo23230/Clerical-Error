@@ -63,30 +63,35 @@ public class AlertMonobehaviour : MonoBehaviour
     {
         if(_animation == lowHealthAnimatorBool)
         {
-            animator.SetBool(lowHealthAnimatorBool, true);
+            
             animator.SetBool(criticalAnimatorBool, false);
             animator.SetBool(deadAnimatorBool, false);
             animator.SetBool(fineAnimatorBool, false);
+
+            animator.SetBool(lowHealthAnimatorBool, true);
         }
         else if(_animation == criticalAnimatorBool)
         {
-            animator.SetBool(lowHealthAnimatorBool, false);
-            animator.SetBool(criticalAnimatorBool, true);
+            animator.SetBool(lowHealthAnimatorBool, false); 
             animator.SetBool(deadAnimatorBool, false);
             animator.SetBool(fineAnimatorBool, false);
+
+            animator.SetBool(criticalAnimatorBool, true);
         }
         else if (_animation == deadAnimatorBool)
         {
             animator.SetBool(lowHealthAnimatorBool, false);
             animator.SetBool(criticalAnimatorBool, false);
-            animator.SetBool(deadAnimatorBool, true);
             animator.SetBool(fineAnimatorBool, false);
+
+            animator.SetBool(deadAnimatorBool, true);
         }
         else if (_animation == fineAnimatorBool)
         {
             animator.SetBool(lowHealthAnimatorBool, false);
             animator.SetBool(criticalAnimatorBool, false);
             animator.SetBool(deadAnimatorBool, false);
+
             animator.SetBool(fineAnimatorBool, true);
         }
     }
