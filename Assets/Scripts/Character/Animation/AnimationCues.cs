@@ -14,6 +14,12 @@ public class AnimationCues : MonoBehaviour
     public void SetIsAttackingToFalse()
     {
         animator.SetBool("isAttacking", false);
+        //SetIsReadyingToTrue();
+    }
+
+    public void SetIsReadyingToTrue()
+    {
+        animator.SetBool("isReadying", true);
     }
 
     public void SetIsReadyingToFalse()

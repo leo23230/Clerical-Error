@@ -48,7 +48,10 @@ public class CharacterAttackState : CharacterBaseState
         }
         else
         {
-            characterSM.walkState.EnterState(characterSM);
+            if (!characterSM.character.animator.GetBool("isReadying"))
+            {
+                characterSM.walkState.EnterState(characterSM);
+            }
         }
         
     }

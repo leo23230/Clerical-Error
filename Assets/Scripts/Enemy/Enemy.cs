@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
 
         if(healthComponent.GetHealth() <= 0)
         {
-            LevelSequencer.Instance.UpdateEnemyList(gameObject);
+            //LevelSequencer.Instance.UpdateEnemyList(gameObject);
             Destroy(gameObject);
         }
     }

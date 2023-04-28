@@ -9,6 +9,8 @@ public class CharacterDeadState : CharacterBaseState
         if (characterSM.animator != null)
         {
             characterSM.animator.SetBool("isRunning", false);
+            characterSM.animator.SetBool("isReadying", false);
+            characterSM.animator.SetBool("isAttacking", false);
         }
 
         characterSM.InstantiateEffectPrefab(characterSM.deathEffect);
@@ -20,7 +22,7 @@ public class CharacterDeadState : CharacterBaseState
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
-
+        if(characterSM.character.sortingGroup.sortingLayerName != "Dead")characterSM.character.sortingGroup.sortingLayerName = "Dead";
     }
 }
 

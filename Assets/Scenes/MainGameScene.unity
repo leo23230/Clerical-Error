@@ -1941,7 +1941,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &709130614
@@ -2561,6 +2561,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6812353130048190523, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
+  enemyPrefabs:
+  - {fileID: 2241373679411527533, guid: 776ed4e464b2b2e47b0e126335e129de, type: 3}
+  - {fileID: 2241373679411527533, guid: 00dd3fb5f3b007644b32eab0a1e56a0a, type: 3}
+  - {fileID: 2241373679411527533, guid: 3119e262911a9994f8cbd4340b25135e, type: 3}
   currentEnemies: []
   enemySpawnPoints:
   - {fileID: 157361967}
@@ -4571,7 +4575,7 @@ SpriteRenderer:
   m_Size: {x: 8, y: 8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1934600870

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 public class CharacterStateManager : MonoBehaviour
 {
@@ -332,6 +333,22 @@ public class CharacterStateManager : MonoBehaviour
         {
             StartCoroutine(HealOverTime(5, 8f));
         }
+    }
+
+    public bool IsPlayingLayer(int layerIndex)
+    {
+        return character.animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime % 1.0f < 1.0f;
+    }
+
+    public async void SwitchAnimation(string newAnimationBool)
+    {
+        //we want to wait until the animator is finished with it's current animation
+        while (IsPlayingLayer(0))
+        {
+            await Task.Yield();
+        }
+
+        character.animator.SetBool(newAnimationBool, true);
     }
 
     public bool NotDead()

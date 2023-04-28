@@ -8,6 +8,7 @@ public class LevelSequencer : MonoBehaviour
     public static LevelSequencer Instance { get; private set; }
 
     public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs;
     [HideInInspector] public List<GameObject> currentEnemies;
     bool currentEnemyWaveDead;
 
@@ -60,7 +61,11 @@ public class LevelSequencer : MonoBehaviour
 
             Vector3 selectedSpawn = enemySpawnPoints[i].transform.position;
 
-            GameObject newEnemy = Instantiate(enemyPrefab);
+            int randIndexForPrefabs = HelperUtilities.RandInt(0f, enemyPrefabs.Count-1);
+
+            GameObject selectedPrefab = enemyPrefabs[randIndexForPrefabs];
+
+            GameObject newEnemy = Instantiate(selectedPrefab);
 
             newEnemy.transform.position = new Vector3(selectedSpawn.x, selectedSpawn.y, newEnemy.transform.position.z);
 
