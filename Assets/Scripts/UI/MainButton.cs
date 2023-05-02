@@ -27,6 +27,7 @@ public class MainButton : MonoBehaviour
     private void OnEnable()
     {
         StaticEventHandler.BagRummageEvent += StartTimedDeactivate;
+        StaticEventHandler.CraftingEvent += StartTimedDeactivate;
         StaticEventHandler.ExitMiniGameEvent += ActivateSelf;
     }
 
@@ -90,6 +91,10 @@ public class MainButton : MonoBehaviour
     }*/
 
     public void StartTimedDeactivate(BagRummageEventArgs eventArgs)
+    {
+        StartCoroutine(TimedDeactivate());
+    }
+    public void StartTimedDeactivate(CraftingEventArgs eventArgs)
     {
         StartCoroutine(TimedDeactivate());
     }

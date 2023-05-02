@@ -10,6 +10,10 @@ public class UIEventInvoker : MonoBehaviour
     {
         StaticEventHandler.CallBagRummageEvent();
     }
+    public void callCrafitngEvent()
+    {
+        StaticEventHandler.CallCraftingEvent();
+    }
     public void callExitMiniGameEvent()
     {
         StaticEventHandler.CallExitMiniGameEvent();

@@ -6,14 +6,22 @@ using System;
 public static class StaticEventHandler
 {
     public static event Action<BagRummageEventArgs> BagRummageEvent;
+    public static event Action<CraftingEventArgs> CraftingEvent;
     public static event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
     public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
     public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
     public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
+    public static event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
+    public static event Action<EnemyDiedEventArgs> EnemyDiedEvent;
+
 
     public static void CallBagRummageEvent()
     {
         BagRummageEvent?.Invoke(new BagRummageEventArgs() { });
+    }
+    public static void CallCraftingEvent()
+    {
+        CraftingEvent?.Invoke(new CraftingEventArgs() { });
     }
     public static void CallExitMiniGameEvent()
     {
@@ -33,11 +41,25 @@ public static class StaticEventHandler
         ItemDestroyedEvent?.Invoke(new ItemDestroyedEventArgs() {item = item});
     }
 
+    public static void CallEnemySpawnedEvent()
+    {
+        EnemySpawnedEvent?.Invoke(new EnemySpawnedEventArgs() { });
+    }
+
+    public static void CallEnemyDiedEvent()
+    {
+        EnemyDiedEvent?.Invoke(new EnemyDiedEventArgs() { });
+    }
+
 }
 
 public class BagRummageEventArgs : EventArgs
 {
     
+}
+public class CraftingEventArgs : EventArgs
+{
+
 }
 public class ExitMiniGameEventArgs : EventArgs
 {
@@ -63,4 +85,14 @@ public class ConsumableUsedEventArgs : EventArgs
 public class ItemDestroyedEventArgs : EventArgs
 {
     public GameObject item;
+}
+
+public class EnemySpawnedEventArgs : EventArgs
+{
+    
+}
+
+public class EnemyDiedEventArgs : EventArgs
+{
+
 }

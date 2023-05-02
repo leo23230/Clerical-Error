@@ -9,6 +9,7 @@ public class BackpackManager : MonoBehaviour
     private Inventory inventoryComponent;
     private Transform parentTransform;
     private BackpackUIManager BPUIManager;
+    private Transform miniGameParent;
     private float yOffset;
 
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
@@ -40,6 +41,8 @@ public class BackpackManager : MonoBehaviour
         inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
         parentTransform = GameObject.Find("BackPackMiniGame").transform;
         BPUIManager = GameObject.Find("BackpackUI").GetComponent<BackpackUIManager>();
+
+        miniGameParent = GameObject.Find("BackPackMiniGame").transform;
     }
 
     private void OnEnable()
@@ -80,6 +83,7 @@ public class BackpackManager : MonoBehaviour
             Vector3 startingPos = new Vector3(randX, randY, 0f);
             //set starting position
             item.transform.position = startingPos;
+            item.transform.SetParent(miniGameParent);
 
             if (i < maxLayerItems)
             {

@@ -13,6 +13,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
             draggableItem.parentAfterDrag = transform;
         }
+        else if(transform.childCount >= 1)
+        {
+            //if it has a slot number, swamp them
+
+            //if not its coming from the pot
+            //so it will snap to the next available slot
+        }
        
     }
 }

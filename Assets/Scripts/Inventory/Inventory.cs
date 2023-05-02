@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
             foreach (InventoryItem inventoryItem in inventory)
             {
                 if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt +=1;
-                if (inventoryItem.itemDetails.itemName == "Papariko Insence") speedAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "Papariko Incense") speedAmt += 1;
                 if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt += 1;
                 if (inventoryItem.itemDetails.itemName == "Herbal Salve") salveAmt += 1;
             }

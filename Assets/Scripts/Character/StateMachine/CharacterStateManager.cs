@@ -53,6 +53,17 @@ public class CharacterStateManager : MonoBehaviour
 
         target = SelectEnemy();
     }
+
+    private void OnEnable()
+    {
+        StaticEventHandler.EnemyDiedEvent += ChooseEnemyUponEnemyDeath;
+    }
+
+    private void OnDisable()
+    {
+        StaticEventHandler.EnemyDiedEvent -= ChooseEnemyUponEnemyDeath;
+    }
+
     void Start()
     {
         //stat cahce//
@@ -121,11 +132,19 @@ public class CharacterStateManager : MonoBehaviour
         {
             if (enemy.GetComponent<Health>().GetHealth() > 0)
             {
-                aliveEnemies.Add(enemy);
+                if (!aliveEnemies.Contains(enemy))
+                {
+                    aliveEnemies.Add(enemy);
+                }
             }
         }
 
         return aliveEnemies;
+    }
+
+    public void ChooseEnemyUponEnemyDeath(EnemyDiedEventArgs eventArgs)
+    {
+        target = SelectEnemy();
     }
 
     public bool CharacterIsWithinRange()

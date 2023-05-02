@@ -32,4 +32,6 @@ public class ItemDetailsSO : ScriptableObject
     public GameObject entityPrefab;
 
     public GameObject backpackPrefab;
+
+    public GameObject craftingPrefab;
 }

@@ -11,13 +11,15 @@ public class BackButton : MonoBehaviour
     private void OnEnable()
     {
         StaticEventHandler.BagRummageEvent += ActivateSelf;
+        StaticEventHandler.CraftingEvent += ActivateSelf;
         StaticEventHandler.ExitMiniGameEvent += DeactivateSelf;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.BagRummageEvent += ActivateSelf;
-        StaticEventHandler.ExitMiniGameEvent += DeactivateSelf;
+/*        StaticEventHandler.BagRummageEvent -= ActivateSelf;
+        StaticEventHandler.CraftingEvent -= ActivateSelf;*/
+        StaticEventHandler.ExitMiniGameEvent -= DeactivateSelf;
     }
 
     // Start is called before the first frame update
@@ -43,7 +45,11 @@ public class BackButton : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void ActivateSelf(BagRummageEventArgs eventArgs)
+    public void ActivateSelf(BagRummageEventArgs backpackArgs)
+    {
+        gameObject.SetActive(true);
+    }
+    public void ActivateSelf(CraftingEventArgs craftingArgs)
     {
         gameObject.SetActive(true);
     }
