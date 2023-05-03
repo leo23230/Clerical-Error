@@ -63,17 +63,35 @@ public class BackpackManager : MonoBehaviour
     {
         SetYOffset();
         playerInventory = inventoryComponent.inventory;
-        //Genereate Items from prefabs
-        for (int i = 0; i < maxItems - 4; i++)
-        {
-            int rand = HelperUtilities.RandInt(0f, (float)playerInventory.Count-1);
 
+        //A temporary list used to initially add all of the inventory items into the backpack//
+
+        List<ItemDetailsSO> backPackInventory = new List<ItemDetailsSO>();
+
+        foreach(InventoryItem inventoryItem in playerInventory)
+        {
+            if (inventoryItem.quantity > 1)
+            {
+                for (int i = 0; i < inventoryItem.quantity; i++)
+                {
+                    backPackInventory.Add(inventoryItem.itemDetails);
+                }
+            }
+            else
+            {
+                backPackInventory.Add(inventoryItem.itemDetails);
+            }
+        }
+
+        //Genereate Items from prefabs
+        for (int i = 0; i < backPackInventory.Count; i++)
+        {
             //instantiate the prefab
-            GameObject itemPrefab = playerInventory[i].itemDetails.backpackPrefab;
+            GameObject itemPrefab = backPackInventory[i].backpackPrefab;
             GameObject item = Instantiate(itemPrefab);
 
             Item itemComponent = item.GetComponent<Item>();
-            ItemDetailsSO selectedItemDetails = playerInventory[i].itemDetails;
+            ItemDetailsSO selectedItemDetails = backPackInventory[i];
 
             itemComponent.InitializeItem(selectedItemDetails);
 

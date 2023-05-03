@@ -20,3 +20,4 @@ MonoBehaviour:
   maxUses: 1
   entityPrefab: {fileID: 0}
   backpackPrefab: {fileID: 9195122051222814653, guid: 34b2200078b734dc6abcdbea483cfa37, type: 3}
+  craftingPrefab: {fileID: 6788682700312486274, guid: 004ee7196018147a4962da43ec53d7c5, type: 3}

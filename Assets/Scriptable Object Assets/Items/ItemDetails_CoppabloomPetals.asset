@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: ItemDetails_CoppabloomPetals
   m_EditorClassIdentifier: 
   itemName: Coppabloom Petals
+  itemDescription: 
   isConsumable: 0
   isIngredient: 1
   isTreasure: 0
   maxUses: 1
   entityPrefab: {fileID: 0}
   backpackPrefab: {fileID: 4908390268069130214, guid: af31541a1ac764fe9b354cb7dcd913ba, type: 3}
+  craftingPrefab: {fileID: 3247704017549528425, guid: 41dc17543b5bd4a08a9ed40744bb6965, type: 3}

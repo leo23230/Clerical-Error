@@ -7,6 +7,7 @@ public class CookingPot : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log("Item Dropped In Pot");
         if (transform.childCount <= 3)
         {
             GameObject dropped = eventData.pointerDrag;

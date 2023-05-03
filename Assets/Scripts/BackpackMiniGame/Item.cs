@@ -291,7 +291,7 @@ public class Item: MonoBehaviour
 
     public void InstantiateEffectPrefab(GameObject _prefab)
     {
-        Debug.Log("making effect");
+
         GameObject effectObject = Instantiate(_prefab);
 
         float yOffset = 0f;

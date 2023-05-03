@@ -10,6 +10,7 @@ public static class StaticEventHandler
     public static event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
     public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
     public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
+    public static event Action<ItemCraftedEventArgs> ItemCraftedEvent;
     public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
     public static event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
     public static event Action<EnemyDiedEventArgs> EnemyDiedEvent;
@@ -34,6 +35,11 @@ public static class StaticEventHandler
     public static void CallConsumableUsedEvent(CharacterStateManager _character)
     {
         ConsumableUsedEvent?.Invoke(new ConsumableUsedEventArgs() {character = _character});
+    }
+
+    public static void CallItemCraftedEvent(List<ItemDetailsSO> _items)
+    {
+        ItemCraftedEvent?.Invoke(new ItemCraftedEventArgs() { items = _items });
     }
 
     public static void CallItemDestroyedEvent(GameObject item)
@@ -80,6 +86,11 @@ public class ItemSelectedEventArgs : EventArgs
 public class ConsumableUsedEventArgs : EventArgs
 {
     public CharacterStateManager character;
+}
+
+public class ItemCraftedEventArgs : EventArgs
+{
+    public List<ItemDetailsSO> items;
 }
 
 public class ItemDestroyedEventArgs : EventArgs

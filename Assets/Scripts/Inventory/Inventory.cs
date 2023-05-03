@@ -12,7 +12,8 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        InitializeInventory();
+        InitializeInventory(24);
+        PrintInventory();
     }
 
     void Start()
@@ -37,11 +38,10 @@ public class Inventory : MonoBehaviour
         StaticEventHandler.ConsumableUsedEvent -= UseHandItem;
     }
 
-    void InitializeInventory()
+    void InitializeInventory(int numItems)
     {
         
         //populate this inventory with 24 random objects
-        int numItems = 24;
         for (int i = 0; i < numItems; i++)
         {
 
@@ -52,13 +52,13 @@ public class Inventory : MonoBehaviour
             int salveAmt = 0;
             foreach (InventoryItem inventoryItem in inventory)
             {
-                if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt +=1;
-                if (inventoryItem.itemDetails.itemName == "Papariko Incense") speedAmt += 1;
-                if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt += 1;
-                if (inventoryItem.itemDetails.itemName == "Herbal Salve") salveAmt += 1;
+                if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Papariko Incense") speedAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Herbal Salve") salveAmt = inventoryItem.quantity;
             }
 
-            Debug.Log(healAmt);
+            //Debug.Log(healAmt);
 
             ItemDetailsSO randItem;
 
@@ -86,13 +86,7 @@ public class Inventory : MonoBehaviour
             /*int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
             ItemDetailsSO randItem = allItems[rand];*/
 
-            //Create an inventory item from it
-            InventoryItem item = new InventoryItem();
-            item.itemDetails = randItem;
-            item.quantity = 1;
-
-            //add the inventory item
-            inventory.Add(item);
+            AddItem(randItem);
         }
     }
 
@@ -103,22 +97,24 @@ public class Inventory : MonoBehaviour
 
         //this is for the future
 
-        /*for (int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < inventory.Count; i++)
         {
             InventoryItem inventoryItem = inventory[i];
 
             if (inventoryItem.itemDetails.name == _item.name)
             {
-                    inventoryItem.quantity += 1;
+
+                //only because I used structs and i cannot directly change the quantity on it through the list
+                InventoryItem updatedInventoryItem = new InventoryItem();
+                updatedInventoryItem.itemDetails = _item;
+                updatedInventoryItem.quantity = inventoryItem.quantity += 1;
+
+                inventory[i] = updatedInventoryItem;
+                return;
             }
-            else
-            {
-                InventoryItem newInventoryItem = new InventoryItem();
-                newInventoryItem.itemDetails = _item;
-                newInventoryItem.quantity = 1;
-                inventory.Add(newInventoryItem);
-            }
-        }*/
+        }
+
+        //if the item is not incremented, it is added here as a new entry/
         InventoryItem newInventoryItem = new InventoryItem();
         newInventoryItem.itemDetails = _item;
         newInventoryItem.quantity = 1;
@@ -137,10 +133,12 @@ public class Inventory : MonoBehaviour
                 if (inventoryItem.quantity > 1)
                 {
                     inventoryItem.quantity -= 1;
+                    break;
                 }
                 else
                 {
                     inventory.Remove(inventoryItem);
+                    break;
                 }
             }
         }
@@ -150,6 +148,8 @@ public class Inventory : MonoBehaviour
     {
         Item itemComponent = eventArgs.item.GetComponent<Item>();
         RemoveItem(itemComponent.itemName);
+
+        PrintInventory();
     }
 
     public void SetHandItem(ItemSelectedEventArgs eventArgs)
@@ -202,6 +202,13 @@ public class Inventory : MonoBehaviour
         //reset variables
         itemInHand = null;
         handItemBackpackObject = null;
-        
+    }
+
+    private void PrintInventory()
+    {
+        foreach (InventoryItem item in inventory)
+        {
+            Debug.Log(item.itemDetails.name + ": " + item.quantity);
+        }
     }
 }
