@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.UI;
 
 public class CraftingManager : MonoBehaviour
 {
     //refs//
     public Transform hotBar;
     public Transform cookingPot;
+    public Image CookingTimerBar;
     private Player player;
     private Inventory inventoryComponent;
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
@@ -24,6 +25,15 @@ public class CraftingManager : MonoBehaviour
         {
             inventorySlots.Add(child);
         }
+    }
+
+    private void OnEnable()
+    {
+        StaticEventHandler.StartedCraftingEvent += DestroyIngredients;
+    }
+    private void OnDisable()
+    {
+        StaticEventHandler.StartedCraftingEvent -= DestroyIngredients;
     }
 
     // Start is called before the first frame update
@@ -64,26 +74,48 @@ public class CraftingManager : MonoBehaviour
 
             DraggableItem[] draggableItems = cookingPot.GetComponentsInChildren<DraggableItem>();
 
-            List<string> craftingItems = new List<string>();
+            List<string> craftingItemNames = new List<string>();
+            List<ItemDetailsSO> craftingIngredients = new List<ItemDetailsSO>();
 
             foreach(DraggableItem draggable in draggableItems)
             {
-                craftingItems.Add(draggable.itemDetails.itemName);
+                craftingItemNames.Add(draggable.itemDetails.itemName);
+                craftingIngredients.Add(draggable.itemDetails);
             }
 
-            craftingItems.Sort();
+            craftingItemNames.Sort();
 
             foreach (RecipeSO recipe in craftingRecipes)
             {
                 List<string> poop = recipe.GetSortedListOfIngredients();
 
-                if (MatchesRecipe(craftingItems, recipe.GetSortedListOfIngredients()))
+                if (MatchesRecipe(craftingItemNames, recipe.GetSortedListOfIngredients()))
                 {
-                    Debug.Log("Crafted: " + recipe.output.itemName);
+                    Debug.Log("Crafting: " + recipe.output.itemName);
+                    StartCoroutine(StartCrafting(craftingIngredients, recipe.output, recipe.craftingDuration));
                     break;
                 }
             }
         }
+    }
+
+    private IEnumerator StartCrafting(List<ItemDetailsSO> _ingredients, ItemDetailsSO _output, float _craftingDuration)
+    {
+        float duration = _craftingDuration;
+        float normalizedTime = 0;
+
+        StaticEventHandler.CallStartedCraftingEvent(_ingredients);
+
+        while (normalizedTime <= 1f)
+        {
+            CookingTimerBar.fillAmount = normalizedTime;
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+
+        StaticEventHandler.CallItemCraftedEvent(_ingredients, _output);
+
+        yield break;
     }
 
     public Transform FindAvailableInventorySlot()
@@ -111,12 +143,20 @@ public class CraftingManager : MonoBehaviour
         return true;
     }
 
-    private void DestroyIngredients()
+    private void DestroyIngredients(StartedCraftingEventArgs eventArgs)
     {
 
         //This will respond to an ItemCraftedEvent
 
+        for(int i = 0; i < cookingPot.childCount; i++)
+        {
+            Debug.Log(cookingPot.GetChild(i).name);
+            Destroy(cookingPot.GetChild(i).gameObject);
+        }
+
         //The inventory component will remove one of each item from the player's inventory
+
+        //We must disable the hot bar and crockpot
 
         //Once the ingredients are removed from the inventory,
         //The backpack will be responsible for removing those items

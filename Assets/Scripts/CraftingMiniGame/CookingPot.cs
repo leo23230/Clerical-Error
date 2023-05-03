@@ -5,15 +5,36 @@ using UnityEngine.EventSystems;
 
 public class CookingPot : MonoBehaviour, IDropHandler
 {
+    bool isCooking = false;
+
+    private void OnEnable()
+    {
+        StaticEventHandler.StartedCraftingEvent += DisableCookingPot;
+        StaticEventHandler.ItemCraftedEvent += EnableCookingPot;
+    }
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("Item Dropped In Pot");
-        if (transform.childCount <= 3)
+        if (!isCooking)
         {
-            GameObject dropped = eventData.pointerDrag;
-            DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
-            draggableItem.parentAfterDrag = transform;
+            //Debug.Log("Item Dropped In Pot");
+            if (transform.childCount <= 3)
+            {
+                GameObject dropped = eventData.pointerDrag;
+                DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
+                draggableItem.parentAfterDrag = transform;
+            }
         }
+        
+    }
+
+    private void DisableCookingPot(StartedCraftingEventArgs eventArgs)
+    {
+        isCooking = true;
+    }
+
+    private void EnableCookingPot(ItemCraftedEventArgs eventArgs)
+    {
+        isCooking = false;
     }
 }
 

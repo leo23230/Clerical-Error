@@ -17,3 +17,4 @@ MonoBehaviour:
   ingredient02: {fileID: 0}
   ingredient03: {fileID: 0}
   ingredient04: {fileID: 0}
+  craftingDuration: 5

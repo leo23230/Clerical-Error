@@ -50,6 +50,8 @@ public class BackpackManager : MonoBehaviour
         StaticEventHandler.ItemSelectedEvent += RemoveItemFromBackpack;
         StaticEventHandler.ConsumableUsedEvent += useConsumable;
         StaticEventHandler.ItemDestroyedEvent += removeDestroyedItem;
+        StaticEventHandler.StartedCraftingEvent += removeCraftingIngredients;
+        StaticEventHandler.ItemCraftedEvent += addCraftedConsumable;
     }
 
     private void OnDisable()
@@ -57,6 +59,8 @@ public class BackpackManager : MonoBehaviour
         StaticEventHandler.ItemSelectedEvent -= RemoveItemFromBackpack;
         StaticEventHandler.ConsumableUsedEvent -= useConsumable;
         StaticEventHandler.ItemDestroyedEvent -= removeDestroyedItem;
+        StaticEventHandler.StartedCraftingEvent -= removeCraftingIngredients;
+        StaticEventHandler.ItemCraftedEvent -= addCraftedConsumable;
     }
 
     void Start()
@@ -134,6 +138,27 @@ public class BackpackManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void InstantiateBackpackObject(GameObject _prefab, ItemDetailsSO _details)
+    {
+        //instantiate the prefab
+        GameObject itemPrefab = _prefab;
+        GameObject item = Instantiate(itemPrefab);
+
+        Item itemComponent = item.GetComponent<Item>();
+
+        itemComponent.InitializeItem(_details);
+
+        //get a random x and y for starting Position
+        float randX = Random.Range(-8f, 8f);
+        float randY = Random.Range(-4f, 4f) + yOffset;
+        Vector3 startingPos = new Vector3(randX, randY, 0f);
+        //set starting position
+        item.transform.position = startingPos;
+        item.transform.SetParent(miniGameParent);
+
+        AddItemToBackpack(item);
     }
 
     public void ReorganizeItemsIntoLayers(GameObject selectedItem)
@@ -220,13 +245,13 @@ public class BackpackManager : MonoBehaviour
         DetermineLayer(_item);
         UnlockBackpackItems();
 
+        //if the item was in the hand
         if (inventoryComponent.GetHandItem() != null)
         {
             //Get Item Details to pass to player inventory
             ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
             PutBackHandItem(itemDetails);
         }
-
 
     }
 
@@ -250,7 +275,7 @@ public class BackpackManager : MonoBehaviour
     public void RemoveItemFromBackpackReg(GameObject _item)
     {
         backpackObjects.Remove(_item);
-        SetItemLayers(_item, offHandLayer, offHandSortingLayer);
+        Destroy(_item);
 
         // SetPlayerInventoryHandItem(_itemDetails);
     }
@@ -313,5 +338,29 @@ public class BackpackManager : MonoBehaviour
     public void removeDestroyedItem(ItemDestroyedEventArgs eventArgs)
     {
         RemoveItemFromBackpackReg(eventArgs.item);
+    }
+    
+    private void removeCraftingIngredients(StartedCraftingEventArgs eventArgs)
+    {
+        Debug.Log("removing ingredients from bag");
+        foreach(ItemDetailsSO ingredient in eventArgs.ingredients)
+        {
+            foreach(GameObject bpObject in backpackObjects){
+                if(bpObject.GetComponent<Item>().itemDetails.itemName == ingredient.itemName)
+                {
+                    Debug.Log("ingredient to remove " + ingredient.itemName);
+                    Debug.Log("matching item detail name " + bpObject.GetComponent<Item>().itemDetails.itemName);
+
+                    Debug.Log("removing " + bpObject.name);
+                    RemoveItemFromBackpackReg(bpObject);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void addCraftedConsumable(ItemCraftedEventArgs eventArgs)
+    {
+        InstantiateBackpackObject(eventArgs.output.backpackPrefab, eventArgs.output);
     }
 }

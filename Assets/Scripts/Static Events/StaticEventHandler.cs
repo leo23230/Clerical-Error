@@ -11,6 +11,7 @@ public static class StaticEventHandler
     public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
     public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
     public static event Action<ItemCraftedEventArgs> ItemCraftedEvent;
+    public static event Action<StartedCraftingEventArgs> StartedCraftingEvent;
     public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
     public static event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
     public static event Action<EnemyDiedEventArgs> EnemyDiedEvent;
@@ -37,9 +38,14 @@ public static class StaticEventHandler
         ConsumableUsedEvent?.Invoke(new ConsumableUsedEventArgs() {character = _character});
     }
 
-    public static void CallItemCraftedEvent(List<ItemDetailsSO> _items)
+    public static void CallItemCraftedEvent(List<ItemDetailsSO> _ingredients, ItemDetailsSO _output)
     {
-        ItemCraftedEvent?.Invoke(new ItemCraftedEventArgs() { items = _items });
+        ItemCraftedEvent?.Invoke(new ItemCraftedEventArgs(_ingredients, _output));
+    }
+
+    public static void CallStartedCraftingEvent(List<ItemDetailsSO> _ingredients)
+    {
+        StartedCraftingEvent?.Invoke(new StartedCraftingEventArgs(_ingredients));
     }
 
     public static void CallItemDestroyedEvent(GameObject item)
@@ -90,7 +96,22 @@ public class ConsumableUsedEventArgs : EventArgs
 
 public class ItemCraftedEventArgs : EventArgs
 {
-    public List<ItemDetailsSO> items;
+    public ItemCraftedEventArgs(List<ItemDetailsSO> _ingredients, ItemDetailsSO _output)
+    {
+        ingredients = _ingredients;
+        output = _output;
+    }
+    public List<ItemDetailsSO> ingredients;
+    public ItemDetailsSO output;
+}
+
+public class StartedCraftingEventArgs : EventArgs
+{
+    public StartedCraftingEventArgs(List<ItemDetailsSO> _ingredients)
+    {
+        ingredients = _ingredients;
+    }
+    public List<ItemDetailsSO> ingredients;
 }
 
 public class ItemDestroyedEventArgs : EventArgs

@@ -35,7 +35,7 @@ public class AlertMonobehaviour : MonoBehaviour
     //temporary function for swapping sprites
     public void UpdateSprite(float _health)
     {
-        Debug.Log(_health);
+        //Debug.Log(_health);
         if (_health > 20f && _health <= 40f)
         {
             Debug.Log("Health Low");

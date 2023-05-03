@@ -25,6 +25,8 @@ public class RecipeSO : ScriptableObject
 
     public ItemDetailsSO ingredient04;
 
+    public float craftingDuration;
+
     public List<string> GetSortedListOfIngredients()
     {
         List<string> list = new List<string>();
@@ -38,7 +40,5 @@ public class RecipeSO : ScriptableObject
 
         return list;
     }
-
-
     //need to get a count of certain items
 }

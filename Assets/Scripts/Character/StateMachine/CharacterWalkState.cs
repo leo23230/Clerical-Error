@@ -8,7 +8,7 @@ public class CharacterWalkState : CharacterBaseState
     private float margin = 0.2f;
     public override void EnterState(CharacterStateManager characterSM)
     {
-        Debug.Log("Entered Run State");
+        //Debug.Log("Entered Run State");
         if (characterSM.animator != null)
         {
             characterSM.animator.SetBool("isRunning", true);

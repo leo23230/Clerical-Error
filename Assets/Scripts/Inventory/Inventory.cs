@@ -30,12 +30,14 @@ public class Inventory : MonoBehaviour
     {
         StaticEventHandler.ItemSelectedEvent += SetHandItem;
         StaticEventHandler.ConsumableUsedEvent += UseHandItem;
+        StaticEventHandler.StartedCraftingEvent += RemoveUsedCraftingIngredients;
     }
 
     private void OnDisable()
     {
         StaticEventHandler.ItemSelectedEvent -= SetHandItem;
         StaticEventHandler.ConsumableUsedEvent -= UseHandItem;
+        StaticEventHandler.StartedCraftingEvent -= RemoveUsedCraftingIngredients;
     }
 
     void InitializeInventory(int numItems)
@@ -128,7 +130,7 @@ public class Inventory : MonoBehaviour
         {
             InventoryItem inventoryItem = inventory[i];
 
-            if (inventoryItem.itemDetails.name == _itemName)
+            if (inventoryItem.itemDetails.itemName == _itemName)
             {
                 if (inventoryItem.quantity > 1)
                 {
@@ -210,5 +212,14 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log(item.itemDetails.name + ": " + item.quantity);
         }
+    }
+
+    private void RemoveUsedCraftingIngredients(StartedCraftingEventArgs eventArgs)
+    {
+        foreach(ItemDetailsSO ingredient in eventArgs.ingredients)
+        {
+            RemoveItem(ingredient.itemName);
+        }
+        PrintInventory();
     }
 }
