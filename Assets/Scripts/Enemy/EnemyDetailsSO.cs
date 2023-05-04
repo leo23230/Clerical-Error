@@ -22,14 +22,14 @@ public class EnemyDetailsSO : ScriptableObject
     public GameObject enemyPrefab;
 
     #region Tooltip
-    [Tooltip("enemy runtime animator controller")]
+    [Tooltip("Enemy attack bool")]
     #endregion
-    public RuntimeAnimatorController runtimeAnimatorController;
+    public string enemyAttackAnimationBoolName;
 
 
     #region Header enemy STATS
     [Space(10)]
-    [Header("enemy STATS")]
+    [Header("ENEMY STATS")]
     #endregion
     #region Header HEALTH
     [Space(10)]
@@ -57,6 +57,12 @@ public class EnemyDetailsSO : ScriptableObject
     [Tooltip("Float (0.5 - 1.0) that is multiplied to incoming damage")]
     #endregion
     public float enemyArmorClass;
+
+    #region Header ATTACKDAMAGE
+    [Space(10)]
+    [Header("ATTACKDAMAGE")]
+    #endregion
+    public float enemyDamage;
 
     #region Header ATTACKRANGE
     [Space(10)]

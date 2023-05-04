@@ -7,13 +7,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4693125087013115120, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 6860765366081180278}
     - target: {fileID: 6344321192824355210, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6812353130048190523, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_Name
-      value: RaiderCrossbow
+      value: XbowRaider
       objectReference: {fileID: 0}
     - target: {fileID: 7903710543149565822, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_RootOrder
@@ -667,3 +671,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b580814f541ad6f4eb42bcb633104fb3, type: 3}
+--- !u!95 &6860765366081180278 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4167079836406848843, guid: b580814f541ad6f4eb42bcb633104fb3, type: 3}
+  m_PrefabInstance: {fileID: 7413528379412664125}
+  m_PrefabAsset: {fileID: 0}

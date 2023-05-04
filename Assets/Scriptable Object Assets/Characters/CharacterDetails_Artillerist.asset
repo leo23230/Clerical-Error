@@ -16,10 +16,10 @@ MonoBehaviour:
   characterPrefab: {fileID: 4966904054944035368, guid: e8413e8c659f18d4bbfe0e5b31d882af, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 90
-  characterSpeed: 5
+  characterSpeed: 4
   characterArmorClass: 0.9
   characterAttackMax: 14
-  characterAttackMin: 10
+  characterAttackMin: 8
   characterAbilityCooldown: 10
   characterAbilities:
   - ArtilleristAttack1

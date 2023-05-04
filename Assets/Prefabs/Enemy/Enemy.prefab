@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 3455390595703611662}
   - component: {fileID: 8406711286886470841}
   - component: {fileID: 4693125087013115120}
+  - component: {fileID: 5474400079515739374}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -302,7 +303,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0056869984, y: 0.472925}
+  m_Offset: {x: -0.013523817, y: 0.3553726}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -313,7 +314,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9440517, y: 1.0236703}
+  m_Size: {x: 1.6149049, y: 0.7885655}
   m_EdgeRadius: 0
 --- !u!60 &3455390595703611662
 PolygonCollider2D:
@@ -322,7 +323,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6812353130048190523}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -381,15 +382,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05115c5f91978394cb71d95f7b3aa35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDetails: {fileID: 0}
   enemyName: 
   speed: 0
+  armorClass: 0
   health: 0
+  attackDamage: 0
+  attackCooldown: 0
+  minDistance: 0
+  maxDistance: 0
+  avgDistance: 0
   dead: 0
   abilities: []
   healthComponent: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  rigidBody: {fileID: 0}
+  sprite: {fileID: 0}
   animator: {fileID: 0}
   damage: 15
+--- !u!114 &5474400079515739374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812353130048190523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15514042b572624aa34a5e05c3b9b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  moveSpeed: 0
+  animator: {fileID: 0}
+  target: {fileID: 0}
+  enemys: []
+  startingPos: {x: 0, y: 0}
 --- !u!1 &7529604458834086328
 GameObject:
   m_ObjectHideFlags: 0

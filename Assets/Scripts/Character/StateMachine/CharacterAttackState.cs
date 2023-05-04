@@ -7,7 +7,14 @@ public class CharacterAttackState : CharacterBaseState
     float attackReadyCoolDown = 0f;
     public override void EnterState(CharacterStateManager characterSM)
     {
-        characterSM.FlipSprite("right");
+        if(characterSM.transform.position.x < characterSM.target.transform.position.x)
+        {
+            characterSM.FlipSprite("right");
+        }
+        else
+        {
+            characterSM.FlipSprite("left");
+        }
 
         if (characterSM.animator != null) characterSM.animator.SetBool("isRunning", false);
 

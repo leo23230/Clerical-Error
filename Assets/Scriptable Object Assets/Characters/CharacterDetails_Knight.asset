@@ -18,8 +18,8 @@ MonoBehaviour:
   characterHealthAmount: 100
   characterSpeed: 3
   characterArmorClass: 0.7
-  characterAttackMax: 3
-  characterAttackMin: 2
+  characterAttackMax: 5
+  characterAttackMin: 3
   characterAbilityCooldown: 2
   characterAbilities:
   - LightAttack

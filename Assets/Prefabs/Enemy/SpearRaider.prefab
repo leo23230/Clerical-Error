@@ -7,13 +7,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4693125087013115120, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 3143489567667452569}
     - target: {fileID: 6344321192824355210, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6812353130048190523, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_Name
-      value: RaiderSpear
+      value: SpearRaider
       objectReference: {fileID: 0}
     - target: {fileID: 7903710543149565822, guid: 1a753140f23a9724a8f60e6159fedb81, type: 3}
       propertyPath: m_RootOrder
@@ -651,3 +655,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fb00babe7bd720469bc1a9e88843f71, type: 3}
+--- !u!95 &3143489567667452569 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7378274382436156228, guid: 3fb00babe7bd720469bc1a9e88843f71, type: 3}
+  m_PrefabInstance: {fileID: 5619100829434657245}
+  m_PrefabAsset: {fileID: 0}

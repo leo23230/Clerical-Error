@@ -6,9 +6,16 @@ public class Enemy : MonoBehaviour
 {
     //Enemy stats
     //[HideInInspector] public EnemyDetailsSO enemyDetails;
+    [HideInInspector] public EnemyDetailsSO enemyDetails;
     [HideInInspector] public string enemyName;
-    [HideInInspector] public int speed;
+    [HideInInspector] public float speed;
+    [HideInInspector] public float armorClass;
     [HideInInspector] public int health = 100;
+    [HideInInspector] public float attackDamage;
+    [HideInInspector] public float attackCooldown;
+    [HideInInspector] public float minDistance;
+    [HideInInspector] public float maxDistance;
+    [HideInInspector] public float avgDistance;
 
     [HideInInspector] public bool dead;
 
@@ -17,7 +24,11 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector] public Health healthComponent;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public Animator animator;
+    [HideInInspector] public Rigidbody2D rigidBody;
+    [HideInInspector] public GameObject sprite;
+
+    public Animator animator;
+
 
     private float damageTimer;
     private float damageTimerSet;
@@ -28,11 +39,8 @@ public class Enemy : MonoBehaviour
         // Load components
         healthComponent = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-
-        //THIS IS TEMPORARY//
-        health = 100;
-        SetEnemyHealth();
+        sprite = transform.Find("Sprite").gameObject;
+        rigidBody = GetComponent<Rigidbody2D>();
 
         damageTimerSet = Random.Range(3f, 8f);
 
@@ -45,7 +53,7 @@ public class Enemy : MonoBehaviour
     {
         if (!dead)
         {
-            AttackCharacters();
+            //AttackCharacters();
         }
 
         if (healthComponent.GetHealth() <= 0) dead = true;
@@ -54,14 +62,18 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialize the Enemy
     /// </summary>
-    public void Initialize(EnemyDetailsSO EnemyDetails)
+    public void Initialize(EnemyDetailsSO enemyDetails)
     {
-        /*this.enemyDetails = enemyDetails;
-        enemyName = EnemyDetails.enemyName;
-        health = EnemyDetails.enemyHealthAmount;
-        speed = EnemyDetails.enemySpeed;
-        armorClass = EnemyDetails.enemyArmorClass;*/
-
+        this.enemyDetails = enemyDetails;
+        enemyName = enemyDetails.enemyName;
+        health = enemyDetails.enemyHealthAmount;
+        speed = enemyDetails.enemySpeed;
+        armorClass = enemyDetails.enemyArmorClass;
+        attackDamage = enemyDetails.enemyDamage;
+        attackCooldown = enemyDetails.enemyAbilityCooldown;
+        maxDistance = enemyDetails.enemyAttackMax;
+        minDistance = enemyDetails.enemyAttackMin;
+        avgDistance = minDistance + ((maxDistance - minDistance) / 2);
 
         // Set Enemy starting health
         SetEnemyHealth();
