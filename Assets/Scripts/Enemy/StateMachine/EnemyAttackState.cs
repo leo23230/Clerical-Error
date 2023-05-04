@@ -32,6 +32,16 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemySM)
     {
+
+        if (enemySM.transform.position.x < enemySM.target.transform.position.x)
+        {
+            enemySM.FlipSprite("left");
+        }
+        else
+        {
+            enemySM.FlipSprite("right");
+        }
+
         if (enemySM.target.GetComponent<Health>().GetHealth() <= 0)
         {
             if (enemySM.FindAliveCharacters().Count > 0)

@@ -11,18 +11,19 @@ public class CharacterDeadState : CharacterBaseState
             characterSM.animator.SetBool("isRunning", false);
             characterSM.animator.SetBool("isReadying", false);
             characterSM.animator.SetBool("isAttacking", false);
+            characterSM.animator.SetBool("isDead", true);
         }
 
         characterSM.InstantiateEffectPrefab(characterSM.deathEffect);
 
-        characterSM.character.sortingGroup.sortingLayerName = "Dead";
+        //characterSM.character.sortingGroup.sortingLayerName = "Dead";
 
         characterSM.currentState = characterSM.deadState;
     }
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
-        if(characterSM.character.sortingGroup.sortingLayerName != "Dead")characterSM.character.sortingGroup.sortingLayerName = "Dead";
+        //if(characterSM.character.sortingGroup.sortingLayerName != "Dead")characterSM.character.sortingGroup.sortingLayerName = "Dead";
     }
 }
 
