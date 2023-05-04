@@ -57,11 +57,13 @@ public class CharacterStateManager : MonoBehaviour
     private void OnEnable()
     {
         StaticEventHandler.EnemyDiedEvent += ChooseEnemyUponEnemyDeath;
+        StaticEventHandler.EnemySpawnedEvent += ChooseEnemyUponEnemySpawn;
     }
 
     private void OnDisable()
     {
         StaticEventHandler.EnemyDiedEvent -= ChooseEnemyUponEnemyDeath;
+        StaticEventHandler.EnemySpawnedEvent -= ChooseEnemyUponEnemySpawn;
     }
 
     void Start()
@@ -146,6 +148,12 @@ public class CharacterStateManager : MonoBehaviour
     {
         target = SelectEnemy();
     }
+
+    public void ChooseEnemyUponEnemySpawn(EnemySpawnedEventArgs eventArgs)
+    {
+        target = SelectEnemy();
+    }
+
 
     public bool CharacterIsWithinRange()
     {

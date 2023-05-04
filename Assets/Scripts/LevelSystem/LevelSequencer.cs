@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelSequencer : MonoBehaviour
 {
@@ -14,15 +15,44 @@ public class LevelSequencer : MonoBehaviour
 
     public List<GameObject> enemySpawnPoints = new List<GameObject>();
 
+    //Levels
+    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 10), new Phase(PhaseType.EnemySpawn, 2), 
+        new Phase(PhaseType.Camping, 20), new Phase(PhaseType.EnemySpawn, 4) };
+
+    int phaseCounter;
+    Phase currentPhase;
+    bool phaseCondition;
+    float phaseTimer;
+    float phaseTimerSet;
+    int enemyCount;
+    bool switchingPhase;
+
+    //UI//
+    public TextMeshProUGUI phaseText;
+
+
     private void Awake()
     {
-        StartCoroutine(Sequence());
+
+    }
+
+    private void OnEnable()
+    {
+        StaticEventHandler.EnemyDiedEvent += UpdateEnemyCount;
+    }
+
+    private void OnDisable()
+    {
+        StaticEventHandler.EnemyDiedEvent -= UpdateEnemyCount;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        enemyCount = 0;
+        phaseCounter = 0;
+        phaseCondition = false;
+        StartCoroutine(Sequence());
     }
 
     // Update is called once per frame
@@ -33,32 +63,66 @@ public class LevelSequencer : MonoBehaviour
 
     IEnumerator Sequence()
     {
-        SpawnEnemies(5);
+        while (phaseCounter != level1.Length)
+        {
+            currentPhase = level1[phaseCounter];
 
-        //yield return new WaitUntil(() => !currentEnemyWaveDead);
+            Debug.Log("Phase " + phaseCounter + " Started");
 
-        //while (!currentEnemyWaveDead) { };
+            InitializePhase(currentPhase.phaseType, currentPhase.phaseData);
 
-        //yield return new WaitForSeconds(60);
+            Debug.Log(currentPhase.phaseType);
 
-        //SpawnEnemies(5);
+            //When the phase condition is met, we will increment the counter and start the next wave
+            while (!phaseCondition)
+            {
+                //We do these things until the phase condition is met
+                if (currentPhase.phaseType == PhaseType.EnemySpawn)
+                {
+                    phaseText.text = "Enemies Incoming!";
 
-        //yield return new WaitUntil(() => !currentEnemyWaveDead);
+                    if (enemyCount <= 0)
+                    {
+                        Debug.Log(enemyCount);
+                        phaseCondition = true;
+                    }
+                }
+                else if (currentPhase.phaseType == PhaseType.Camping)
+                {
+                    if (phaseTimer > 0)
+                    {
+                        phaseTimer -= Time.deltaTime;
+                        phaseText.text = "Camping Time: " + Mathf.Ceil(phaseTimer).ToString();
+                    }
+                    else
+                    {
+                        phaseCondition = true;
+                    }
+                }
 
-        //while (!currentEnemyWaveDead) { };
+                yield return null;
+            };
 
-        yield break;
+            phaseCounter += 1;
+
+            Debug.Log("About To Start Phase " + phaseCounter);
+
+            yield return null;
+        }
+
+        phaseText.text = "Victory!";
     }
 
-    private void SpawnEnemies(int _amt)
+    private void SpawnEnemies(float _amt)
     {
         //reset bool 
         currentEnemyWaveDead = false;
 
         int enemyIndex = 0;
 
-        for (int i=0; i<_amt; i++)
+        for (int i = 0; i < _amt; i++)
         {
+            Debug.Log("Spawning Enemy");
             int randIndex = HelperUtilities.RandInt(0f, enemySpawnPoints.Count);
 
             Vector3 selectedSpawn = enemySpawnPoints[i].transform.position;
@@ -77,18 +141,55 @@ public class LevelSequencer : MonoBehaviour
 
             newEnemy.transform.position = new Vector3(selectedSpawn.x, selectedSpawn.y, newEnemy.transform.position.z);
 
-            currentEnemies.Add(newEnemy);
+            //currentEnemies.Add(newEnemy);
         }
+        StaticEventHandler.CallEnemySpawnedEvent();
+        switchingPhase = false;
     }
 
-    public void UpdateEnemyList(GameObject enemy)
+    public void UpdateEnemyCount(EnemyDiedEventArgs eventArgs)
     {
-        currentEnemies.Remove(enemy);
-        if(currentEnemies.Count == 0)
+        GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemyCount = remainingEnemies.Length - 1;
+        Debug.Log("EnemyCount: " + enemyCount);
+    }
+
+    public void InitializePhase(PhaseType _phaseType, float _phaseData)
+    {
+        phaseCondition = false;
+        if (_phaseType == PhaseType.EnemySpawn)
         {
-            currentEnemyWaveDead = true;
+            SpawnEnemies(currentPhase.phaseData);
+            enemyCount = (int) currentPhase.phaseData;
+        }
+
+        if (_phaseType == PhaseType.Camping)
+        {
+            SetPhaseTimer(currentPhase.phaseData);
         }
     }
 
+    public void SetPhaseTimer(float _timerSet)
+    {
+        phaseTimerSet = _timerSet;
+        phaseTimer = phaseTimerSet;
+        switchingPhase = false;
+    }
 
+    public enum PhaseType
+    {
+        EnemySpawn,
+        Camping,
+    }
+
+    public class Phase
+    {
+        public Phase(PhaseType _phaseType, float _phaseData) 
+        {
+            phaseType = _phaseType;
+            phaseData = _phaseData;
+        }
+        public PhaseType phaseType;
+        public float phaseData;
+    }
 }
