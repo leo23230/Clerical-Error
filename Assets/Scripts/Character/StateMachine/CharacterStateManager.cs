@@ -38,6 +38,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public List<Ability> abilities = new List<Ability>();
     [HideInInspector] public Vector2 startingPos = new Vector2();
     [HideInInspector] public Vector3 effectAnchorPos;
+    [HideInInspector] public GameObject characterCanvas;
     private void Awake()
     {
         //the character component is repsonible for storing
@@ -50,6 +51,8 @@ public class CharacterStateManager : MonoBehaviour
         inventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         effectAnchorPos = transform.Find("EffectAnchor").transform.position;
+
+        characterCanvas = transform.Find("CharacterCanvas").gameObject;
 
         target = SelectEnemy();
     }

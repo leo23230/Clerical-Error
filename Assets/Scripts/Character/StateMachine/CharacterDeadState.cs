@@ -16,6 +16,8 @@ public class CharacterDeadState : CharacterBaseState
 
         characterSM.InstantiateEffectPrefab(characterSM.deathEffect);
 
+        characterSM.characterCanvas.SetActive(false);
+
         //characterSM.character.sortingGroup.sortingLayerName = "Dead";
 
         characterSM.currentState = characterSM.deadState;

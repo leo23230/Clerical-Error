@@ -134,7 +134,12 @@ public class Inventory : MonoBehaviour
             {
                 if (inventoryItem.quantity > 1)
                 {
-                    inventoryItem.quantity -= 1;
+                    InventoryItem updatedItem = new InventoryItem();
+                    updatedItem.itemDetails = inventoryItem.itemDetails;
+                    updatedItem.quantity = inventoryItem.quantity -= 1;
+
+                    inventory[i] = updatedItem;
+
                     break;
                 }
                 else
@@ -218,6 +223,7 @@ public class Inventory : MonoBehaviour
     {
         foreach(ItemDetailsSO ingredient in eventArgs.ingredients)
         {
+            Debug.Log("Removing " + ingredient.itemName + " from inventory");
             RemoveItem(ingredient.itemName);
         }
         PrintInventory();

@@ -30,10 +30,12 @@ public class CraftingManager : MonoBehaviour
     private void OnEnable()
     {
         StaticEventHandler.StartedCraftingEvent += DestroyIngredients;
+        StaticEventHandler.ItemDestroyedEvent += DestroyBrokenIngredients;
     }
     private void OnDisable()
     {
         StaticEventHandler.StartedCraftingEvent -= DestroyIngredients;
+        StaticEventHandler.ItemDestroyedEvent -= DestroyBrokenIngredients;
     }
 
     // Start is called before the first frame update
@@ -41,7 +43,12 @@ public class CraftingManager : MonoBehaviour
     {
         playerInventory = inventoryComponent.inventory;
 
-        foreach(InventoryItem inventoryItem in playerInventory)
+        LoadHotbar();
+    }
+
+    public void LoadHotbar()
+    {
+        foreach (InventoryItem inventoryItem in playerInventory)
         {
             if (inventoryItem.itemDetails.isIngredient)
             {
@@ -53,9 +60,9 @@ public class CraftingManager : MonoBehaviour
 
                 //find an available slot
                 Transform availableSlot = FindAvailableInventorySlot();
-                
+
                 //put the item in the slot
-                if(availableSlot != null)
+                if (availableSlot != null)
                 {
                     newCraftingItem.transform.position = availableSlot.transform.position;
                     newCraftingItem.transform.SetParent(availableSlot.transform);
@@ -87,8 +94,6 @@ public class CraftingManager : MonoBehaviour
 
             foreach (RecipeSO recipe in craftingRecipes)
             {
-                List<string> poop = recipe.GetSortedListOfIngredients();
-
                 if (MatchesRecipe(craftingItemNames, recipe.GetSortedListOfIngredients()))
                 {
                     Debug.Log("Crafting: " + recipe.output.itemName);
@@ -153,14 +158,26 @@ public class CraftingManager : MonoBehaviour
             Debug.Log(cookingPot.GetChild(i).name);
             Destroy(cookingPot.GetChild(i).gameObject);
         }
+    }
 
-        //The inventory component will remove one of each item from the player's inventory
+    private void DestroyBrokenIngredients(ItemDestroyedEventArgs eventArgs)
+    {
+        ItemDetailsSO destroyedItem = eventArgs.item.GetComponent<Item>().itemDetails;
+        List<GameObject> objectsToDestroy = new List<GameObject>();
 
-        //We must disable the hot bar and crockpot
+        //destroy all hotbar objects
 
-        //Once the ingredients are removed from the inventory,
-        //The backpack will be responsible for removing those items
+        foreach(Transform hotbarSlot in inventorySlots)
+        {
+            if(hotbarSlot.childCount > 0)
+            {
+                Destroy(hotbarSlot.GetChild(0).gameObject);
+            }
+        }
 
-        //Then the crafting game objects will be destroyed in this function
+        //reload hotbar
+
+        LoadHotbar();
+
     }
 }

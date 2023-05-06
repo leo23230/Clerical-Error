@@ -40,6 +40,7 @@ public class Item: MonoBehaviour
     public float maxVelocity = 2f;
     public GameObject breakEffect;
     public GameObject dinkEffect;
+    public GameObject craftedEffect;
 
     private void Awake()
     {

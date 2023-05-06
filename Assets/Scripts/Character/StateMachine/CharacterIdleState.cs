@@ -7,6 +7,8 @@ public class CharacterIdleState : CharacterBaseState
     public override void EnterState(CharacterStateManager characterSM)
     {
         characterSM.currentState = characterSM.idleState;
+
+        if(!characterSM.characterCanvas.activeSelf) characterSM.characterCanvas.SetActive(true);
     }
 
     public override void UpdateState(CharacterStateManager characterSM)
