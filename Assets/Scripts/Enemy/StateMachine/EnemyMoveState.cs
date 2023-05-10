@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMoveState : EnemyBaseState
 {
     private bool isAtAvgDistance;
-    private float margin = 0.2f;
+    private float margin = 0.3f;
     public override void EnterState(EnemyStateManager enemySM)
     {
         Debug.Log("Entered Move State");

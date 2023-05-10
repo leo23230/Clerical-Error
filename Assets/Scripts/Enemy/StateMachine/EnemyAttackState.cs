@@ -44,7 +44,7 @@ public class EnemyAttackState : EnemyBaseState
 
         if (enemySM.target.GetComponent<Health>().GetHealth() <= 0)
         {
-            if (enemySM.FindAliveCharacters().Count > 0)
+            if (enemySM.FindAliveCharacters().Count > 0 && enemySM.PlayerIsAlive())
             {
                 enemySM.target = enemySM.SelectCharacter();
             }

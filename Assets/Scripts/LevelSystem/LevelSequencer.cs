@@ -16,8 +16,8 @@ public class LevelSequencer : MonoBehaviour
     public List<GameObject> enemySpawnPoints = new List<GameObject>();
 
     //Levels
-    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 1), new Phase(PhaseType.EnemySpawn, 5), 
-        new Phase(PhaseType.Camping, 20), new Phase(PhaseType.EnemySpawn, 4) };
+    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 2), new Phase(PhaseType.EnemySpawn, 5), 
+        new Phase(PhaseType.Camping, 20), new Phase(PhaseType.EnemySpawn, 5) };
 
     int phaseCounter;
     Phase currentPhase;

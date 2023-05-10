@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyStateManager : MonoBehaviour
 {
@@ -107,9 +108,11 @@ public class EnemyStateManager : MonoBehaviour
 
         if (aliveCharacters.Count > 1)
         {
-            GameObject randomCharacter = aliveCharacters[HelperUtilities.RandInt(0f, aliveCharacters.Count - 1)];
+            List<GameObject> closestAliveCharacters = aliveCharacters.OrderBy(x => Vector2.Distance(this.transform.position, x.transform.position)).ToList();
 
-            string characterName = randomCharacter.GetComponent<Character>().characterName;
+            target = closestAliveCharacters[0];
+
+            /*string characterName = randomCharacter.GetComponent<Character>().characterName;
             if (characterName == "Artillerist" && enemy.enemyName != "XbowRaider")
             {
                 while (randomCharacter.GetComponent<Character>().characterName == "Artillerist")
@@ -121,7 +124,7 @@ public class EnemyStateManager : MonoBehaviour
             else
             {
                 target = aliveCharacters[HelperUtilities.RandInt(0f, aliveCharacters.Count - 1)];
-            }
+            }*/
         }
         else if (aliveCharacters.Count == 1)
         {
@@ -129,8 +132,7 @@ public class EnemyStateManager : MonoBehaviour
         }
         else
         {
-            target = null;
-
+            target = GameObject.Find("Player");
         }
 
         return target;
@@ -154,6 +156,18 @@ public class EnemyStateManager : MonoBehaviour
             }
         }
 
+       /* GameObject player = GameObject.Find("Player");
+
+        if (player.GetComponent<Health>().GetHealth() > 0) aliveCharacters.Add(player);*/
+
         return aliveCharacters;
+    }
+
+    public bool PlayerIsAlive()
+    {
+        GameObject player = GameObject.Find("Player");
+        int playerHealth = player.GetComponent<Health>().GetHealth();
+
+        return playerHealth > 0;
     }
 }

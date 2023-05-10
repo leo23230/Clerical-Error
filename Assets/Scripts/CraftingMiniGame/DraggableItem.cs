@@ -32,6 +32,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log("Begin Drag");
         if (itemCount > 1)
         {
+            Debug.Log("DragCHILD");
             newDraggableItem = Instantiate(gameObject);
             DraggableItem draggableItemComponent = newDraggableItem.GetComponent<DraggableItem>();
 
@@ -49,6 +50,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else if(itemCount <= 1)
         {
+            Debug.Log("DragSELF");
             parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
             //transform.SetAsLastSibling();
@@ -108,7 +110,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 }
                 else
                 {
-                    Destroy(newDraggableItem);                   
+                    Destroy(newDraggableItem);                  
                 }
                 
             }

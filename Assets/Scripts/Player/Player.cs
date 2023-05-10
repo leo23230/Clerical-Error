@@ -12,11 +12,14 @@ public class Player : MonoBehaviour
     //temp//
     public List<ItemDetailsSO> allItems = new List<ItemDetailsSO>();
 
+    public Health healthComponent;
+
     [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>();
 
     void Awake()
     {
-        
+        healthComponent = GetComponent<Health>();
+        healthComponent.SetStartingHealth(50);
     }
     void Start()
     {

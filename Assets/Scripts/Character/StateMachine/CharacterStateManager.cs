@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class CharacterStateManager : MonoBehaviour
 {
@@ -112,7 +113,9 @@ public class CharacterStateManager : MonoBehaviour
         List<GameObject> aliveEnemies = findAliveEnemies();
         if(aliveEnemies.Count > 1)
         {
-            target = aliveEnemies[Mathf.RoundToInt(UnityEngine.Random.Range(0f, aliveEnemies.Count - 1))];
+            List<GameObject> closestAliveEnemies = aliveEnemies.OrderBy(x => Vector2.Distance(this.transform.position, x.transform.position)).ToList();
+
+            target = closestAliveEnemies[0];
         }
         else if (aliveEnemies.Count == 1)
         {
@@ -121,7 +124,6 @@ public class CharacterStateManager : MonoBehaviour
         else
         {
             target = null;
-
         }
         
         return target;
@@ -361,7 +363,7 @@ public class CharacterStateManager : MonoBehaviour
         }
         if (item.itemName == "Herbal Salve")
         {
-            StartCoroutine(HealOverTime(5, 8f));
+            StartCoroutine(HealOverTime(8, 10f));
         }
     }
 
