@@ -15,8 +15,8 @@ public class BackpackManager : MonoBehaviour
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
     private List<GameObject> backpackObjects = new List<GameObject>();
     
-    private int maxItems = 24;
-    private int maxLayerItems = 8;
+    private int maxItems = 30;
+    private int maxLayerItems = 10;
     private const string bottomLayer = "BPBottom";
     private const string middleLayer = "BPMiddle";
     private const string topLayer = "BPTop";

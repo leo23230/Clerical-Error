@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        InitializeInventory(24);
+        InitializeInventory(30);
         PrintInventory();
     }
 
@@ -52,12 +52,21 @@ public class Inventory : MonoBehaviour
             int speedAmt = 0;
             int damageAmt = 0;
             int salveAmt = 0;
+            int yukaAmt = 0;
+            int pepperAmt = 0;
+            int petalAmt = 0;
+            int beadAmt = 0;
+
             foreach (InventoryItem inventoryItem in inventory)
             {
                 if (inventoryItem.itemDetails.itemName == "Coppabloom Tea") healAmt = inventoryItem.quantity;
                 if (inventoryItem.itemDetails.itemName == "Papariko Incense") speedAmt = inventoryItem.quantity;
                 if (inventoryItem.itemDetails.itemName == "Slayer Stew") damageAmt = inventoryItem.quantity;
                 if (inventoryItem.itemDetails.itemName == "Herbal Salve") salveAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Yuka Sprigs") yukaAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Papariko Peppercorns") pepperAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Coppabloom Petals") petalAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Starly Beads") beadAmt = inventoryItem.quantity;
             }
 
             //Debug.Log(healAmt);
@@ -79,6 +88,22 @@ public class Inventory : MonoBehaviour
             else if (salveAmt < 2)
             {
                 randItem = allItems[4];
+            }
+            else if (yukaAmt < 3)
+            {
+                randItem = allItems[1];
+            }
+            else if(petalAmt < 1)
+            {
+                randItem = allItems[0];
+            }
+            else if(pepperAmt < 2)
+            {
+                randItem = allItems[2];
+            }
+            else if (beadAmt < 1)
+            {
+                randItem = allItems[7];
             }
             else
             {

@@ -8,6 +8,11 @@ public class CraftingManager : MonoBehaviour
     //refs//
     public Transform hotBar;
     public Transform cookingPot;
+
+    [HideInInspector]public GameObject lidObject;
+    public Sprite openLid;
+    public Sprite closedLid;
+
     public Image CookingTimerBar;
     private Player player;
     private Inventory inventoryComponent;
@@ -74,32 +79,32 @@ public class CraftingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+    }
+
+    public void InitializeCraft()
+    {
+        //we want to get a list of the items in the pot in that moment
+
+        DraggableItem[] draggableItems = cookingPot.GetComponentsInChildren<DraggableItem>();
+
+        List<string> craftingItemNames = new List<string>();
+        List<ItemDetailsSO> craftingIngredients = new List<ItemDetailsSO>();
+
+        foreach (DraggableItem draggable in draggableItems)
         {
+            craftingItemNames.Add(draggable.itemDetails.itemName);
+            craftingIngredients.Add(draggable.itemDetails);
+        }
 
-            //we want to get a list of the items in the pot in that moment
+        craftingItemNames.Sort();
 
-            DraggableItem[] draggableItems = cookingPot.GetComponentsInChildren<DraggableItem>();
-
-            List<string> craftingItemNames = new List<string>();
-            List<ItemDetailsSO> craftingIngredients = new List<ItemDetailsSO>();
-
-            foreach(DraggableItem draggable in draggableItems)
+        foreach (RecipeSO recipe in craftingRecipes)
+        {
+            if (MatchesRecipe(craftingItemNames, recipe.GetSortedListOfIngredients()))
             {
-                craftingItemNames.Add(draggable.itemDetails.itemName);
-                craftingIngredients.Add(draggable.itemDetails);
-            }
-
-            craftingItemNames.Sort();
-
-            foreach (RecipeSO recipe in craftingRecipes)
-            {
-                if (MatchesRecipe(craftingItemNames, recipe.GetSortedListOfIngredients()))
-                {
-                    Debug.Log("Crafting: " + recipe.output.itemName);
-                    StartCoroutine(StartCrafting(craftingIngredients, recipe.output, recipe.craftingDuration));
-                    break;
-                }
+                Debug.Log("Crafting: " + recipe.output.itemName);
+                StartCoroutine(StartCrafting(craftingIngredients, recipe.output, recipe.craftingDuration));
+                break;
             }
         }
     }
@@ -111,14 +116,33 @@ public class CraftingManager : MonoBehaviour
 
         StaticEventHandler.CallStartedCraftingEvent(_ingredients);
 
+        float colorTransitionAmount = 0f;
+        float colorTransitionSet = 304f;
+
         while (normalizedTime <= 1f)
         {
             CookingTimerBar.fillAmount = normalizedTime;
             normalizedTime += Time.deltaTime / duration;
+
+            /*colorTransitionAmount += colorTransitionSet*Time.deltaTime / duration;
+
+            if (CookingTimerBar.color.r < 152)
+            {
+                Color newColor = new Color(colorTransitionAmount, 152f, 0f);
+                CookingTimerBar.color = newColor;
+            }
+            else if(CookingTimerBar.color.r >= 152)
+            {
+                Color newColor = new Color(152f, 304 - colorTransitionAmount, 0f);
+                CookingTimerBar.color = newColor;
+            }*/
+
             yield return null;
         }
 
         StaticEventHandler.CallItemCraftedEvent(_ingredients, _output);
+
+        CookingTimerBar.fillAmount = 0f;
 
         yield break;
     }
@@ -180,4 +204,5 @@ public class CraftingManager : MonoBehaviour
         LoadHotbar();
 
     }
+
 }
