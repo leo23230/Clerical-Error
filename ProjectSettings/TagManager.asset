@@ -88,6 +88,9 @@ TagManager:
   - name: Effects
     uniqueID: 762682115
     locked: 0
+  - name: BaseUI
+    uniqueID: 4218698797
+    locked: 0
   - name: UIAlerts
     uniqueID: 1004001335
     locked: 0
