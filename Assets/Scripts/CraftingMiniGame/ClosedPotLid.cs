@@ -41,7 +41,7 @@ public class ClosedPotLid : MonoBehaviour, IPointerClickHandler
         closedLid.SetActive(true);
         openLid.SetActive(false);
 
-        transform.position = closedPosition;
+        transform.localPosition = closedPosition;
         fireEffect.SetActive(true);
     }
     void DisableLid(ItemCraftedEventArgs eventArgs)
@@ -49,7 +49,7 @@ public class ClosedPotLid : MonoBehaviour, IPointerClickHandler
         closedLid.SetActive(false);
         openLid.SetActive(true);
 
-        transform.position = openedPosition;
+        transform.localPosition = openedPosition;
         fireEffect.SetActive(false);
     }
 }

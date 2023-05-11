@@ -36,9 +36,9 @@ public class AnimationCues : MonoBehaviour
     }
     public void GreatShieldShake()
     {
-        if (GameObject.Find("CameraTarget").transform.position.y < 9f)
+        /*if (GameObject.Find("CameraTarget").transform.position.y < 9f)
         {
             ScreenShake.Instance.ShakeCamera(3f, .1f, true);
-        }
+        }*/
     }
 }

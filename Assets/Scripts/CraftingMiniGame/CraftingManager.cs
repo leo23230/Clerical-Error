@@ -14,6 +14,7 @@ public class CraftingManager : MonoBehaviour
     public Sprite closedLid;
 
     public Image CookingTimerBar;
+    public GameObject CookingTimerBarObject;
     private Player player;
     private Inventory inventoryComponent;
     public List<InventoryItem> playerInventory = new List<InventoryItem>();
@@ -25,6 +26,7 @@ public class CraftingManager : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+        CookingTimerBarObject.SetActive(false);
 
         foreach (Transform child in hotBar)
         {
@@ -116,6 +118,8 @@ public class CraftingManager : MonoBehaviour
 
         StaticEventHandler.CallStartedCraftingEvent(_ingredients);
 
+        CookingTimerBarObject.SetActive(true);
+
         float colorTransitionAmount = 0f;
         float colorTransitionSet = 304f;
 
@@ -143,6 +147,8 @@ public class CraftingManager : MonoBehaviour
         StaticEventHandler.CallItemCraftedEvent(_ingredients, _output);
 
         CookingTimerBar.fillAmount = 0f;
+
+        CookingTimerBarObject.SetActive(false);
 
         yield break;
     }
