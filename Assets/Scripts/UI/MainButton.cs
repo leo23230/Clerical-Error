@@ -28,6 +28,7 @@ public class MainButton : MonoBehaviour
     {
         StaticEventHandler.BagRummageEvent += StartTimedDeactivate;
         StaticEventHandler.CraftingEvent += StartTimedDeactivate;
+        StaticEventHandler.SpellcastingEvent += StartTimedDeactivate;
         StaticEventHandler.ExitMiniGameEvent += ActivateSelf;
     }
 
@@ -96,6 +97,11 @@ public class MainButton : MonoBehaviour
     }
     public void StartTimedDeactivate(CraftingEventArgs eventArgs)
     {
+        StartCoroutine(TimedDeactivate());
+    }
+    public void StartTimedDeactivate(SpellcastingEventArgs eventArgs)
+    {
+        Debug.Log("ishappenin");
         StartCoroutine(TimedDeactivate());
     }
 

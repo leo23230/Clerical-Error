@@ -41,6 +41,10 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public Vector2 startingPos = new Vector2();
     [HideInInspector] public Vector3 effectAnchorPos;
     [HideInInspector] public GameObject characterCanvas;
+    [HideInInspector] public Inventory inventoryComponent;
+    [HideInInspector] public GameObject hoverLight;
+
+    private GameObject spellReadyEffect;
     private void Awake()
     {
         //the character component is repsonible for storing
@@ -55,6 +59,14 @@ public class CharacterStateManager : MonoBehaviour
         effectAnchorPos = transform.Find("EffectAnchor").transform.position;
 
         characterCanvas = transform.Find("CharacterCanvas").gameObject;
+
+        hoverLight = transform.Find("HoverLight").gameObject;
+
+        hoverLight.SetActive(false);
+
+        inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+
+        spellReadyEffect = GameObject.Find("SpellReadyEffect");
 
         target = SelectEnemy();
     }
@@ -83,6 +95,9 @@ public class CharacterStateManager : MonoBehaviour
         InstantiateAbilities();
 
         idleState.EnterState(this);
+
+        //after all characters have grabbed a reference to this in Awake, we will disable in Start
+        if(spellReadyEffect.activeSelf)spellReadyEffect.SetActive(false);
     }
     void Update()
     {
@@ -99,6 +114,17 @@ public class CharacterStateManager : MonoBehaviour
                 deadState.EnterState(this);
             }
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inventoryComponent.hasPreparedSpell())
+            {
+                if(inventoryComponent.preparedSpell[0] == "Rune_ TargetCharacters")
+                {
+                    RecieveSpellEffects(inventoryComponent.preparedSpell);
+                }
+            }
+        }
     }
 
     private void OnMouseDown()
@@ -107,6 +133,30 @@ public class CharacterStateManager : MonoBehaviour
         {
             StaticEventHandler.CallConsumableUsedEvent(this);
         }
+        if (Input.GetMouseButtonDown(0) && NotDead() && inventory.GetPreparedSpell() != null)
+        {
+            Debug.Log(inventory.GetPreparedSpell()[0]);
+            if (inventory.GetPreparedSpell()[0] == "Rune_ SingleTarget")
+            {  
+                RecieveSpellEffects(inventory.GetPreparedSpell());            
+            }
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (inventoryComponent.hasHandItem() || inventoryComponent.hasPreparedSpell())
+        {
+            hoverLight.SetActive(true);
+        }
+        else
+        {
+            if (hoverLight.activeSelf) hoverLight.SetActive(false);
+        }
+    }
+    private void OnMouseExit()
+    {
+        if(hoverLight.activeSelf) hoverLight.SetActive(false);
     }
 
     public GameObject SelectEnemy() {
@@ -380,6 +430,15 @@ public class CharacterStateManager : MonoBehaviour
         yield break;
     }
 
+    //THIS IS SUPER SLOPPY TEMPORARY AND WILL BE REPLACED BY A PROPER EVENT
+    IEnumerator TimedSpellReset()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        inventory.UsePreparedSpell();
+        spellReadyEffect.SetActive(false);
+    }
+
     public void StatBoost(ItemDetailsSO item)
     {
         if(item.itemName == "Coppabloom Tea")
@@ -398,6 +457,45 @@ public class CharacterStateManager : MonoBehaviour
         {
             StartCoroutine(HealOverTime(8, 10f));
         }
+    }
+
+    public void RecieveSpellEffects(List<string> _spell)
+    {
+        int healAmt = 10;
+        int speedAmt = 2;
+        int damageAmt = 5;
+        int harmAmt = 5;
+
+        int healCount = 0;
+        int speedCount = 0;
+        int damageCount = 0;
+        int harmCount = 0;
+
+        foreach(string rune in _spell)
+        {
+            if (rune == "Rune_ Heal")
+            {
+                healCount += 1;
+            }
+            else if (rune == "Rune_ Speed")
+            {
+                speedCount += 1;
+            }
+            else if (rune == "Rune_ Damage")
+            {
+                damageCount += 1;
+            }
+            else if (rune == "Rune_ Harm")
+            {
+                harmCount += 1;
+            }
+        }
+
+        if (healCount > 0) Heal(healAmt * healCount);
+        if (speedCount > 0) StartCoroutine(ChangeSpeed(speedAmt*speedCount, 4f));
+        if (damageCount > 0) StartCoroutine(ChangeDamage(damageAmt*damageCount, 5f));
+
+        StartCoroutine(TimedSpellReset());
     }
 
     public bool IsPlayingLayer(int layerIndex)

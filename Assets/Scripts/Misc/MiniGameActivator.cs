@@ -15,6 +15,7 @@ public class MiniGameActivator : MonoBehaviour
     {
         StaticEventHandler.BagRummageEvent += ActivateMiniGame;
         StaticEventHandler.CraftingEvent += ActivateCraftingMiniGame;
+        StaticEventHandler.SpellcastingEvent += ActivateSpellcastingMiniGame;
         StaticEventHandler.ExitMiniGameEvent += DeactivateMiniGame;
     }
 
@@ -37,6 +38,13 @@ public class MiniGameActivator : MonoBehaviour
     private void ActivateCraftingMiniGame(CraftingEventArgs eventArgs)
     {
         if (gameObject.name == "CraftingMiniGame")
+        {
+            if (!gameObject.activeSelf) gameObject.SetActive(true);
+        }
+    }
+    private void ActivateSpellcastingMiniGame(SpellcastingEventArgs eventArgs)
+    {
+        if (gameObject.name == "SpellCastingMiniGame")
         {
             if (!gameObject.activeSelf) gameObject.SetActive(true);
         }

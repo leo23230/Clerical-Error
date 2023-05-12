@@ -12,6 +12,7 @@ public class BackButton : MonoBehaviour
     {
         StaticEventHandler.BagRummageEvent += ActivateSelf;
         StaticEventHandler.CraftingEvent += ActivateSelf;
+        StaticEventHandler.SpellcastingEvent += ActivateSelfSpellcasting;
         StaticEventHandler.ExitMiniGameEvent += DeactivateSelf;
     }
 
@@ -51,6 +52,11 @@ public class BackButton : MonoBehaviour
     }
     public void ActivateSelf(CraftingEventArgs craftingArgs)
     {
+        gameObject.SetActive(true);
+    }
+    public void ActivateSelfSpellcasting(SpellcastingEventArgs eventArgs)
+    {
+        Debug.Log("GAHHHHHHHHH");
         gameObject.SetActive(true);
     }
 }

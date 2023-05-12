@@ -17,14 +17,16 @@ public class MoveCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += moveCameraToBagRummage;
-        StaticEventHandler.CraftingEvent += moveCameraToCrafting;
+        StaticEventHandler.BagRummageEvent += moveCameraToMiniGame;
+        StaticEventHandler.CraftingEvent += moveCameraToMiniGame;
+        StaticEventHandler.SpellcastingEvent += moveCameraToMiniGame;
         StaticEventHandler.ExitMiniGameEvent += moveCameraBack;
     }
     private void OnDisable()
     {
-        StaticEventHandler.BagRummageEvent -= moveCameraToBagRummage;
-        StaticEventHandler.CraftingEvent -= moveCameraToCrafting;
+        StaticEventHandler.BagRummageEvent -= moveCameraToMiniGame;
+        StaticEventHandler.CraftingEvent -= moveCameraToMiniGame;
+        StaticEventHandler.SpellcastingEvent -= moveCameraToMiniGame;
         StaticEventHandler.ExitMiniGameEvent -= moveCameraBack;
     }
     // Update is called once per frame
@@ -42,11 +44,15 @@ public class MoveCamera : MonoBehaviour
         }
     }
 
-    public void moveCameraToBagRummage(BagRummageEventArgs bagRummageEventArgs)
+    public void moveCameraToMiniGame(BagRummageEventArgs bagRummageEventArgs)
     {
         targetY = bagRummageY;
     }
-    public void moveCameraToCrafting(CraftingEventArgs eventArgs)
+    public void moveCameraToMiniGame(SpellcastingEventArgs eventArg)
+    {
+        targetY = bagRummageY;
+    }
+    public void moveCameraToMiniGame(CraftingEventArgs eventArg)
     {
         targetY = bagRummageY;
     }

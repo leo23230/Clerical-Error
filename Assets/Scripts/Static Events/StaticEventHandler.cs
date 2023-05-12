@@ -7,6 +7,7 @@ public static class StaticEventHandler
 {
     public static event Action<BagRummageEventArgs> BagRummageEvent;
     public static event Action<CraftingEventArgs> CraftingEvent;
+    public static event Action<SpellcastingEventArgs> SpellcastingEvent;
     public static event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
     public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
     public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
@@ -24,6 +25,10 @@ public static class StaticEventHandler
     public static void CallCraftingEvent()
     {
         CraftingEvent?.Invoke(new CraftingEventArgs() { });
+    }
+    public static void CallSpellcastingEvent()
+    {
+        SpellcastingEvent?.Invoke(new SpellcastingEventArgs() { });
     }
     public static void CallExitMiniGameEvent()
     {
@@ -68,6 +73,10 @@ public static class StaticEventHandler
 public class BagRummageEventArgs : EventArgs
 {
     
+}
+public class SpellcastingEventArgs : EventArgs
+{
+
 }
 public class CraftingEventArgs : EventArgs
 {

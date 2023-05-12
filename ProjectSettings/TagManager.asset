@@ -43,8 +43,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 1932013335
+    locked: 0
   - name: Dead
     uniqueID: 612491147
+    locked: 0
+  - name: GreatShield
+    uniqueID: 2057939979
+    locked: 0
+  - name: SwordSinger
+    uniqueID: 2449443941
     locked: 0
   - name: Default
     uniqueID: 0

@@ -13,7 +13,11 @@ public class FocusManager : MonoBehaviour
     private SimpleScrollSnap scrollSnap;
     private GameObject selectedPanel;
     private InkCounter inkCounter;
+    private Inventory playerInventoryComponent;
     [HideInInspector]public List<string> selectedSpell = new List<string>();
+    private Transform selectedRunesParentGroup;
+
+    public GameObject spellReadyEffect;
 
     private void Awake()
     {
@@ -22,20 +26,21 @@ public class FocusManager : MonoBehaviour
             focusTargets.Add(spellCircle.transform.GetChild(i));
         shapePopulator = GameObject.Find("ShapePopulator").GetComponent<ShapePopulator>();
         scrollSnap = GetComponent<SimpleScrollSnap>();
-
         inkCounter = GameObject.Find("InkCounter").GetComponent<InkCounter>();
+        playerInventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+        selectedRunesParentGroup = GameObject.Find("SelectedRunes").transform;
     }
     // Start is called before the first frame update
     void Start()
     {
         transform.position = focusTargets[0].transform.position;
-        selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
+        //selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && targetNumber < 4)
         {
             Debug.Log(selectedPanel.name);
             if(selectedPanel.name == "Rune_ TargetEnemies(Clone)" || selectedPanel.name == "Rune_ TargetCharacters(Clone)")
@@ -52,20 +57,21 @@ public class FocusManager : MonoBehaviour
             //This List will be parsed to determine what spell it will turn into
 
             GameObject newPanel = Instantiate(selectedPanel);
-            newPanel.transform.position = transform.position;
+            newPanel.transform.localPosition = transform.position;
+            newPanel.transform.localScale = new Vector3(0.0156f, 0.0156f, 0);
             newPanel.GetComponent<Image>().enabled = false;
-            Transform selectedRunesParentGroup = GameObject.Find("SelectedRunes").transform;
+            
             newPanel.transform.SetParent(selectedRunesParentGroup);
 
             if(targetNumber < 4) targetNumber += 1;
-            else
+            /*else
             {
                 targetNumber = 0;
                 for (int i = 0; i < selectedRunesParentGroup.childCount; i++)
                 {
                     Destroy(selectedRunesParentGroup.GetChild(i).gameObject);
                 }
-            }
+            }*/
 
             if (targetNumber == 0) shapePopulator.changeShapeGroup(1);
             if (targetNumber == 1) shapePopulator.changeShapeGroup(2);
@@ -91,11 +97,14 @@ public class FocusManager : MonoBehaviour
                     if (c == '(') break;
                     parsedRuneName += c;
                 }
-                selectedRunes.Add(runesParent.GetChild(i).gameObject.name);
+                selectedRunes.Add(parsedRuneName);
                 Destroy(runesParent.GetChild(i).gameObject);
             }
 
             selectedSpell = selectedRunes;
+            playerInventoryComponent.SetPreparedSpell(selectedSpell);
+            ResetFocus();
+            spellReadyEffect.SetActive(true);
             //Call Reset Spell Circle Function
         }
     }
@@ -103,5 +112,24 @@ public class FocusManager : MonoBehaviour
     public void SetSelectedPanel(int index)
     {
         selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
+    }
+
+    public void ResetShapeGroup()
+    {
+        targetNumber = 0;
+        for (int i = 0; i < selectedRunesParentGroup.childCount; i++)
+        {
+            Destroy(selectedRunesParentGroup.GetChild(i).gameObject);
+        }
+        shapePopulator.changeShapeGroup(1);
+
+    }
+
+    public void ResetFocus()
+    {
+        ResetShapeGroup();
+        selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
+
+        transform.position = focusTargets[targetNumber].transform.position;
     }
 }

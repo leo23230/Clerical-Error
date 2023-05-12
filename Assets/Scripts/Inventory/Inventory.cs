@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public List<ItemDetailsSO> allItems = new List<ItemDetailsSO>();
     private ItemDetailsSO itemInHand;
+    [HideInInspector] public List<string> preparedSpell = new List<string>();
     private GameObject handItemBackpackObject;
 
     [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>();
@@ -218,6 +219,11 @@ public class Inventory : MonoBehaviour
         return itemInHand;
     }
 
+    public bool hasHandItem()
+    {
+        return itemInHand != null;
+    }
+
     public void UseHandItem(ConsumableUsedEventArgs eventArgs)
     {
         CharacterStateManager character = eventArgs.character;
@@ -253,4 +259,24 @@ public class Inventory : MonoBehaviour
         }
         PrintInventory();
     }
+
+    //spellcasting
+
+    public void SetPreparedSpell(List<string> _spell)
+    {
+        preparedSpell = _spell;
+    }
+    public List<string> GetPreparedSpell()
+    {
+        return preparedSpell;
+    }
+    public void UsePreparedSpell()
+    {
+        preparedSpell = new List<string>();
+    }
+    public bool hasPreparedSpell()
+    {
+        return preparedSpell.Count != 0;
+    }
+
 }

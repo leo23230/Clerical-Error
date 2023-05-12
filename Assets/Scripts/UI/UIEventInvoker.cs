@@ -14,6 +14,10 @@ public class UIEventInvoker : MonoBehaviour
     {
         StaticEventHandler.CallCraftingEvent();
     }
+    public void callSpellcastingEvent()
+    {
+        StaticEventHandler.CallSpellcastingEvent();
+    }
     public void callExitMiniGameEvent()
     {
         StaticEventHandler.CallExitMiniGameEvent();
