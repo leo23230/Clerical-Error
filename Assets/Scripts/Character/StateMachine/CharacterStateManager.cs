@@ -37,6 +37,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject[] enemies;
     [HideInInspector] public List<Ability> abilities = new List<Ability>();
+    [HideInInspector] public Ability backupAbility;
     [HideInInspector] public Vector2 startingPos = new Vector2();
     [HideInInspector] public Vector3 effectAnchorPos;
     [HideInInspector] public GameObject characterCanvas;
@@ -177,6 +178,24 @@ public class CharacterStateManager : MonoBehaviour
       
     }
 
+    public bool UseBackupAbility()
+    {
+        if (backupAbility.AbilityIsReady())
+        {
+            backupAbility.useAbility(target, damageBuff);
+            Debug.Log("Player used " + backupAbility.name);
+
+            //start animation
+            if (animator != null) animator.SetBool("isMelee", true);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public bool ChooseAnAbility()
     {
         //collect a list of ready abilities
@@ -232,6 +251,19 @@ public class CharacterStateManager : MonoBehaviour
             //add the ability to the list
             abilities.Add(abilityInstance);
         }
+
+        //if we have a backup attack we need to instantiate it and store it
+        if (character.hasBackupAbility)
+        {
+            //Finds the type that matches the ability name
+            System.Type abilityType = Type.GetType(character.backupAbility);
+
+            //creates an instance of the ability (type cast as Ability so methods can be used)
+            Ability abilityInstance = (Ability)Activator.CreateInstance(abilityType);
+
+            //add the ability to the list
+            backupAbility = abilityInstance;
+        }
     }
 
     public void UpdateCoolDownTimers()
@@ -240,6 +272,7 @@ public class CharacterStateManager : MonoBehaviour
         {
             ability.updateCoolDownTimer();
         }
+        if(character.hasBackupAbility)backupAbility.updateCoolDownTimer();
     }
 
     public void FlipSprite(string dir)

@@ -57,7 +57,19 @@ public class CharacterAttackState : CharacterBaseState
         {
             if (!characterSM.character.animator.GetBool("isReadying"))
             {
-                characterSM.walkState.EnterState(characterSM);
+                if (characterSM.character.hasBackupAbility)
+                {
+                    //Since we're not using normal abilities, we ignore the base cooldown
+                    //if an ability is actually chosen, then we'll set the cool down
+                    if (characterSM.UseBackupAbility())
+                    {
+                        setAttackCoolDownTime(characterSM);
+                    }
+                }
+                else
+                {
+                    characterSM.walkState.EnterState(characterSM);
+                }       
             }
         }
         

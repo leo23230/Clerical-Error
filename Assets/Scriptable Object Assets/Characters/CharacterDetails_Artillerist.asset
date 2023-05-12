@@ -25,4 +25,6 @@ MonoBehaviour:
   - ArtilleristAttack1
   - ArtilleristAttack2
   - ArtilleristSpecial
+  hasBackupAttack: 1
+  backupAbility: ArtilleristMelee
   characterMiniMapIcon: {fileID: 0}

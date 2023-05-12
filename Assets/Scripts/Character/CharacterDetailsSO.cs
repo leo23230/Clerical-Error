@@ -91,6 +91,9 @@ public class CharacterDetailsSO : ScriptableObject
     #endregion
     public List<string> characterAbilities;
 
+    public bool hasBackupAttack;
+    public string backupAbility;
+
     #region Header OTHER
     [Space(10)]
     [Header("OTHER")]

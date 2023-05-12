@@ -12,6 +12,8 @@ public class FocusManager : MonoBehaviour
     private ShapePopulator shapePopulator;
     private SimpleScrollSnap scrollSnap;
     private GameObject selectedPanel;
+    private InkCounter inkCounter;
+    [HideInInspector]public List<string> selectedSpell = new List<string>();
 
     private void Awake()
     {
@@ -20,6 +22,8 @@ public class FocusManager : MonoBehaviour
             focusTargets.Add(spellCircle.transform.GetChild(i));
         shapePopulator = GameObject.Find("ShapePopulator").GetComponent<ShapePopulator>();
         scrollSnap = GetComponent<SimpleScrollSnap>();
+
+        inkCounter = GameObject.Find("InkCounter").GetComponent<InkCounter>();
     }
     // Start is called before the first frame update
     void Start()
@@ -33,6 +37,15 @@ public class FocusManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log(selectedPanel.name);
+            if(selectedPanel.name == "Rune_ TargetEnemies(Clone)" || selectedPanel.name == "Rune_ TargetCharacters(Clone)")
+            {
+                inkCounter.UpdateTotalInkAmt(3);
+            }
+            else
+            {
+                inkCounter.UpdateTotalInkAmt(1);
+            }
 
             //First Instantiate the selected rune prefab
             //Add the rune's id to a list of rune id's
@@ -62,14 +75,33 @@ public class FocusManager : MonoBehaviour
 
             transform.position = focusTargets[targetNumber].transform.position;
 
-            Debug.Log(targetNumber);
+        }
 
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            //Collect Children of SelectedRunes
+            List<string> selectedRunes = new List<string>();
+            Transform runesParent = GameObject.Find("SelectedRunes").transform;
+            for(int i = 0; i < runesParent.childCount; i++)
+            {
+                string runeName = runesParent.GetChild(i).gameObject.name;
+                string parsedRuneName = "";
+                foreach(char c in runeName)
+                {
+                    if (c == '(') break;
+                    parsedRuneName += c;
+                }
+                selectedRunes.Add(runesParent.GetChild(i).gameObject.name);
+                Destroy(runesParent.GetChild(i).gameObject);
+            }
+
+            selectedSpell = selectedRunes;
+            //Call Reset Spell Circle Function
         }
     }
 
     public void SetSelectedPanel(int index)
     {
         selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
-        Debug.Log(index);
     }
 }

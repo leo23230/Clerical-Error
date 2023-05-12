@@ -28,6 +28,8 @@ public class Character : MonoBehaviour
     [HideInInspector] public float abilityReadyCooldown;
     //a list of ability ids
     [HideInInspector] public List<string> abilities;
+    [HideInInspector] public bool hasBackupAbility;
+    [HideInInspector] public string backupAbility;
 
     [HideInInspector] public Health healthComponent;
     [HideInInspector] public CooldownBarManager CDBarManager;
@@ -90,6 +92,8 @@ public class Character : MonoBehaviour
         avgDistance = minDistance + ((maxDistance - minDistance) /2);
         abilities = characterDetails.characterAbilities;
         abilityReadyCooldown = characterDetails.characterAbilityCooldown;
+        hasBackupAbility = characterDetails.hasBackupAttack;
+        backupAbility = characterDetails.backupAbility;
 
 
         // Set character starting health

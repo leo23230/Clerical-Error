@@ -27,6 +27,11 @@ public class AnimationCues : MonoBehaviour
         animator.SetBool("isReadying", false);
     }
 
+    public void SetIsMeleeToFalse()
+    {
+        animator.SetBool("isMelee", false);
+    }
+
     public void ArtilleristShake()
     {
         if(GameObject.Find("CameraTarget").transform.position.y < 9f)

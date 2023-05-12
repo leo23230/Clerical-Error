@@ -12,6 +12,8 @@ public abstract class Ability
 
     public float coolDown = 0f;
 
+    public string animationBool = "isAttacking";
+
     public abstract void useAbility(GameObject target, int buff);
 
     public void setCoolDownTimer()
