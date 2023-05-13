@@ -207,8 +207,13 @@ public class CraftingManager : MonoBehaviour
 
         //reload hotbar
 
-        LoadHotbar();
+        StartCoroutine(DelayedLoadHotbar());
+    }
 
+    private IEnumerator DelayedLoadHotbar()
+    {
+        yield return new WaitForSeconds(0.1f);
+        LoadHotbar();
     }
 
 }

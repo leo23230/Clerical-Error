@@ -32,6 +32,7 @@ public class Inventory : MonoBehaviour
         StaticEventHandler.ItemSelectedEvent += SetHandItem;
         StaticEventHandler.ConsumableUsedEvent += UseHandItem;
         StaticEventHandler.StartedCraftingEvent += RemoveUsedCraftingIngredients;
+        StaticEventHandler.ItemDestroyedEvent += RemoveDestroyedItem;
     }
 
     private void OnDisable()
@@ -39,6 +40,7 @@ public class Inventory : MonoBehaviour
         StaticEventHandler.ItemSelectedEvent -= SetHandItem;
         StaticEventHandler.ConsumableUsedEvent -= UseHandItem;
         StaticEventHandler.StartedCraftingEvent -= RemoveUsedCraftingIngredients;
+        StaticEventHandler.ItemDestroyedEvent -= RemoveDestroyedItem;
     }
 
     void InitializeInventory(int numItems)

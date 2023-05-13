@@ -451,11 +451,11 @@ public class CharacterStateManager : MonoBehaviour
         }
         if (item.itemName == "Slayer Stew")
         {
-            StartCoroutine(ChangeDamage(10, 5f));
+            StartCoroutine(ChangeDamage(10, 10f));
         }
         if (item.itemName == "Herbal Salve")
         {
-            StartCoroutine(HealOverTime(8, 10f));
+            StartCoroutine(HealOverTime(10, 8f));
         }
     }
 
@@ -493,7 +493,7 @@ public class CharacterStateManager : MonoBehaviour
 
         if (healCount > 0) Heal(healAmt * healCount);
         if (speedCount > 0) StartCoroutine(ChangeSpeed(speedAmt*speedCount, 4f));
-        if (damageCount > 0) StartCoroutine(ChangeDamage(damageAmt*damageCount, 5f));
+        if (damageCount > 0) StartCoroutine(ChangeDamage(damageAmt*damageCount, 10f));
 
         StartCoroutine(TimedSpellReset());
     }

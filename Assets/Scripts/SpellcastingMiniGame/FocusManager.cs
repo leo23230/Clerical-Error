@@ -40,7 +40,7 @@ public class FocusManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && targetNumber < 4)
+        if (Input.GetKeyDown(KeyCode.Space) && targetNumber < 5)
         {
             Debug.Log(selectedPanel.name);
             if(selectedPanel.name == "Rune_ TargetEnemies(Clone)" || selectedPanel.name == "Rune_ TargetCharacters(Clone)")
@@ -63,7 +63,7 @@ public class FocusManager : MonoBehaviour
             
             newPanel.transform.SetParent(selectedRunesParentGroup);
 
-            if(targetNumber < 4) targetNumber += 1;
+            if(targetNumber < 5) targetNumber += 1;
             /*else
             {
                 targetNumber = 0;
@@ -79,7 +79,18 @@ public class FocusManager : MonoBehaviour
             //reset selected panel since the old panels have been deleted
             selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
 
-            transform.position = focusTargets[targetNumber].transform.position;
+            //if the target number is equal to 5, there is no other target so we need to disable the focus.
+            //(OR JUST REMOVE THE CURRENT SHAPES)
+            if(targetNumber == 5)
+            {
+                //disable
+                shapePopulator.RemoveCurrentShapesFromScrollSnap(5);
+            }
+            else
+            {
+                transform.position = focusTargets[targetNumber].transform.position;
+            }
+
 
         }
 

@@ -43,12 +43,15 @@ public class ShapePopulator : MonoBehaviour
         }
     }
 
-    void RemoveCurrentShapesFromScrollSnap(int _num)
+    public void RemoveCurrentShapesFromScrollSnap(int _num)
     {
         Transform contentTransform = dynamicContentComponent.transform.GetChild(0).Find("Content");
-        for(int i = 0; i < _num; i++)
+        if(contentTransform.childCount > 0)
         {
-            dynamicContentComponent.Remove(0);
+            for (int i = 0; i < _num; i++)
+            {
+                dynamicContentComponent.Remove(0);
+            }
         }
     }
 
