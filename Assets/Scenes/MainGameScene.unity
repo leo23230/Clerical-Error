@@ -3675,6 +3675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allItems: []
   healthComponent: {fileID: 0}
+  dropEffect: {fileID: 3768583624554778401, guid: 3223c6e50d8d50f48821a5bea7b775b7, type: 3}
 --- !u!114 &709130616
 MonoBehaviour:
   m_ObjectHideFlags: 0

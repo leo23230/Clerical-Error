@@ -28,6 +28,7 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public float moveSpeed;
     [HideInInspector] public int damageBuff = 0;
     [HideInInspector] public float abilityReadyCooldown;
+    [HideInInspector] public bool isInAltState;
 
     //components//
     [HideInInspector] public Animator animator;
@@ -270,7 +271,27 @@ public class CharacterStateManager : MonoBehaviour
             Debug.Log("Player used " + chosenAbility.name);
 
             //start animation
-            if(animator != null) animator.SetBool("isAttacking", true);
+            if (animator != null) 
+            {
+                if (chosenAbility.isSpecial)
+                {
+                    animator.SetBool("isSwitching", true);
+                    StartCoroutine(AlternateState(20));
+                }
+                else
+                {
+                    if (isInAltState)
+                    {
+                        animator.SetBool("isAttackingAlt", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("isAttacking", true);
+                    }
+                    
+                }
+            }
+            
 
             return true;
         }
@@ -282,7 +303,25 @@ public class CharacterStateManager : MonoBehaviour
             Debug.Log(character.name + " used " + chosenAbility.name);
 
             //start animation
-            if (animator != null) animator.SetBool("isAttacking", true);
+            if (animator != null)
+            {
+                if (chosenAbility.isSpecial)
+                {
+                    animator.SetBool("isSwitching", true);
+                    StartCoroutine(AlternateState(20));
+                }
+                else
+                {
+                    if (isInAltState)
+                    {
+                        animator.SetBool("isAttackingAlt", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("isAttacking", true);
+                    }
+                }
+            }
 
             return true;
         }
@@ -517,6 +556,27 @@ public class CharacterStateManager : MonoBehaviour
     public bool NotDead()
     {
         return currentState != deadState;
+    }
+
+    //boolean to determine which set of walking animations to use
+    //isAltState
+    //isRunningAlt
+    //isAttackingAlt
+    //change character stats in coroutine
+
+    public IEnumerator AlternateState (float duration)
+    {
+        //this keeps us in the alt branch of the animator
+        animator.SetBool("isAlt", true);
+
+        isInAltState = true;
+        character.armorClass = 0.2f;
+        character.speed -= 1;
+        yield return new WaitForSeconds(duration);
+        character.armorClass = character.characterDetails.characterArmorClass;
+        character.speed += 1;
+        isInAltState = false;
+        animator.SetBool("isAlt", false);
     }
 
 }

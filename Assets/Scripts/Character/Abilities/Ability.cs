@@ -14,6 +14,8 @@ public abstract class Ability
 
     public string animationBool = "isAttacking";
 
+    public bool isSpecial = false;
+
     public abstract void useAbility(GameObject target, int buff);
 
     public void setCoolDownTimer()

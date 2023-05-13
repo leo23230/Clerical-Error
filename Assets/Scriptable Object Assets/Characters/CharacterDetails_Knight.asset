@@ -24,5 +24,7 @@ MonoBehaviour:
   characterAbilities:
   - LightAttack
   - HeavyAttack
-  - Special
+  - GreatShieldSpecial
+  hasBackupAttack: 0
+  backupAbility: 
   characterMiniMapIcon: {fileID: 0}

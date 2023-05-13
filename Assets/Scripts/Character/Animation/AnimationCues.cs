@@ -16,7 +16,16 @@ public class AnimationCues : MonoBehaviour
         animator.SetBool("isAttacking", false);
         //SetIsReadyingToTrue();
     }
-
+    public void SetIsAttackingAltToFalse()
+    {
+        animator.SetBool("isAttackingAlt", false);
+        //SetIsReadyingToTrue();
+    }
+    public void SetIsSwitchingToFalse()
+    {
+        animator.SetBool("isSwitching", false);
+        //SetIsReadyingToTrue();
+    }
     public void SetIsReadyingToTrue()
     {
         animator.SetBool("isReadying", true);
@@ -41,9 +50,9 @@ public class AnimationCues : MonoBehaviour
     }
     public void GreatShieldShake()
     {
-        /*if (GameObject.Find("CameraTarget").transform.position.y < 9f)
+        if (GameObject.Find("CameraTarget").transform.position.y < 9f)
         {
-            ScreenShake.Instance.ShakeCamera(3f, .1f, true);
-        }*/
+            ScreenShake.Instance.ShakeCamera(10f, .2f, true);
+        }
     }
 }
