@@ -10,16 +10,18 @@ public class Inventory : MonoBehaviour
     private GameObject handItemBackpackObject;
 
     [HideInInspector] public List<InventoryItem> inventory = new List<InventoryItem>();
+    private BackpackManager backpackManager;
 
     private void Awake()
     {
         InitializeInventory(30);
         PrintInventory();
+
     }
 
     void Start()
     {
-        
+       backpackManager = GameObject.Find("BackpackManager").GetComponent<BackpackManager>();
     }
 
     void Update()
@@ -117,6 +119,56 @@ public class Inventory : MonoBehaviour
             ItemDetailsSO randItem = allItems[rand];*/
 
             AddItem(randItem);
+        }
+    }
+
+    public void AddMoreCraftingIngredients(int numItems)
+    {
+        for (int i = 0; i < numItems; i++)
+        {
+            int yukaAmt = 0;
+            int pepperAmt = 0;
+            int petalAmt = 0;
+            int beadAmt = 0;
+
+            foreach (InventoryItem inventoryItem in inventory)
+            {
+                if (inventoryItem.itemDetails.itemName == "Yuka Sprigs") yukaAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Papariko Peppercorns") pepperAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Coppabloom Petals") petalAmt = inventoryItem.quantity;
+                if (inventoryItem.itemDetails.itemName == "Starly Beads") beadAmt = inventoryItem.quantity;
+            }
+
+            //Debug.Log(healAmt);
+
+            ItemDetailsSO randItem;
+
+            if (yukaAmt < 3)
+            {
+                randItem = allItems[1];
+            }
+            else if (petalAmt < 1)
+            {
+                randItem = allItems[0];
+            }
+            else if (pepperAmt < 2)
+            {
+                randItem = allItems[2];
+            }
+            else if (beadAmt < 2)
+            {
+                randItem = allItems[7];
+            }
+            else
+            {
+                int rand = HelperUtilities.RandInt(0f, 2f);
+                randItem = allItems[rand];
+            }
+            /*int rand = HelperUtilities.RandInt(0f, allItems.Count - 1);
+            ItemDetailsSO randItem = allItems[rand];*/
+
+            AddItem(randItem);
+            backpackManager.InstantiateBackpackObject(randItem.backpackPrefab, randItem);
         }
     }
 

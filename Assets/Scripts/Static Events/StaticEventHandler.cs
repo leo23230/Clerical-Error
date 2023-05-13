@@ -16,6 +16,7 @@ public static class StaticEventHandler
     public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
     public static event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
     public static event Action<EnemyDiedEventArgs> EnemyDiedEvent;
+    public static event Action<ResourceDropEventArgs> ResourceDropEvent;
 
 
     public static void CallBagRummageEvent()
@@ -66,6 +67,11 @@ public static class StaticEventHandler
     public static void CallEnemyDiedEvent()
     {
         EnemyDiedEvent?.Invoke(new EnemyDiedEventArgs() { });
+    }
+
+    public static void CallResourceDropEvent()
+    {
+        ResourceDropEvent?.Invoke(new ResourceDropEventArgs() { });
     }
 
 }
@@ -134,6 +140,11 @@ public class EnemySpawnedEventArgs : EventArgs
 }
 
 public class EnemyDiedEventArgs : EventArgs
+{
+
+}
+
+public class ResourceDropEventArgs: EventArgs
 {
 
 }

@@ -23,7 +23,13 @@ public class EnemyStateManager : MonoBehaviour
     //other//
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject[] enemys;
+    [HideInInspector] public Vector3 effectAnchorPos;
     [HideInInspector] public Vector2 startingPos = new Vector2();
+    [HideInInspector] public Inventory inventoryComponent;
+    [HideInInspector] public GameObject spellReadyEffect;
+
+    public GameObject harmEffect;
+
 
     //[HideInInspector] public Vector3 effectAnchorPos;
 
@@ -31,7 +37,16 @@ public class EnemyStateManager : MonoBehaviour
     {
         enemy = gameObject.GetComponent<Enemy>();
 
+        effectAnchorPos = transform.Find("EffectAnchor").transform.position;
+
         startingPos = new Vector2(transform.position.x, transform.position.y);
+
+        inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+
+        //Have to do it this way since the object is inactive
+        SpellReadyEffect[] spellReadyComp = Resources.FindObjectsOfTypeAll<SpellReadyEffect>();
+
+        spellReadyEffect = spellReadyComp[0].gameObject;
     }
 
     // Start is called before the first frame update
@@ -61,6 +76,17 @@ public class EnemyStateManager : MonoBehaviour
             if (currentState != deadState)
             {
                 deadState.EnterState(this);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (inventoryComponent.hasPreparedSpell())
+            {
+                if (inventoryComponent.preparedSpell[0] == "Rune_ TargetEnemies")
+                {
+                    RecieveSpellEffects(inventoryComponent.preparedSpell);
+                }
             }
         }
     }
@@ -169,5 +195,74 @@ public class EnemyStateManager : MonoBehaviour
         int playerHealth = player.GetComponent<Health>().GetHealth();
 
         return playerHealth > 0;
+    }
+
+    public GameObject InstantiateEffectPrefab(GameObject _prefab)
+    {
+        GameObject effectObject = Instantiate(_prefab);
+
+        //float yOffset = 2.0f;
+
+        Vector3 newPos = new Vector3(transform.position.x + effectAnchorPos.x, transform.position.y + effectAnchorPos.y, transform.position.z);
+
+        //set pos to middle of character
+        effectObject.transform.localPosition = newPos;
+
+        //make sure the effect follows the character
+        effectObject.transform.SetParent(transform);
+        //spawn effect prefab
+
+        return effectObject;
+    }
+
+    public void RecieveSpellEffects(List<string> _spell)
+    {
+        int healAmt = 10;
+        int speedAmt = 2;
+        int damageAmt = 5;
+        int harmAmt = 5;
+
+        int healCount = 0;
+        int speedCount = 0;
+        int damageCount = 0;
+        int harmCount = 0;
+
+        foreach (string rune in _spell)
+        {
+            if (rune == "Rune_ Heal")
+            {
+                healCount += 1;
+            }
+            else if (rune == "Rune_ Speed")
+            {
+                speedCount += 1;
+            }
+            else if (rune == "Rune_ Damage")
+            {
+                damageCount += 1;
+            }
+            else if (rune == "Rune_ Harm")
+            {
+                harmCount += 1;
+            }
+        }
+
+        if (harmCount > 0) 
+        {
+            enemy.TakeDamage(harmAmt * harmCount);
+            InstantiateEffectPrefab(harmEffect);
+            ScreenShake.Instance.ShakeCamera(5, 0.1f, true);
+        } 
+
+        StartCoroutine(TimedSpellReset());
+
+    }
+
+    IEnumerator TimedSpellReset()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        inventoryComponent.UsePreparedSpell();
+        spellReadyEffect.SetActive(false);
     }
 }

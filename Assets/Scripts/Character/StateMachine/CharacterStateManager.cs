@@ -145,7 +145,7 @@ public class CharacterStateManager : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (inventoryComponent.hasHandItem() || inventoryComponent.hasPreparedSpell())
+        if (currentState != deadState && (inventoryComponent.hasHandItem() || inventoryComponent.hasPreparedSpell()))
         {
             hoverLight.SetActive(true);
         }

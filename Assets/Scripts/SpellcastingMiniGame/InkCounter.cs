@@ -30,6 +30,16 @@ public class InkCounter : MonoBehaviour
         UpdateInkBottleSprites();
     }
 
+    public void AddInk(int amtToAdd)
+    {
+        if (totalInkAmt < totalInkMax) 
+        {
+            if (totalInkAmt <= totalInkMax - amtToAdd) totalInkAmt += amtToAdd;
+            else totalInkAmt = totalInkMax;
+        }
+        UpdateInkBottleSprites();
+    }
+
     public void UpdateInkBottleSprites()
     {
         int fullBottleCount = Mathf.FloorToInt(totalInkAmt / maxInkAmtPerBottle);
@@ -37,6 +47,13 @@ public class InkCounter : MonoBehaviour
 
         Debug.Log("fullBottleCount" + fullBottleCount.ToString());
         Debug.Log("leftOverInk" + leftOverInk.ToString());
+
+        for(int i = 0; i < fullBottleCount; i++)
+        {
+            InkBottle inkBottleToUpdate = inkBottleObjects[i].GetComponent<InkBottle>();
+            inkBottleToUpdate.inkAmt = inkBottleToUpdate.inkMax;
+            inkBottleToUpdate.UpdateInkSprite();
+        }
 
         //the for loop is to make sure ALL bottles that aren't full get updated
         for (int i = fullBottleCount; i < inkBottleObjects.Count; i++)

@@ -15,9 +15,14 @@ public class LevelSequencer : MonoBehaviour
 
     public List<GameObject> enemySpawnPoints = new List<GameObject>();
 
+    private Inventory inventoryComponent;
+    private InkCounter inkCounter;
+
     //Levels
-    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 2), new Phase(PhaseType.EnemySpawn, 3), 
-        new Phase(PhaseType.Camping, 20), new Phase(PhaseType.EnemySpawn, 5) };
+    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 7), new Phase(PhaseType.ResourceDrop, 12), new Phase(PhaseType.EnemySpawn, 3), 
+        new Phase(PhaseType.Camping, 30), new Phase(PhaseType.EnemySpawn, 4), new Phase(PhaseType.ResourceDrop, 12),
+        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 5)
+    };
 
     int phaseCounter;
     Phase currentPhase;
@@ -33,7 +38,8 @@ public class LevelSequencer : MonoBehaviour
 
     private void Awake()
     {
-
+        inventoryComponent = GameObject.Find("Player").GetComponent<Inventory>();
+        inkCounter = GameObject.Find("InkCounter").GetComponent<InkCounter>();
     }
 
     private void OnEnable()
@@ -98,6 +104,14 @@ public class LevelSequencer : MonoBehaviour
                     {
                         phaseCondition = true;
                     }
+                }
+                else if (currentPhase.phaseType == PhaseType.ResourceDrop)
+                {
+                    //Drop resources
+                    inventoryComponent.AddMoreCraftingIngredients((int)currentPhase.phaseData);
+                    inkCounter.AddInk(HelperUtilities.RandInt(2f, 7f));
+                    StaticEventHandler.CallResourceDropEvent();
+                    phaseCondition = true;
                 }
 
                 yield return null;
@@ -180,7 +194,7 @@ public class LevelSequencer : MonoBehaviour
     {
         EnemySpawn,
         Camping,
-        ItemDrops,
+        ResourceDrop,
     }
 
     public class Phase

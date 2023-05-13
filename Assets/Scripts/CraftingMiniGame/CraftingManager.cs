@@ -38,11 +38,13 @@ public class CraftingManager : MonoBehaviour
     {
         StaticEventHandler.StartedCraftingEvent += DestroyIngredients;
         StaticEventHandler.ItemDestroyedEvent += DestroyBrokenIngredients;
+        StaticEventHandler.ResourceDropEvent += ReloadHotbarOnResourceDrop;
     }
     private void OnDisable()
     {
         StaticEventHandler.StartedCraftingEvent -= DestroyIngredients;
         StaticEventHandler.ItemDestroyedEvent -= DestroyBrokenIngredients;
+        StaticEventHandler.ResourceDropEvent -= ReloadHotbarOnResourceDrop;
     }
 
     // Start is called before the first frame update
@@ -214,6 +216,24 @@ public class CraftingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         LoadHotbar();
+    }
+
+    private void DestroyAllHotbarObjects()
+    {
+        foreach (Transform hotbarSlot in inventorySlots)
+        {
+            if (hotbarSlot.childCount > 0)
+            {
+                Destroy(hotbarSlot.GetChild(0).gameObject);
+            }
+        }
+    }
+
+    private void ReloadHotbarOnResourceDrop(ResourceDropEventArgs eventArgs)
+    {
+        DestroyAllHotbarObjects();
+        //hotbar needs time to destroy the items, so we delay loading it
+        StartCoroutine(DelayedLoadHotbar());
     }
 
 }
