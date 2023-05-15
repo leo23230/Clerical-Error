@@ -7,7 +7,7 @@ public class GreatShieldSpecial : Ability
     public GreatShieldSpecial()
     {
         name = "GreatShieldSpecial";
-        attackDamage = 0;
+        attackDamage = 20;
         accuracy = 1f;
         coolDownTime = 40f;
         isSpecial = true;

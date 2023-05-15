@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Rigidbody2D rigidBody;
     [HideInInspector] public GameObject sprite;
+    [HideInInspector] public GameObject redFlashLight;
 
     public Animator animator;
 
@@ -45,6 +46,9 @@ public class Enemy : MonoBehaviour
         damageTimerSet = Random.Range(3f, 8f);
 
         damageTimer = damageTimerSet;
+
+        redFlashLight = transform.Find("RedFlash").gameObject;
+        redFlashLight.SetActive(false);
 
         dead = false;
     }
@@ -90,6 +94,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int _amt)
     {
         healthComponent.SubtractHealth(_amt);
+        StartCoroutine(RedFlash());
 
         if(healthComponent.GetHealth() <= 0)
         {
@@ -97,6 +102,13 @@ public class Enemy : MonoBehaviour
             StaticEventHandler.CallEnemyDiedEvent();
             Destroy(gameObject);
         }
+    }
+
+    public IEnumerator RedFlash()
+    {
+        redFlashLight.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        redFlashLight.SetActive(false);
     }
 
     private void AttackCharacters()

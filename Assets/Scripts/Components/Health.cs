@@ -35,7 +35,15 @@ public class Health : MonoBehaviour
 
     public void SubtractHealth(int amt)
     {
-        currentHealth -= amt;
+        if(currentHealth - amt < 0)
+        {
+            currentHealth = -1;
+        }
+        else
+        {
+            currentHealth -= amt;
+        }
+
         UpdateHealthBar();
     }
 

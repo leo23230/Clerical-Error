@@ -17,4 +17,4 @@ MonoBehaviour:
   ingredient02: {fileID: 11400000, guid: aaaa49babe2da074b98dada9dd6467e5, type: 2}
   ingredient03: {fileID: 11400000, guid: aaaa49babe2da074b98dada9dd6467e5, type: 2}
   ingredient04: {fileID: 0}
-  craftingDuration: 20
+  craftingDuration: 15

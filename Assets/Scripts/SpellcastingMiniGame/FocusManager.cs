@@ -47,7 +47,11 @@ public class FocusManager : MonoBehaviour
             {
                 inkCounter.UpdateTotalInkAmt(3);
             }
-            else
+            else if (selectedPanel.name == "Rune_ Res(Clone)")
+            {
+                inkCounter.UpdateTotalInkAmt(6);
+            }
+                else
             {
                 inkCounter.UpdateTotalInkAmt(1);
             }

@@ -1083,10 +1083,13 @@ MonoBehaviour:
   healEffect: {fileID: 4155764736166186941, guid: 7a22e9dcf971e5e4486a01861afbdedf, type: 3}
   speedEffect: {fileID: 9027514048236820045, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   damageEffect: {fileID: 3251330770811330448, guid: 9ee54efe66a4ba94089b957b205f61f9, type: 3}
+  greatShieldEffect: {fileID: 6091849738672977877, guid: af7931239aa7b5e479e4e5c2e6b460c3, type: 3}
   character: {fileID: 0}
   moveSpeed: 8
   damageBuff: 0
   abilityReadyCooldown: 0
+  isInAltState: 0
+  multiAbilityUseCounter: 0
   animator: {fileID: 0}
   inventory: {fileID: 0}
   target: {fileID: 0}

@@ -58,7 +58,7 @@ public class EnemyMoveState : EnemyBaseState
         }
         else
         {
-            enemySM.currentState = enemySM.idleState;
+            enemySM.idleState.EnterState(enemySM);
         }
     }
 

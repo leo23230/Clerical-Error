@@ -15,6 +15,7 @@ public class CharacterStateManager : MonoBehaviour
     [SerializeField] public GameObject healEffect;
     [SerializeField] public GameObject speedEffect;
     [SerializeField] public GameObject damageEffect;
+    [SerializeField] public GameObject greatShieldEffect;
 
     //state manager stuff//
     [HideInInspector] public CharacterIdleState idleState = new CharacterIdleState();
@@ -29,9 +30,10 @@ public class CharacterStateManager : MonoBehaviour
     [HideInInspector] public int damageBuff = 0;
     [HideInInspector] public float abilityReadyCooldown;
     [HideInInspector] public bool isInAltState;
-
+    [HideInInspector] public Ability chosenAbility = null;
+    [HideInInspector] public int multiAbilityUseCounter = 0;
     //components//
-    [HideInInspector] public Animator animator;
+   [HideInInspector] public Animator animator;
     [HideInInspector] public Inventory inventory;
 
     //other//
@@ -134,19 +136,29 @@ public class CharacterStateManager : MonoBehaviour
         {
             StaticEventHandler.CallConsumableUsedEvent(this);
         }
-        if (Input.GetMouseButtonDown(0) && NotDead() && inventory.GetPreparedSpell() != null)
+        if (Input.GetMouseButtonDown(0) && NotDead() && inventory.hasPreparedSpell())
         {
-            Debug.Log(inventory.GetPreparedSpell()[0]);
             if (inventory.GetPreparedSpell()[0] == "Rune_ SingleTarget")
             {  
                 RecieveSpellEffects(inventory.GetPreparedSpell());            
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && inventory.hasPreparedSpell())
+        {
+            if(inventory.GetPreparedSpell()[0] == "Rune_ Res")
+            {
+                animator.Play("Res");
             }
         }
     }
 
     private void OnMouseOver()
     {
-        if (currentState != deadState && (inventoryComponent.hasHandItem() || inventoryComponent.hasPreparedSpell()))
+        if (currentState != deadState && (inventoryComponent.hasHandItem() || (inventory.GetPreparedSpell()[0] == "Rune_ SingleTarget" || inventory.GetPreparedSpell()[0] == "Rune_ Res")))
+        {
+            hoverLight.SetActive(true);
+        }
+        else if(currentState == deadState && inventoryComponent.preparedSpell[0] == "Rune_ Res")
         {
             hoverLight.SetActive(true);
         }
@@ -234,7 +246,6 @@ public class CharacterStateManager : MonoBehaviour
         if (backupAbility.AbilityIsReady())
         {
             backupAbility.useAbility(target, damageBuff);
-            Debug.Log("Player used " + backupAbility.name);
 
             //start animation
             if (animator != null) animator.SetBool("isMelee", true);
@@ -266,9 +277,8 @@ public class CharacterStateManager : MonoBehaviour
         //if there is one, we just pick that ability, if there are more than one in that moment pick randomly
         else if (readyAbilities.Count == 1)
         {
-            Ability chosenAbility = readyAbilities[0];
-            chosenAbility.useAbility(target, damageBuff);
-            Debug.Log("Player used " + chosenAbility.name);
+            chosenAbility = readyAbilities[0];
+            //chosenAbility.useAbility(target, damageBuff);
 
             //start animation
             if (animator != null) 
@@ -298,9 +308,8 @@ public class CharacterStateManager : MonoBehaviour
         else
         {
             int random = UnityEngine.Random.Range(0, readyAbilities.Count);
-            Ability chosenAbility = readyAbilities[random];
-            chosenAbility.useAbility(target, damageBuff);
-            Debug.Log(character.name + " used " + chosenAbility.name);
+            chosenAbility = readyAbilities[random];
+            //chosenAbility.useAbility(target, damageBuff);
 
             //start animation
             if (animator != null)
@@ -324,6 +333,25 @@ public class CharacterStateManager : MonoBehaviour
             }
 
             return true;
+        }
+    }
+
+    public void UseChosenAbility()
+    {
+        chosenAbility.useAbility(target, damageBuff);
+        chosenAbility = null;
+    }
+    public void UseChosenMultiAbility(int _numOfAttacks)
+    {
+        if(multiAbilityUseCounter < _numOfAttacks)
+        {
+            chosenAbility.useAbility(target, damageBuff);
+            multiAbilityUseCounter += 1;
+        }
+        else
+        {
+            multiAbilityUseCounter = 0;
+            chosenAbility = null;
         }
     }
 
@@ -482,7 +510,7 @@ public class CharacterStateManager : MonoBehaviour
     {
         if(item.itemName == "Coppabloom Tea")
         {
-            Heal(30);
+            Heal(40);
         }
         if(item.itemName == "Papariko Insence")
         {
@@ -512,6 +540,10 @@ public class CharacterStateManager : MonoBehaviour
 
         foreach(string rune in _spell)
         {
+            if(rune == "Rune_ Res")
+            {
+                animator.Play("Res");
+            }
             if (rune == "Rune_ Heal")
             {
                 healCount += 1;
@@ -533,6 +565,7 @@ public class CharacterStateManager : MonoBehaviour
         if (healCount > 0) Heal(healAmt * healCount);
         if (speedCount > 0) StartCoroutine(ChangeSpeed(speedAmt*speedCount, 4f));
         if (damageCount > 0) StartCoroutine(ChangeDamage(damageAmt*damageCount, 10f));
+        if (harmCount > 0) DamagePlayer(harmAmt * harmCount);
 
         StartCoroutine(TimedSpellReset());
     }
@@ -577,6 +610,14 @@ public class CharacterStateManager : MonoBehaviour
         character.speed += 1;
         isInAltState = false;
         animator.SetBool("isAlt", false);
+    }
+
+    public void ResCharacter()
+    {
+        character.healthComponent.AddHealth(51);
+        characterCanvas.SetActive(true);
+        animator.SetBool("isDead", false);
+        idleState.EnterState(this);
     }
 
 }

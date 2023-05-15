@@ -5,10 +5,12 @@ using UnityEngine;
 public class AnimationCues : MonoBehaviour
 {
     [HideInInspector] public Animator animator;
+    [HideInInspector] public CharacterStateManager characterSM;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        characterSM = transform.parent.GetComponent<CharacterStateManager>();
     }
 
     public void SetIsAttackingToFalse()
@@ -54,5 +56,32 @@ public class AnimationCues : MonoBehaviour
         {
             ScreenShake.Instance.ShakeCamera(10f, .2f, true);
         }
+    }
+
+    public void UseAbility()
+    {
+        characterSM.UseChosenAbility();
+    }
+
+    public void UseBackupbility()
+    {
+        characterSM.UseBackupAbility();
+    }
+
+
+    public void GreatShieldCloseEffect()
+    {
+        characterSM.InstantiateEffectPrefab(characterSM.greatShieldEffect);
+        characterSM.UseChosenAbility();
+    }
+
+    public void UseSwordSingerAttack()
+    {
+        characterSM.UseChosenMultiAbility(3);
+    }
+
+    public void ResCharacter()
+    {
+        characterSM.ResCharacter();
     }
 }

@@ -6,6 +6,17 @@ public class CharacterIdleState : CharacterBaseState
 {
     public override void EnterState(CharacterStateManager characterSM)
     {
+        if (characterSM.isInAltState)
+        {
+            characterSM.animator.SetBool("isRunningAlt", false);
+        }
+        else
+        {
+            //incase it is running out of alt mode
+            characterSM.animator.SetBool("isRunningAlt", false);
+            characterSM.animator.SetBool("isRunning", false);
+        }
+
         characterSM.currentState = characterSM.idleState;
 
         if(!characterSM.characterCanvas.activeSelf) characterSM.characterCanvas.SetActive(true);

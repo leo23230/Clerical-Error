@@ -20,8 +20,8 @@ public class LevelSequencer : MonoBehaviour
 
     //Levels
     Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 2), /*new Phase(PhaseType.ResourceDrop, 12),*/ new Phase(PhaseType.EnemySpawn, 3), 
-        new Phase(PhaseType.Camping, 30), new Phase(PhaseType.EnemySpawn, 4), new Phase(PhaseType.ResourceDrop, 12),
-        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 5)
+        new Phase(PhaseType.Camping, 30), new Phase(PhaseType.EnemySpawn, 5), new Phase(PhaseType.ResourceDrop, 12),
+        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 6)
     };
 
     int phaseCounter;

@@ -16,7 +16,16 @@ public class CharacterAttackState : CharacterBaseState
             characterSM.FlipSprite("left");
         }
 
-        if (characterSM.animator != null) characterSM.animator.SetBool("isRunning", false);
+        if (characterSM.isInAltState)
+        {
+            characterSM.animator.SetBool("isRunningAlt", false);
+        }
+        else
+        {
+            //incase it is running out of alt mode
+            characterSM.animator.SetBool("isRunningAlt", false);
+            characterSM.animator.SetBool("isRunning", false);
+        }
 
         //this function sets animation automatically
         if (characterSM.ChooseAnAbility()) setAttackCoolDownTime(characterSM);
@@ -26,6 +35,7 @@ public class CharacterAttackState : CharacterBaseState
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
+        Debug.Log(characterSM.character.name + " is Attacking");
         if (characterSM.target.GetComponent<Health>().GetHealth() <= 0)
         {
             if(characterSM.findAliveEnemies().Count > 0) 
@@ -55,7 +65,11 @@ public class CharacterAttackState : CharacterBaseState
         }
         else
         {
-            if (!characterSM.character.animator.GetBool("isReadying"))
+            //wait for all of these animations to finish
+            if (!characterSM.character.animator.GetBool("isReadying")&&
+                !characterSM.character.animator.GetBool("isSwitching") &&
+                !characterSM.character.animator.GetBool("isReturning") &&
+                !characterSM.character.animator.GetBool("isAttacking"))
             {
                 if (characterSM.character.hasBackupAbility)
                 {

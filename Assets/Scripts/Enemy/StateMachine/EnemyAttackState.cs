@@ -32,8 +32,8 @@ public class EnemyAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager enemySM)
     {
-
-        if (enemySM.transform.position.x < enemySM.target.transform.position.x)
+        bool isTargetToLeft = enemySM.transform.position.x < enemySM.target.transform.position.x;
+        if (isTargetToLeft)
         {
             enemySM.FlipSprite("left");
         }

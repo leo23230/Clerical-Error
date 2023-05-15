@@ -38,7 +38,7 @@ public class ShapePopulator : MonoBehaviour
         }
         if (_num == 2)
         {
-            RemoveCurrentShapesFromScrollSnap(3);
+            RemoveCurrentShapesFromScrollSnap(4);
             LoadShapeGroupIntoScrollSnap(shapeGroup2);
         }
     }

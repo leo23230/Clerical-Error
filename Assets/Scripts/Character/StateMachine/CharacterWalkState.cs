@@ -11,7 +11,15 @@ public class CharacterWalkState : CharacterBaseState
         //Debug.Log("Entered Run State");
         if (characterSM.animator != null)
         {
-            characterSM.animator.SetBool("isRunning", true);
+            if (characterSM.isInAltState)
+            {
+                characterSM.animator.SetBool("isRunningAlt", true);
+            }
+            else
+            {
+                characterSM.animator.SetBool("isRunning", true);
+            }
+            
         }
         
         characterSM.currentState = characterSM.walkState;
@@ -27,6 +35,7 @@ public class CharacterWalkState : CharacterBaseState
 
         if (!isAtAvgDistance)
         {
+            Debug.Log(characterSM.character.name + " is Walking");
             //if(characterIs
             Vector2 targetPosition = new Vector2(characterSM.target.transform.position.x, characterSM.target.transform.position.y);
 
