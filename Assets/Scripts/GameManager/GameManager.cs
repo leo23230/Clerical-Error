@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public List<CharacterDetailsSO> characters;
     public int numberOfCharacters;
+    private List<GameObject> aliveCharacters = new List<GameObject>();
 
     void Start()
     {
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
                 instance.GetComponent<Character>().Initialize(chosenCharacterDetails);
             } 
             else Debug.Log("No Spawn");
+            aliveCharacters.Add(instance);
         }
     }
 
@@ -75,5 +77,38 @@ public class GameManager : MonoBehaviour
             Destroy(character);
         }
         generateCharacters();
+    }
+
+    public void RefreshAliveCharacters()
+    {
+        List<GameObject> resCharacters = new List<GameObject>();
+        List<GameObject> deadCharacters = new List<GameObject>();
+
+        foreach (GameObject characterObject in aliveCharacters)
+        {
+            CharacterStateManager characterSM = characterObject.GetComponent<CharacterStateManager>();
+            if (characterSM.currentState == characterSM.deadState)
+            {
+                deadCharacters.Add(characterObject);
+                Debug.Log("Remove");
+            }
+            else if (!aliveCharacters.Contains(characterObject))
+            {
+                resCharacters.Add(characterObject);
+            }
+        }
+        foreach (GameObject character in deadCharacters)
+        {
+            aliveCharacters.Remove(character);
+        }
+
+        foreach (GameObject character in resCharacters)
+        {
+            aliveCharacters.Add(character);
+        }
+
+        Debug.Log("ALIVE: " + aliveCharacters.Count);
+
+        if (aliveCharacters.Count <= 0) SceneManager.LoadScene(2);
     }
 }

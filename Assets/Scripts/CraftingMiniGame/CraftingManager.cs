@@ -214,7 +214,7 @@ public class CraftingManager : MonoBehaviour
 
     private IEnumerator DelayedLoadHotbar()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         LoadHotbar();
     }
 

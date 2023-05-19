@@ -618,6 +618,8 @@ public class CharacterStateManager : MonoBehaviour
         characterCanvas.SetActive(true);
         animator.SetBool("isDead", false);
         idleState.EnterState(this);
+
+        StartCoroutine(TimedSpellReset());
     }
 
 }

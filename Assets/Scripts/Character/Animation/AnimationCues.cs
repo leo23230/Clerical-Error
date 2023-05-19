@@ -6,11 +6,13 @@ public class AnimationCues : MonoBehaviour
 {
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterStateManager characterSM;
+    [HideInInspector] public GameManager gameManager;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         characterSM = transform.parent.GetComponent<CharacterStateManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void SetIsAttackingToFalse()
@@ -83,5 +85,10 @@ public class AnimationCues : MonoBehaviour
     public void ResCharacter()
     {
         characterSM.ResCharacter();
+    }
+
+    public void RefreshAliveCharacters()
+    {
+        gameManager.RefreshAliveCharacters();
     }
 }

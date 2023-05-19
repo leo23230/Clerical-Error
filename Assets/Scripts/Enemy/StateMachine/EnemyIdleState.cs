@@ -6,7 +6,7 @@ public class EnemyIdleState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager enemySM)
     {
-        Debug.Log("Entered Idle State");
+        //Debug.Log("Entered Idle State");
 
         enemySM.currentState = enemySM.idleState;
     }
@@ -18,7 +18,7 @@ public class EnemyIdleState : EnemyBaseState
             //determine which attack to use based on cooldowns and other stuff
             //then send the enemy into the attack state
 
-            Debug.Log("WithinRange");
+           // Debug.Log("WithinRange");
 
             enemySM.attackState.EnterState(enemySM);
         }

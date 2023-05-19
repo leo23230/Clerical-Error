@@ -16,7 +16,6 @@ public class Inventory : MonoBehaviour
     {
         InitializeInventory(30);
         PrintInventory();
-
     }
 
     void Start()

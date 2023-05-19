@@ -35,7 +35,7 @@ public class CharacterAttackState : CharacterBaseState
 
     public override void UpdateState(CharacterStateManager characterSM)
     {
-        Debug.Log(characterSM.character.name + " is Attacking");
+        //Debug.Log(characterSM.character.name + " is Attacking");
         if (characterSM.target.GetComponent<Health>().GetHealth() <= 0)
         {
             if(characterSM.findAliveEnemies().Count > 0) 
