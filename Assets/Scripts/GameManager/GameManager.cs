@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("ALIVE: " + aliveCharacters.Count);
 
-        if (aliveCharacters.Count <= 0) SceneManager.LoadScene(2);
+        if (aliveCharacters.Count <= 0) 
+        {
+            SceneManager.LoadScene(2);
+            
+        } 
     }
 }

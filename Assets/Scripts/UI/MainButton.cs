@@ -26,10 +26,10 @@ public class MainButton : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += StartTimedDeactivate;
-        StaticEventHandler.CraftingEvent += StartTimedDeactivate;
-        StaticEventHandler.SpellcastingEvent += StartTimedDeactivate;
-        StaticEventHandler.ExitMiniGameEvent += ActivateSelf;
+        StaticEventHandler.Instance.BagRummageEvent += StartTimedDeactivate;
+        StaticEventHandler.Instance.CraftingEvent += StartTimedDeactivate;
+        StaticEventHandler.Instance.SpellcastingEvent += StartTimedDeactivate;
+        StaticEventHandler.Instance.ExitMiniGameEvent += ActivateSelf;
     }
 
     private void OnDisable()

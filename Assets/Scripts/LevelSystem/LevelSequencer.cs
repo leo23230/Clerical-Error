@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelSequencer : MonoBehaviour
 {
@@ -19,9 +20,10 @@ public class LevelSequencer : MonoBehaviour
     private InkCounter inkCounter;
 
     //Levels
-    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 2), /*new Phase(PhaseType.ResourceDrop, 12),*/ new Phase(PhaseType.EnemySpawn, 7), 
-        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 5), new Phase(PhaseType.ResourceDrop, 12),
-        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 5), new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 6)
+    Phase[] level1 = new Phase[] { new Phase(PhaseType.Camping, 30), new Phase(PhaseType.EnemySpawn, 3), 
+        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 4), new Phase(PhaseType.ResourceDrop, 12),
+        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 5), new Phase(PhaseType.ResourceDrop, 12), 
+        new Phase(PhaseType.Camping, 45), new Phase(PhaseType.EnemySpawn, 6)
     };
 
     int phaseCounter;
@@ -44,12 +46,12 @@ public class LevelSequencer : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.EnemyDiedEvent += UpdateEnemyCount;
+        StaticEventHandler.Instance.EnemyDiedEvent += UpdateEnemyCount;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.EnemyDiedEvent -= UpdateEnemyCount;
+        StaticEventHandler.Instance.EnemyDiedEvent -= UpdateEnemyCount;
     }
 
     // Start is called before the first frame update
@@ -110,7 +112,7 @@ public class LevelSequencer : MonoBehaviour
                     //Drop resources
                     inventoryComponent.AddMoreCraftingIngredients((int)currentPhase.phaseData);
                     inkCounter.AddInk(HelperUtilities.RandInt(2f, 7f));
-                    StaticEventHandler.CallResourceDropEvent();
+                    StaticEventHandler.Instance.CallResourceDropEvent();
                     phaseCondition = true;
                 }
 
@@ -125,6 +127,8 @@ public class LevelSequencer : MonoBehaviour
         }
 
         phaseText.text = "Victory!";
+        SceneManager.LoadScene(3);
+
     }
 
     private void SpawnEnemies(float _amt)
@@ -157,7 +161,7 @@ public class LevelSequencer : MonoBehaviour
 
             //currentEnemies.Add(newEnemy);
         }
-        StaticEventHandler.CallEnemySpawnedEvent();
+        StaticEventHandler.Instance.CallEnemySpawnedEvent();
         switchingPhase = false;
     }
 

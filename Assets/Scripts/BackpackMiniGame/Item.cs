@@ -90,7 +90,7 @@ public class Item: MonoBehaviour
             {
                 if (itemDetails.isConsumable)
                 {
-                    StaticEventHandler.CallItemSelectedEvent(gameObject, itemDetails);
+                    StaticEventHandler.Instance.CallItemSelectedEvent(gameObject, itemDetails);
                     //backpackManager.RemoveItemFromBackpack(gameObject, itemDetails);
                     transform.position = offHand.transform.position;
                     transform.rotation = offHand.transform.rotation;
@@ -252,7 +252,7 @@ public class Item: MonoBehaviour
 
                         ScreenShake.Instance.ShakeCamera(10f, .2f, true);
 
-                        StaticEventHandler.CallItemDestroyedEvent(gameObject);
+                        StaticEventHandler.Instance.CallItemDestroyedEvent(gameObject);
 
                         Destroy(gameObject);
                     }

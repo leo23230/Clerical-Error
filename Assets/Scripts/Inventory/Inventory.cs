@@ -30,18 +30,18 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.ItemSelectedEvent += SetHandItem;
-        StaticEventHandler.ConsumableUsedEvent += UseHandItem;
-        StaticEventHandler.StartedCraftingEvent += RemoveUsedCraftingIngredients;
-        StaticEventHandler.ItemDestroyedEvent += RemoveDestroyedItem;
+        StaticEventHandler.Instance.ItemSelectedEvent += SetHandItem;
+        StaticEventHandler.Instance.ConsumableUsedEvent += UseHandItem;
+        StaticEventHandler.Instance.StartedCraftingEvent += RemoveUsedCraftingIngredients;
+        StaticEventHandler.Instance.ItemDestroyedEvent += RemoveDestroyedItem;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.ItemSelectedEvent -= SetHandItem;
-        StaticEventHandler.ConsumableUsedEvent -= UseHandItem;
-        StaticEventHandler.StartedCraftingEvent -= RemoveUsedCraftingIngredients;
-        StaticEventHandler.ItemDestroyedEvent -= RemoveDestroyedItem;
+        StaticEventHandler.Instance.ItemSelectedEvent -= SetHandItem;
+        StaticEventHandler.Instance.ConsumableUsedEvent -= UseHandItem;
+        StaticEventHandler.Instance.StartedCraftingEvent -= RemoveUsedCraftingIngredients;
+        StaticEventHandler.Instance.ItemDestroyedEvent -= RemoveDestroyedItem;
     }
 
     void InitializeInventory(int numItems)

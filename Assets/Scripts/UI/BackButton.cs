@@ -10,17 +10,17 @@ public class BackButton : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += ActivateSelf;
-        StaticEventHandler.CraftingEvent += ActivateSelf;
-        StaticEventHandler.SpellcastingEvent += ActivateSelfSpellcasting;
-        StaticEventHandler.ExitMiniGameEvent += DeactivateSelf;
+        StaticEventHandler.Instance.BagRummageEvent += ActivateSelf;
+        StaticEventHandler.Instance.CraftingEvent += ActivateSelf;
+        StaticEventHandler.Instance.SpellcastingEvent += ActivateSelfSpellcasting;
+        StaticEventHandler.Instance.ExitMiniGameEvent += DeactivateSelf;
     }
 
     private void OnDisable()
     {
 /*        StaticEventHandler.BagRummageEvent -= ActivateSelf;
         StaticEventHandler.CraftingEvent -= ActivateSelf;*/
-        StaticEventHandler.ExitMiniGameEvent -= DeactivateSelf;
+        //StaticEventHandler.Instance.ExitMiniGameEvent -= DeactivateSelf;
     }
 
     // Start is called before the first frame update
@@ -28,6 +28,7 @@ public class BackButton : MonoBehaviour
     {
         MainButton = GameObject.Find("MainButton");
         MainButtonComponent = MainButton.GetComponent<MainButton>();
+        if (gameObject.activeSelf) gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,8 +38,7 @@ public class BackButton : MonoBehaviour
 
     public void DisableButtonObject()
     {
-        MainButton.SetActive(true);
-        
+        MainButton.SetActive(true);  
     }
 
     public void DeactivateSelf(ExitMiniGameEventArgs eventArgs)
@@ -56,7 +56,7 @@ public class BackButton : MonoBehaviour
     }
     public void ActivateSelfSpellcasting(SpellcastingEventArgs eventArgs)
     {
-        Debug.Log("GAHHHHHHHHH");
+        //Debug.Log("GAHHHHHHHHH");
         gameObject.SetActive(true);
     }
 }

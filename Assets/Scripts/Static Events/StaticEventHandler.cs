@@ -3,73 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public static class StaticEventHandler
+public class StaticEventHandler : MonoBehaviour
 {
-    public static event Action<BagRummageEventArgs> BagRummageEvent;
-    public static event Action<CraftingEventArgs> CraftingEvent;
-    public static event Action<SpellcastingEventArgs> SpellcastingEvent;
-    public static event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
-    public static event Action<ItemSelectedEventArgs> ItemSelectedEvent;
-    public static event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
-    public static event Action<ItemCraftedEventArgs> ItemCraftedEvent;
-    public static event Action<StartedCraftingEventArgs> StartedCraftingEvent;
-    public static event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
-    public static event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
-    public static event Action<EnemyDiedEventArgs> EnemyDiedEvent;
-    public static event Action<ResourceDropEventArgs> ResourceDropEvent;
+    public static StaticEventHandler Instance { get; private set; }
 
+    public event Action<BagRummageEventArgs> BagRummageEvent;
+    public event Action<CraftingEventArgs> CraftingEvent;
+    public event Action<SpellcastingEventArgs> SpellcastingEvent;
+    public event Action<ExitMiniGameEventArgs> ExitMiniGameEvent;
+    public event Action<ItemSelectedEventArgs> ItemSelectedEvent;
+    public event Action<ConsumableUsedEventArgs> ConsumableUsedEvent;
+    public event Action<ItemCraftedEventArgs> ItemCraftedEvent;
+    public event Action<StartedCraftingEventArgs> StartedCraftingEvent;
+    public event Action<ItemDestroyedEventArgs> ItemDestroyedEvent;
+    public event Action<EnemySpawnedEventArgs> EnemySpawnedEvent;
+    public event Action<EnemyDiedEventArgs> EnemyDiedEvent;
+    public event Action<ResourceDropEventArgs> ResourceDropEvent;
 
-    public static void CallBagRummageEvent()
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void CallBagRummageEvent()
     {
         BagRummageEvent?.Invoke(new BagRummageEventArgs() { });
     }
-    public static void CallCraftingEvent()
+    public void CallCraftingEvent()
     {
         CraftingEvent?.Invoke(new CraftingEventArgs() { });
     }
-    public static void CallSpellcastingEvent()
+    public void CallSpellcastingEvent()
     {
         SpellcastingEvent?.Invoke(new SpellcastingEventArgs() { });
     }
-    public static void CallExitMiniGameEvent()
+    public void CallExitMiniGameEvent()
     {
         ExitMiniGameEvent?.Invoke(new ExitMiniGameEventArgs() { });
     }
-    public static void CallItemSelectedEvent(GameObject _backPackObject, ItemDetailsSO _itemDetails)
+    public void CallItemSelectedEvent(GameObject _backPackObject, ItemDetailsSO _itemDetails)
     {
         ItemSelectedEvent?.Invoke(new ItemSelectedEventArgs(_backPackObject, _itemDetails) { });
     }
-    public static void CallConsumableUsedEvent(CharacterStateManager _character)
+    public void CallConsumableUsedEvent(CharacterStateManager _character)
     {
         ConsumableUsedEvent?.Invoke(new ConsumableUsedEventArgs() {character = _character});
     }
 
-    public static void CallItemCraftedEvent(List<ItemDetailsSO> _ingredients, ItemDetailsSO _output)
+    public void CallItemCraftedEvent(List<ItemDetailsSO> _ingredients, ItemDetailsSO _output)
     {
         ItemCraftedEvent?.Invoke(new ItemCraftedEventArgs(_ingredients, _output));
     }
 
-    public static void CallStartedCraftingEvent(List<ItemDetailsSO> _ingredients)
+    public void CallStartedCraftingEvent(List<ItemDetailsSO> _ingredients)
     {
         StartedCraftingEvent?.Invoke(new StartedCraftingEventArgs(_ingredients));
     }
 
-    public static void CallItemDestroyedEvent(GameObject item)
+    public void CallItemDestroyedEvent(GameObject item)
     {
         ItemDestroyedEvent?.Invoke(new ItemDestroyedEventArgs() {item = item});
     }
 
-    public static void CallEnemySpawnedEvent()
+    public void CallEnemySpawnedEvent()
     {
         EnemySpawnedEvent?.Invoke(new EnemySpawnedEventArgs() { });
     }
 
-    public static void CallEnemyDiedEvent()
+    public void CallEnemyDiedEvent()
     {
         EnemyDiedEvent?.Invoke(new EnemyDiedEventArgs() { });
     }
 
-    public static void CallResourceDropEvent()
+    public void CallResourceDropEvent()
     {
         ResourceDropEvent?.Invoke(new ResourceDropEventArgs() { });
     }

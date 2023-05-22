@@ -9,8 +9,8 @@ public class CookingPot : MonoBehaviour, IDropHandler
 
     private void OnEnable()
     {
-        StaticEventHandler.StartedCraftingEvent += DisableCookingPot;
-        StaticEventHandler.ItemCraftedEvent += EnableCookingPot;
+        StaticEventHandler.Instance.StartedCraftingEvent += DisableCookingPot;
+        StaticEventHandler.Instance.ItemCraftedEvent += EnableCookingPot;
     }
     public void OnDrop(PointerEventData eventData)
     {

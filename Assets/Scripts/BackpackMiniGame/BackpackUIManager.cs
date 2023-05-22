@@ -25,14 +25,14 @@ public class BackpackUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.ItemSelectedEvent += UpdateToolTipToSelected;
-        StaticEventHandler.ConsumableUsedEvent += ResetTooltipAfterUse;
+        StaticEventHandler.Instance.ItemSelectedEvent += UpdateToolTipToSelected;
+        StaticEventHandler.Instance.ConsumableUsedEvent += ResetTooltipAfterUse;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.ItemSelectedEvent -= UpdateToolTipToSelected;
-        StaticEventHandler.ConsumableUsedEvent -= ResetTooltipAfterUse;
+        StaticEventHandler.Instance.ItemSelectedEvent -= UpdateToolTipToSelected;
+        StaticEventHandler.Instance.ConsumableUsedEvent -= ResetTooltipAfterUse;
     }
 
     // Update is called once per frame

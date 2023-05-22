@@ -17,17 +17,17 @@ public class MoveCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += moveCameraToMiniGame;
-        StaticEventHandler.CraftingEvent += moveCameraToMiniGame;
-        StaticEventHandler.SpellcastingEvent += moveCameraToMiniGame;
-        StaticEventHandler.ExitMiniGameEvent += moveCameraBack;
+        StaticEventHandler.Instance.BagRummageEvent += moveCameraToMiniGame;
+        StaticEventHandler.Instance.CraftingEvent += moveCameraToMiniGame;
+        StaticEventHandler.Instance.SpellcastingEvent += moveCameraToMiniGame;
+        StaticEventHandler.Instance.ExitMiniGameEvent += moveCameraBack;
     }
     private void OnDisable()
     {
-        StaticEventHandler.BagRummageEvent -= moveCameraToMiniGame;
-        StaticEventHandler.CraftingEvent -= moveCameraToMiniGame;
-        StaticEventHandler.SpellcastingEvent -= moveCameraToMiniGame;
-        StaticEventHandler.ExitMiniGameEvent -= moveCameraBack;
+        StaticEventHandler.Instance.BagRummageEvent -= moveCameraToMiniGame;
+        StaticEventHandler.Instance.CraftingEvent -= moveCameraToMiniGame;
+        StaticEventHandler.Instance.SpellcastingEvent -= moveCameraToMiniGame;
+        StaticEventHandler.Instance.ExitMiniGameEvent -= moveCameraBack;
     }
     // Update is called once per frame
     void Update()

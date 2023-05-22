@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
         if(healthComponent.GetHealth() <= 0)
         {
             //LevelSequencer.Instance.UpdateEnemyList(gameObject);
-            StaticEventHandler.CallEnemyDiedEvent();
+            StaticEventHandler.Instance.CallEnemyDiedEvent();
             Destroy(gameObject);
         }
     }

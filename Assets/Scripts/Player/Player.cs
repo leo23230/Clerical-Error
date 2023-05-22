@@ -26,11 +26,11 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.ResourceDropEvent += ResourceDropEffect;
+        StaticEventHandler.Instance.ResourceDropEvent += ResourceDropEffect;
     }
     private void OnDisable()
     {
-        StaticEventHandler.ResourceDropEvent -= ResourceDropEffect;
+        StaticEventHandler.Instance.ResourceDropEvent -= ResourceDropEffect;
     }
     void Start()
     {

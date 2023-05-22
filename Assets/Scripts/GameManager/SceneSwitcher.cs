@@ -33,5 +33,13 @@ public class SceneSwitcher : MonoBehaviour
                 SceneManager.LoadScene(1);
             }
         }
+
+        if (SceneManager.GetActiveScene().name == "VictoryScene")
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SceneManager.LoadScene(1);
+            }
+        }
     }
 }

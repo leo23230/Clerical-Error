@@ -36,15 +36,15 @@ public class CraftingManager : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.StartedCraftingEvent += DestroyIngredients;
-        StaticEventHandler.ItemDestroyedEvent += DestroyBrokenIngredients;
-        StaticEventHandler.ResourceDropEvent += ReloadHotbarOnResourceDrop;
+        StaticEventHandler.Instance.StartedCraftingEvent += DestroyIngredients;
+        StaticEventHandler.Instance.ItemDestroyedEvent += DestroyBrokenIngredients;
+        StaticEventHandler.Instance.ResourceDropEvent += ReloadHotbarOnResourceDrop;
     }
     private void OnDisable()
     {
-        StaticEventHandler.StartedCraftingEvent -= DestroyIngredients;
-        StaticEventHandler.ItemDestroyedEvent -= DestroyBrokenIngredients;
-        StaticEventHandler.ResourceDropEvent -= ReloadHotbarOnResourceDrop;
+        StaticEventHandler.Instance.StartedCraftingEvent -= DestroyIngredients;
+        StaticEventHandler.Instance.ItemDestroyedEvent -= DestroyBrokenIngredients;
+        StaticEventHandler.Instance.ResourceDropEvent -= ReloadHotbarOnResourceDrop;
     }
 
     // Start is called before the first frame update
@@ -118,7 +118,7 @@ public class CraftingManager : MonoBehaviour
         float duration = _craftingDuration;
         float normalizedTime = 0;
 
-        StaticEventHandler.CallStartedCraftingEvent(_ingredients);
+        StaticEventHandler.Instance.CallStartedCraftingEvent(_ingredients);
 
         CookingTimerBarObject.SetActive(true);
 
@@ -146,7 +146,7 @@ public class CraftingManager : MonoBehaviour
             yield return null;
         }
 
-        StaticEventHandler.CallItemCraftedEvent(_ingredients, _output);
+        StaticEventHandler.Instance.CallItemCraftedEvent(_ingredients, _output);
 
         CookingTimerBar.fillAmount = 0f;
 

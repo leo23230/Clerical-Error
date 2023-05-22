@@ -47,20 +47,20 @@ public class BackpackManager : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.ItemSelectedEvent += RemoveItemFromBackpack;
-        StaticEventHandler.ConsumableUsedEvent += useConsumable;
-        StaticEventHandler.ItemDestroyedEvent += removeDestroyedItem;
-        StaticEventHandler.StartedCraftingEvent += removeCraftingIngredients;
-        StaticEventHandler.ItemCraftedEvent += addCraftedConsumable;
+        StaticEventHandler.Instance.ItemSelectedEvent += RemoveItemFromBackpack;
+        StaticEventHandler.Instance.ConsumableUsedEvent += useConsumable;
+        StaticEventHandler.Instance.ItemDestroyedEvent += removeDestroyedItem;
+        StaticEventHandler.Instance.StartedCraftingEvent += removeCraftingIngredients;
+        StaticEventHandler.Instance.ItemCraftedEvent += addCraftedConsumable;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.ItemSelectedEvent -= RemoveItemFromBackpack;
-        StaticEventHandler.ConsumableUsedEvent -= useConsumable;
-        StaticEventHandler.ItemDestroyedEvent -= removeDestroyedItem;
-        StaticEventHandler.StartedCraftingEvent -= removeCraftingIngredients;
-        StaticEventHandler.ItemCraftedEvent -= addCraftedConsumable;
+        StaticEventHandler.Instance.ItemSelectedEvent -= RemoveItemFromBackpack;
+        StaticEventHandler.Instance.ConsumableUsedEvent -= useConsumable;
+        StaticEventHandler.Instance.ItemDestroyedEvent -= removeDestroyedItem;
+        StaticEventHandler.Instance.StartedCraftingEvent -= removeCraftingIngredients;
+        StaticEventHandler.Instance.ItemCraftedEvent -= addCraftedConsumable;
     }
 
     void Start()

@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b766356489aa5146aad828bc3d3330c, type: 3}
-  m_Name: CharacterDetails_Barbarian
+  m_Name: CharacterDetails_GreatShield
   m_EditorClassIdentifier: 
-  characterName: Sword Singer
-  characterPrefab: {fileID: 463899782032013103, guid: 8cda00dd8aab2e84c89327823f8c3ec3, type: 3}
+  characterName: Barbarian
+  characterPrefab: {fileID: 2020621593951310722, guid: 08a25c2153d8a364091ef37c17040ae2, type: 3}
   runtimeAnimatorController: {fileID: 0}
   characterHealthAmount: 100
-  characterSpeed: 5
-  characterArmorClass: 0.8
-  characterAttackMax: 6
-  characterAttackMin: 4
-  characterAbilityCooldown: 1
+  characterSpeed: 3
+  characterArmorClass: 0.7
+  characterAttackMax: 5
+  characterAttackMin: 3
+  characterAbilityCooldown: 2
   characterAbilities:
   - LightAttack
   - HeavyAttack
-  - Special
+  - GreatShieldSpecial
+  hasBackupAttack: 0
+  backupAbility: 
   characterMiniMapIcon: {fileID: 0}

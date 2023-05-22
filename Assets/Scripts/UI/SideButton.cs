@@ -19,11 +19,11 @@ public class SideButton : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += DeactivateActionButtons;
+        StaticEventHandler.Instance.BagRummageEvent += DeactivateActionButtons;
     }
     private void OnDisable()
     {
-        StaticEventHandler.BagRummageEvent -= DeactivateActionButtons;
+        //StaticEventHandler.Instance.BagRummageEvent -= DeactivateActionButtons;
     }
 
     private void Awake()
@@ -33,7 +33,6 @@ public class SideButton : MonoBehaviour
         BackpackButton = GameObject.Find("BackpackButton");
         SpellcastingButton = GameObject.Find("SpellcastingButton");
         CraftingButton = GameObject.Find("CraftingButton");
-        if (BackButton.activeSelf) BackButton.SetActive(false);
         MainButtonUIComponent = MainButton.GetComponent<Button>();
         MainButtonComponent = MainButton.GetComponent<MainButton>();
         MainButtonText = MainButton.transform.Find("text").GetComponent<TextMeshProUGUI>();

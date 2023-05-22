@@ -76,14 +76,14 @@ public class CharacterStateManager : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.EnemyDiedEvent += ChooseEnemyUponEnemyDeath;
-        StaticEventHandler.EnemySpawnedEvent += ChooseEnemyUponEnemySpawn;
+        StaticEventHandler.Instance.EnemyDiedEvent += ChooseEnemyUponEnemyDeath;
+        StaticEventHandler.Instance.EnemySpawnedEvent += ChooseEnemyUponEnemySpawn;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.EnemyDiedEvent -= ChooseEnemyUponEnemyDeath;
-        StaticEventHandler.EnemySpawnedEvent -= ChooseEnemyUponEnemySpawn;
+        StaticEventHandler.Instance.EnemyDiedEvent -= ChooseEnemyUponEnemyDeath;
+        StaticEventHandler.Instance.EnemySpawnedEvent -= ChooseEnemyUponEnemySpawn;
     }
 
     void Start()
@@ -134,7 +134,7 @@ public class CharacterStateManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && NotDead() && inventory.GetHandItem() != null)
         {
-            StaticEventHandler.CallConsumableUsedEvent(this);
+            StaticEventHandler.Instance.CallConsumableUsedEvent(this);
         }
         if (Input.GetMouseButtonDown(0) && NotDead() && inventory.hasPreparedSpell())
         {

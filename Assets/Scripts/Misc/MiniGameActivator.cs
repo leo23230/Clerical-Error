@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MiniGameActivator : MonoBehaviour
 {
@@ -13,19 +14,19 @@ public class MiniGameActivator : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.BagRummageEvent += ActivateMiniGame;
-        StaticEventHandler.CraftingEvent += ActivateCraftingMiniGame;
-        StaticEventHandler.SpellcastingEvent += ActivateSpellcastingMiniGame;
-        StaticEventHandler.ExitMiniGameEvent += DeactivateMiniGame;
+        //SceneManager.activeSceneChanged += OnSceneChange;
+        StaticEventHandler.Instance.BagRummageEvent += ActivateMiniGame;
+        StaticEventHandler.Instance.CraftingEvent += ActivateCraftingMiniGame;
+        StaticEventHandler.Instance.SpellcastingEvent += ActivateSpellcastingMiniGame;
+        StaticEventHandler.Instance.ExitMiniGameEvent += DeactivateMiniGame;
     }
 
     private void OnDisable()
     {
         //don't want this to happen//
 
-/*        StaticEventHandler.BagRummageEvent -= ActivateMiniGame;
-        StaticEventHandler.CraftingEvent -= ActivateCraftingMiniGame;*/
-        StaticEventHandler.ExitMiniGameEvent -= DeactivateMiniGame;
+
+        //StaticEventHandler.Instance.ExitMiniGameEvent -= DeactivateMiniGame;
     }
 
     private void ActivateMiniGame(BagRummageEventArgs eventArgs)
@@ -70,4 +71,26 @@ public class MiniGameActivator : MonoBehaviour
 
         yield break;
     }
+
+    /*private void OnSceneChange(Scene lastScene, Scene newScene)
+    {
+        //unsubscribe all
+        if (newScene.name == "MainGameScene")
+        {
+            Debug.Log("Yes");
+            StaticEventHandler.Instance.BagRummageEvent += ActivateMiniGame;
+            StaticEventHandler.Instance.CraftingEvent += ActivateCraftingMiniGame;
+            StaticEventHandler.Instance.SpellcastingEvent += ActivateSpellcastingMiniGame;
+            //SceneManager.activeSceneChanged -= OnSceneChange;
+        }
+
+        if (newScene.name == "LoseScene")
+        {
+            Debug.Log("Yes");
+            StaticEventHandler.Instance.BagRummageEvent -= ActivateMiniGame;
+            StaticEventHandler.Instance.CraftingEvent -= ActivateCraftingMiniGame;
+            StaticEventHandler.Instance.SpellcastingEvent -= ActivateSpellcastingMiniGame;
+            //SceneManager.activeSceneChanged -= OnSceneChange;
+        }
+    }*/
 }

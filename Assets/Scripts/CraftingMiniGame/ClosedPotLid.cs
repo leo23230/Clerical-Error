@@ -23,8 +23,8 @@ public class ClosedPotLid : MonoBehaviour, IPointerClickHandler
     }
     private void OnEnable()
     {
-        StaticEventHandler.StartedCraftingEvent += EnableLid;
-        StaticEventHandler.ItemCraftedEvent += DisableLid;
+        StaticEventHandler.Instance.StartedCraftingEvent += EnableLid;
+        StaticEventHandler.Instance.ItemCraftedEvent += DisableLid;
     }
     private void OnDisable()
     {
