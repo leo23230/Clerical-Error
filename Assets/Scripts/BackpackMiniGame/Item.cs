@@ -42,6 +42,15 @@ public class Item: MonoBehaviour
     public GameObject dinkEffect;
     public GameObject craftedEffect;
 
+    //boundaries
+
+    private float LeftBoundary;
+    private float RightBoundary;
+    private float TopBoundary;
+    private float BottomBoundary;
+
+    private Vector3 positionBeforeHeld = new Vector3();
+
     private void Awake()
     {
         r = GetComponent<SpriteRenderer>();
@@ -49,6 +58,12 @@ public class Item: MonoBehaviour
         sortingGroup = GetComponent<SortingGroup>();
         glow = transform.Find("Glow").gameObject;
         glow.SetActive(false);
+
+        LeftBoundary = GameObject.Find("LeftWallCollider").transform.position.x;
+        RightBoundary = GameObject.Find("RightWallCollider").transform.position.x;
+        TopBoundary = GameObject.Find("TopWallCollider").transform.position.y;
+        BottomBoundary = GameObject.Find("BottomWallCollider").transform.position.y;
+
     }
 
     private void Start()
@@ -80,6 +95,7 @@ public class Item: MonoBehaviour
             //if the item is currently being held, put on hand layer
             gameObject.layer = LayerBackpackHand;
             sortingGroup.sortingLayerName = "BPHand";
+            positionBeforeHeld = transform.position;
         }
         else if (state == ItemState.Released)
         {
@@ -98,23 +114,32 @@ public class Item: MonoBehaviour
                 }
                 else
                 {
-                    transform.position = new Vector3(-8.5f, 13f, transform.position.z);
+                    transform.position = positionBeforeHeld;
+                    //transform.position = new Vector3(-8.5f, 13f, transform.position.z);
                     offHandComponent.StartFlashRed();
                     SwitchState(ItemState.Free);
-                }
-                
+                }    
             }
             else
             {
+                //if it's not in the backpackObjects list this means it was in the hand
                 if (!backpackManager.IsItemInBackpack(gameObject))
                 {
-                    backpackManager.AddItemToBackpack(gameObject);
+                    backpackManager.AddHandItemToBackpack(gameObject);
+                }
+
+                if (OutOfBounds())
+                {
+                    transform.position = positionBeforeHeld;
+                    SwitchState(ItemState.Free);
                 }
 
                 backpackManager.ReorganizeItemsIntoLayers(gameObject);
                 transform.rotation = startingRotation;
                 SwitchState(ItemState.Free);
             }
+
+            positionBeforeHeld = new Vector3();
 
         }
         else if (state == ItemState.Selected)
@@ -311,6 +336,11 @@ public class Item: MonoBehaviour
     public void UnlockItem()
     {
         isLocked = false;
+    }
+
+    bool OutOfBounds()
+    {
+        return !(transform.position.x > LeftBoundary && transform.position.x < RightBoundary && transform.position.y > BottomBoundary && transform.position.y < TopBoundary);
     }
 }
 

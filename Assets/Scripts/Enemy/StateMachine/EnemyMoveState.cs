@@ -36,13 +36,18 @@ public class EnemyMoveState : EnemyBaseState
             float lowerBound = avgDistance - margin;
 
             Vector2 newMovePoint = Vector2.MoveTowards(enemySM.transform.position, targetPosition, enemySM.moveSpeed * Time.deltaTime);
+
+            //if the target is too close
             if (distanceToTarget < lowerBound)
             {
+                Debug.Log("moving away from target");
                 enemySM.FlipSprite("left");
                 newMovePoint = Vector2.MoveTowards(enemySM.transform.position, enemySM.startingPos, enemySM.moveSpeed * Time.deltaTime);
             }
+            //if the target is too far away
             else if (distanceToTarget > upperBound)
             {
+                Debug.Log("Moving towards target");
                 enemySM.FlipSprite("right");
                 newMovePoint = Vector2.MoveTowards(enemySM.transform.position, targetPosition, enemySM.moveSpeed * Time.deltaTime);
             }

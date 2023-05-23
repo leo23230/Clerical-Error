@@ -19,6 +19,6 @@ MonoBehaviour:
   enemySpeed: 2
   enemyArmorClass: 1
   enemyDamage: 5
-  enemyAttackMax: 5
+  enemyAttackMax: 6
   enemyAttackMin: 3
   enemyAbilityCooldown: 4

@@ -20,5 +20,5 @@ MonoBehaviour:
   enemyArmorClass: 1
   enemyDamage: 15
   enemyAttackMax: 12
-  enemyAttackMin: 6
+  enemyAttackMin: 3
   enemyAbilityCooldown: 10

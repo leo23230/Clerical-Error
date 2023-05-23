@@ -34,7 +34,7 @@ public class FocusManager : MonoBehaviour
     void Start()
     {
         transform.position = focusTargets[0].transform.position;
-        //selectedPanel = scrollSnap.Panels[scrollSnap.CenteredPanel].gameObject;
+        SetSelectedPanel(scrollSnap.CenteredPanel);
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class FocusManager : MonoBehaviour
             {
                 inkCounter.UpdateTotalInkAmt(6);
             }
-                else
+            else
             {
                 inkCounter.UpdateTotalInkAmt(1);
             }
@@ -95,6 +95,7 @@ public class FocusManager : MonoBehaviour
                 transform.position = focusTargets[targetNumber].transform.position;
             }
 
+            SetSelectedPanel(scrollSnap.CenteredPanel);
 
         }
 

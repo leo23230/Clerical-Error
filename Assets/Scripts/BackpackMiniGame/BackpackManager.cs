@@ -241,6 +241,12 @@ public class BackpackManager : MonoBehaviour
     public void AddItemToBackpack(GameObject _item)
     {
         backpackObjects.Add(_item);
+        DetermineLayer(_item);
+    }
+
+    public void AddHandItemToBackpack(GameObject _item)
+    {
+        backpackObjects.Add(_item);
         BPUIManager.ResetTooltip();
         DetermineLayer(_item);
         UnlockBackpackItems();
@@ -252,7 +258,6 @@ public class BackpackManager : MonoBehaviour
             ItemDetailsSO itemDetails = _item.GetComponent<Item>().itemDetails;
             PutBackHandItem(itemDetails);
         }
-
     }
 
     //removes physical game object from the backpack
@@ -333,6 +338,7 @@ public class BackpackManager : MonoBehaviour
     public void useConsumable(ConsumableUsedEventArgs eventArgs)
     {
         UnlockBackpackItems();
+        BPUIManager.ResetTooltip();
     }
 
     public void removeDestroyedItem(ItemDestroyedEventArgs eventArgs)
