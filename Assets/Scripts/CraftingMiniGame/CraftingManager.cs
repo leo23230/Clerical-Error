@@ -214,7 +214,20 @@ public class CraftingManager : MonoBehaviour
 
     private IEnumerator DelayedLoadHotbar()
     {
-        yield return new WaitForSeconds(0.2f);
+        bool allSlotsCleared = false;
+        while (!allSlotsCleared)
+        {
+            foreach (Transform hotbarSlot in inventorySlots)
+            {
+                if (hotbarSlot.childCount > 0)
+                {
+                    //if it finds even one slot with a childCount, we reloop
+                    yield return null;
+                }
+            }
+            allSlotsCleared = true;
+            
+        }
         LoadHotbar();
     }
 

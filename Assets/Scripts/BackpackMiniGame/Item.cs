@@ -59,10 +59,32 @@ public class Item: MonoBehaviour
         glow = transform.Find("Glow").gameObject;
         glow.SetActive(false);
 
-        LeftBoundary = GameObject.Find("LeftWallCollider").transform.position.x;
+        //this is used to find all game objects INCLUDING inactive ones
+        Transform[] allObjs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < allObjs.Length; i++)
+        {
+            if (allObjs[i].name == "LeftWallCollider")
+            {
+                LeftBoundary = allObjs[i].transform.position.x;
+            }
+            if (allObjs[i].name == "RightWallCollider")
+            {
+                RightBoundary = allObjs[i].transform.position.x;
+            }
+            if (allObjs[i].name == "TopWallCollider")
+            {
+                TopBoundary = allObjs[i].transform.position.y;
+            }
+            if (allObjs[i].name == "BottomWallCollider")
+            {
+                BottomBoundary = allObjs[i].transform.position.y;
+            }
+        }
+
+/*        LeftBoundary = GameObject.Find("LeftWallCollider").transform.position.x;
         RightBoundary = GameObject.Find("RightWallCollider").transform.position.x;
         TopBoundary = GameObject.Find("TopWallCollider").transform.position.y;
-        BottomBoundary = GameObject.Find("BottomWallCollider").transform.position.y;
+        BottomBoundary = GameObject.Find("BottomWallCollider").transform.position.y;*/
 
     }
 

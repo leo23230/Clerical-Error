@@ -242,6 +242,7 @@ public class BackpackManager : MonoBehaviour
     {
         backpackObjects.Add(_item);
         DetermineLayer(_item);
+        UnlockBackpackItems();
     }
 
     public void AddHandItemToBackpack(GameObject _item)

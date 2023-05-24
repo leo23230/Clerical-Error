@@ -512,7 +512,7 @@ public class CharacterStateManager : MonoBehaviour
         {
             Heal(40);
         }
-        if(item.itemName == "Papariko Insence")
+        if(item.itemName == "Papariko Incense")
         {
             StartCoroutine(ChangeSpeed(4, 4f));
         }
